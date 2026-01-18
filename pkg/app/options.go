@@ -1,7 +1,7 @@
 package app
 
 import (
-	cliflag "mxshop/pkg/common/cli/flag"
+	cliflag "Advanced_Shop/pkg/common/cli/flag"
 )
 
 // CliOptions abstracts configuration options for reading parameters from the

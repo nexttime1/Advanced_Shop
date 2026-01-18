@@ -9,7 +9,7 @@ import (
 
 	flag "github.com/spf13/pflag"
 
-	"mxshop/pkg/common/version"
+	"Advanced_Shop/pkg/common/version"
 )
 
 type versionValue int

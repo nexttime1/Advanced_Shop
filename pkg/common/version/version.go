@@ -8,7 +8,7 @@ import (
 
 	"github.com/gosuri/uitable"
 
-	"mxshop/pkg/common/json"
+	"Advanced_Shop/pkg/common/json"
 )
 
 var (

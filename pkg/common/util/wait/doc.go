@@ -16,4 +16,4 @@ limitations under the License.
 
 // Package wait provides tools for polling or listening for changes
 // to a condition.
-package wait // import "mxshop/pkg/common/util/wait"
+package wait // import "Advanced_Shop/pkg/common/util/wait"

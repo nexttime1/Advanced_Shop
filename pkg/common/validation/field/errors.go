@@ -6,9 +6,9 @@ import (
 	"strconv"
 	"strings"
 
-	utilerrors "mxshop/pkg/errors"
+	utilerrors "Advanced_Shop/pkg/errors"
 
-	"mxshop/pkg/common/util/sets"
+	"Advanced_Shop/pkg/common/util/sets"
 )
 
 // Error is an implementation of the 'error' interface, which represents a

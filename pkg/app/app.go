@@ -4,17 +4,17 @@ import (
 	"fmt"
 	"os"
 	//controller(参数校验) ->service(具体的业务逻辑) -> data(数据库的接口)
+	cliflag "Advanced_Shop/pkg/common/cli/flag"
+	"Advanced_Shop/pkg/common/cli/globalflag"
+	"Advanced_Shop/pkg/common/term"
+	"Advanced_Shop/pkg/common/version"
+	"Advanced_Shop/pkg/common/version/verflag"
+	"Advanced_Shop/pkg/errors"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	cliflag "mxshop/pkg/common/cli/flag"
-	"mxshop/pkg/common/cli/globalflag"
-	"mxshop/pkg/common/term"
-	"mxshop/pkg/common/version"
-	"mxshop/pkg/common/version/verflag"
-	"mxshop/pkg/errors"
 
-	"mxshop/pkg/log"
+	"Advanced_Shop/pkg/log"
 )
 
 var (

@@ -10,7 +10,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/go-playground/validator/v10/translations/en"
 
-	"mxshop/pkg/common/validation/field"
+	"Advanced_Shop/pkg/common/validation/field"
 )
 
 const (

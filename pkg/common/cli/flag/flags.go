@@ -4,8 +4,8 @@ import (
 	goflag "flag"
 	"strings"
 
+	"Advanced_Shop/pkg/log"
 	"github.com/spf13/pflag"
-	"mxshop/pkg/log"
 )
 
 // WordSepNormalizeFunc changes all flags that contain "_" separators.

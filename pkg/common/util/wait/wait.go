@@ -24,8 +24,8 @@ import (
 	"sync"
 	"time"
 
-	"mxshop/pkg/common/util/clock"
-	"mxshop/pkg/common/util/runtime"
+	"Advanced_Shop/pkg/common/util/clock"
+	"Advanced_Shop/pkg/common/util/runtime"
 )
 
 // For any test of the style:

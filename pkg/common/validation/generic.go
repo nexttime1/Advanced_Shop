@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"mxshop/pkg/common/validation/field"
+	"Advanced_Shop/pkg/common/validation/field"
 )
 
 const (

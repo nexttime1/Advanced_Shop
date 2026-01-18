@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"Advanced_Shop/pkg/common/util/homedir"
 	"github.com/gosuri/uitable"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-	"mxshop/pkg/common/util/homedir"
 )
 
 const configFlagName = "config"

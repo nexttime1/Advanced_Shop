@@ -26,8 +26,8 @@ import (
 	"testing"
 	"time"
 
-	"mxshop/pkg/common/util/clock"
-	"mxshop/pkg/common/util/runtime"
+	"Advanced_Shop/pkg/common/util/clock"
+	"Advanced_Shop/pkg/common/util/runtime"
 )
 
 func TestUntil(t *testing.T) {

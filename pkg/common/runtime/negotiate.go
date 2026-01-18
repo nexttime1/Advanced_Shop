@@ -3,7 +3,7 @@ package runtime
 import (
 	"fmt"
 
-	"mxshop/pkg/common/json"
+	"Advanced_Shop/pkg/common/json"
 )
 
 // NegotiateError is returned when a ClientNegotiator is unable to locate

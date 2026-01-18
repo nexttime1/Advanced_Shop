@@ -9,13 +9,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/go-redis/redis/extra/redisotel/v9"
-	redis "github.com/go-redis/redis/v9"
+	"Advanced_Shop/pkg/errors"
+	"github.com/redis/go-redis/extra/redisotel/v9"
+	"github.com/redis/go-redis/v9"
 	uuid "github.com/satori/go.uuid"
 	"github.com/spf13/viper"
-	"mxshop/pkg/errors"
 
-	"mxshop/pkg/log"
+	"Advanced_Shop/pkg/log"
 )
 
 // Config defines options for redis cluster.

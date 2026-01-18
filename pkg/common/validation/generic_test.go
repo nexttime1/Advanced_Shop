@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"mxshop/pkg/common/validation/field"
+	"Advanced_Shop/pkg/common/validation/field"
 )
 
 func TestIsDNS1123Label(t *testing.T) {

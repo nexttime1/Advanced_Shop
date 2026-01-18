@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"Advanced_Shop/pkg/errors"
 	"github.com/gin-gonic/gin"
-	"mxshop/pkg/errors"
 )
 
 // ErrResponse defines the return messages when an error occurred.
