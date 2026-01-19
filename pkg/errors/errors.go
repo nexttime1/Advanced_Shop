@@ -127,6 +127,7 @@ type fundamental struct {
 
 func (f *fundamental) Error() string { return f.msg }
 
+// Format 拥有自定义格式化能力。  也就是 可以这样用： fmt.Printf("%s", err) 持 %s/%v/%+v 三种格式
 func (f *fundamental) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 'v':
@@ -195,14 +196,19 @@ func WithStack(err error) error {
 }
 
 type withStack struct {
-	error
-	*stack
+	// 这虽然是一个接口 但是你肯定会传入一个实现这个接口的结构体 所以withStack实现了 error的接口  不太对
+	// 匿名嵌入 error 接口，其 Error() 方法被提升到 withStack， （method promotion）
+	// 因此 withStack 在编译期实现了 error 接口
+	error  // 嵌入的原始错误（匿名嵌套，继承 Error() 方法）
+	*stack // 当前包装点的调用栈信息   //自己写的类型
 }
 
+// Cause 返回的是 实现了 error 接口的结构体指针  它的存在意义是： “我这一层不成为错误链的终点”
 func (w *withStack) Cause() error { return w.error }
 
 // Unwrap provides compatibility for Go 1.13 error chains.
 func (w *withStack) Unwrap() error {
+	// 匿名接口类型断言   看看传入的w.error 这个底层error 有没有这个方法  任何类型都可以  有就去调用底层的
 	if e, ok := w.error.(interface{ Unwrap() error }); ok {
 		return e.Unwrap()
 	}
@@ -303,13 +309,21 @@ func WithMessagef(err error, format string, args ...interface{}) error {
 	}
 }
 
+// 作用：给「任意已有错误」只追加业务描述消息，无栈帧、无错误码，纯粹的「消息增强」，用来给错误链补充上下文（比如： file not found）
+// 核心：和 withStack 是「互补关系」，一个加消息、一个加栈帧；
 type withMessage struct {
-	cause error
-	msg   string
+	cause error  // 被包装的根错误（嵌套的原始错误）
+	msg   string // 当前层追加的错误文本消息
 }
 
+// 直接返回msg string  不关心下层错误怎么说
 func (w *withMessage) Error() string { return w.msg }
-func (w *withMessage) Cause() error  { return w.cause }
+
+//Cause() → 给 老 errors 生态 用
+//Unwrap() → 给 Go 官方 errors 用
+
+// 这个是实现
+func (w *withMessage) Cause() error { return w.cause }
 
 // Unwrap provides compatibility for Go 1.13 error chains.
 func (w *withMessage) Unwrap() error { return w.cause }
@@ -329,10 +343,10 @@ func (w *withMessage) Format(s fmt.State, verb rune) {
 }
 
 type withCode struct {
-	err   error
-	code  int
-	cause error
-	*stack
+	err    error // 当前层的错误文本消息（业务提示文案）
+	code   int   // 自定义业务错误码（如：100002、1050、2001）
+	cause  error // 被包装的根错误（错误链的上一层错误）
+	*stack       // 当前错误抛出点的调用栈信息
 }
 
 func WithCode(code int, format string, args ...interface{}) error {

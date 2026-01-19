@@ -87,6 +87,7 @@ func Register(coder Coder) {
 
 // MustRegister register a user define error code.
 // It will panic when the same Code already exist.
+
 func MustRegister(coder Coder) {
 	if coder.Code() == 0 {
 		panic("code '0' is reserved by 'imooc/Advanced_Shop/pkg/errors' as ErrUnknown error code")
@@ -105,21 +106,26 @@ func MustRegister(coder Coder) {
 // ParseCoder parse any error into *withCode.
 // nil error will return nil direct.
 // None withStack error will be parsed as ErrUnknown.
+// 入参：任意的error类型错误对象（业务中抛出的各种错误）
+// 出参：标准化的Coder接口实例（拿到后可调用所有Coder的方法）
 func ParseCoder(err error) Coder {
+	// 【分支1：入参为nil】
 	if err == nil {
 		return nil
 	}
 
+	// 【分支2：能断言为*withCode类型的错误】核心逻辑
 	if v, ok := err.(*withCode); ok {
 		if coder, ok := codes[v.code]; ok {
 			return coder
 		}
 	}
-
+	// 【分支3：兜底】
 	return unknownCoder
 }
 
 // IsCode reports whether any error in err's chain contains the given error code.
+// 判断某个错误对象的错误链中，是否包含指定的业务错误码code   模仿 Go 标准库 errors.Is() 的设计思想 本质上 unwrap
 func IsCode(err error, code int) bool {
 	if v, ok := err.(*withCode); ok {
 		if v.code == code {
