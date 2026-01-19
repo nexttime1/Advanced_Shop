@@ -2,6 +2,7 @@ package app
 
 import (
 	"Advanced_Shop/gnova/register"
+	gs "Advanced_Shop/gnova/server"
 	"Advanced_Shop/pkg/log"
 	"context"
 	"github.com/google/uuid"

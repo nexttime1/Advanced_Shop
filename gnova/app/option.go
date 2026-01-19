@@ -2,6 +2,7 @@ package app
 
 import (
 	"Advanced_Shop/gnova/register"
+	"Advanced_Shop/gnova/server/rpcserver"
 	"net/url"
 	"os"
 	"time"
@@ -18,7 +19,7 @@ type options struct {
 	sigs []os.Signal
 
 	//允许用户传入自己的实现
-	register         register.Registrar
+	registrar        register.Registrar
 	registrarTimeout time.Duration
 
 	//stop超时时间
@@ -30,7 +31,7 @@ type options struct {
 
 func WithRegistrar(registrar register.Registrar) Option {
 	return func(o *options) {
-		o.register = registrar
+		o.registrar = registrar
 	}
 }
 
