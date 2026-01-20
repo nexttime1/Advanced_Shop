@@ -120,10 +120,10 @@ func (a *App) Run() error {
 	wg.Wait()
 
 	//注册服务
-	if a.opts.register != nil {
+	if a.opts.registrar != nil {
 		rctx, rcancel := context.WithTimeout(context.Background(), a.opts.registrarTimeout)
 		defer rcancel()
-		err := a.opts.register.Register(rctx, instance)
+		err := a.opts.registrar.Register(rctx, instance)
 		if err != nil {
 			log.Errorf("register service error: %s", err)
 			return err
@@ -159,10 +159,10 @@ func (a *App) Stop() error {
 	a.lk.Unlock()
 
 	log.Info("start deregister service")
-	if a.opts.register != nil && instance != nil {
+	if a.opts.registrar != nil && instance != nil {
 		rctx, rcancel := context.WithTimeout(context.Background(), a.opts.stopTimeout)
 		defer rcancel()
-		if err := a.opts.register.Deregister(rctx, instance); err != nil {
+		if err := a.opts.registrar.Deregister(rctx, instance); err != nil {
 			log.Errorf("deregister service error: %s", err)
 			return err
 		}

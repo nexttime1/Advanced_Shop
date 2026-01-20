@@ -60,18 +60,36 @@ Use "%s --help" for more information about a command.{{end}}
 
 // App is the main structure of a cli application.
 // It is recommended that an app be created with the app.NewApp() function.
+// App 是 CLI 应用的核心结构体，封装了应用的所有核心属性和行为
+// 推荐通过 app.NewApp() 函数创建实例，而非直接初始化
 type App struct {
-	basename    string
-	name        string
+	// basename 应用的二进制文件基础名称（如可执行文件名为 advanced-shop，则basename为"advanced-shop"）
+	basename string
+	// name 应用的展示名称（用于日志、帮助信息等，如"Advanced Shop API 服务"）
+	name string
+	// description 应用的详细描述信息（会展示在 CLI 的 help 输出中）
 	description string
-	options     CliOptions
-	runFunc     RunFunc
-	silence     bool
-	noVersion   bool
-	noConfig    bool
-	commands    []*Command
-	args        cobra.PositionalArgs
-	cmd         *cobra.Command
+	// options CLI 选项配置集，封装了从命令行/配置文件读取的所有可配置参数
+	// 需实现 CliOptions 接口，支持参数校验、补全、打印等能力
+	options CliOptions
+	// runFunc 应用启动后的核心执行函数，是业务逻辑的入口
+	// 函数签名为 func(basename string) error
+	runFunc RunFunc
+	// silence 静默模式标识：开启后不打印启动信息、版本信息、配置信息等控制台输出
+	silence bool
+	// noVersion 是否禁用版本功能：开启后 CLI 不会注册 --version/-v 相关的 flag
+	noVersion bool
+	// noConfig 是否禁用配置文件功能：开启后 CLI 不会注册 --config/-c 相关的 flag
+	noConfig bool
+	// commands 应用包含的子命令列表（如 start/stop/restart 等子命令）
+	// 每个子命令需封装为 *Command 类型
+	commands []*Command
+	// args 位置参数校验函数：用于验证命令行中非 flag 类型的参数是否合法
+	// 例如限制命令不接受任何位置参数、必须传入指定数量的参数等
+	args cobra.PositionalArgs
+	// cmd 底层依赖的 cobra.Command 实例，是 CLI 功能的核心载体
+	// 封装了命令行的解析、子命令管理、flag 管理等底层能力
+	cmd *cobra.Command
 }
 
 // Option defines optional parameters for initializing the application
@@ -160,6 +178,7 @@ func NewApp(name string, basename string, opts ...Option) *App {
 		o(a)
 	}
 
+	// 初始化命令
 	a.buildCommand()
 
 	return a
@@ -235,6 +254,7 @@ func (a *App) Run() {
 }
 
 // Command returns cobra command instance inside the application.
+// 设计目的：App 结构体对底层的 cobra.Command 做了封装，外部代码默认无法直接访问 a.cmd，通过这个方法可以 “按需暴露” 底层能力；
 func (a *App) Command() *cobra.Command {
 	return a.cmd
 }
@@ -273,6 +293,7 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	}
 	// run application
 	if a.runFunc != nil {
+		// 这里执行我的函数
 		return a.runFunc(a.basename)
 	}
 
