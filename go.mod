@@ -1,6 +1,6 @@
 module Advanced_Shop
 
-go 1.25.5
+go 1.25.6
 
 require (
 	github.com/alibaba/sentinel-golang v1.0.4
@@ -45,7 +45,7 @@ require (
 	golang.org/x/crypto v0.47.0
 	golang.org/x/sync v0.19.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20251029180050-ab9386a59fda
-	google.golang.org/grpc v1.78.0
+	google.golang.org/grpc v1.77.0
 	google.golang.org/protobuf v1.36.10
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1

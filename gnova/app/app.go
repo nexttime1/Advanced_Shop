@@ -1,7 +1,7 @@
 package app
 
 import (
-	"Advanced_Shop/gnova/register"
+	"Advanced_Shop/gnova/registry"
 	gs "Advanced_Shop/gnova/server"
 	"Advanced_Shop/pkg/log"
 	"context"
@@ -19,7 +19,7 @@ type App struct {
 	opts options
 
 	lk       sync.Mutex
-	instance *register.ServiceInstance
+	instance *registry.ServiceInstance
 
 	cancel func()
 }

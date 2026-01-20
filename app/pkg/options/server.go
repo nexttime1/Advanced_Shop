@@ -2,6 +2,7 @@ package options
 
 import "github.com/spf13/pflag"
 
+// ServerOptions  每个微服务 order good user  都必须有的 Config
 type ServerOptions struct {
 	//是否开启pprof
 	EnableProfiling bool `json:"profiling"      mapstructure:"profiling"`

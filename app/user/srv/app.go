@@ -7,18 +7,18 @@ import (
 	"Advanced_Shop/gnova/server/rpcserver"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
-	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/google/wire"
 	"github.com/hashicorp/consul/api"
 
-	"Advanced_Shop/gnova/register"
-	"Advanced_Shop/gnova/register/consul"
+	"Advanced_Shop/gnova/registry"
+	"Advanced_Shop/gnova/registry/consul"
 )
 
 var ProviderSet = wire.NewSet(NewUserApp, NewRegistrar, NewUserRPCServer, NewNacosDataSource)
 
 // NewApp user 服务端的总启动配置  返回所有服务共享的 app结构体 但只输入user服务的
 func NewApp(basename string) *app.App {
+	//这里这个new 做了很多事情 比如 log的初始化 你的rpc服务的端口，name 注册逻辑的前置参数初始化 等等
 	cfg := config.New()
 	appl := app.NewApp("user",
 		"xshop",
@@ -42,7 +42,7 @@ func NewRegistrar(registry *options.RegistryOptions) registry.Registrar {
 }
 
 // NewUserApp  这里返回的是 gnova 的 app
-func NewUserApp(logOpts *log.Options, registry register.Registrar,
+func NewUserApp(logOpts *log.Options, registry registry.Registrar,
 	serverOpts *options.ServerOptions, rpcServer *rpcserver.Server) (*gapp.App, error) {
 	//初始化log
 	log.Init(logOpts)

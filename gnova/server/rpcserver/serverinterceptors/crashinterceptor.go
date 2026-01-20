@@ -8,6 +8,12 @@ import (
 	"Advanced_Shop/pkg/log"
 )
 
+/*
+gRPC 服务端的崩溃防护拦截器，专门用来捕获 RPC 处理过程中发生的 panic（程序崩溃）
+避免服务整体挂掉，同时记录崩溃详情和调用堆栈方便排查问题。
+拦截器返回，服务不会崩溃，继续处理下一个 RPC 请求。
+*/
+
 func StreamCrashInterceptor(svr interface{}, stream grpc.ServerStream, _ *grpc.StreamServerInfo,
 	handler grpc.StreamHandler) (err error) {
 	defer handleCrash(func(r interface{}) {
