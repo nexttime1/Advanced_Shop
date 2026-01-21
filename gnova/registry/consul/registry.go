@@ -78,7 +78,7 @@ type Config struct {
 }
 
 // Registry is consul registry
-type Registry struct {
+type Registry struct { // 实例化 实现接口
 	cli               *Client
 	enableHealthCheck bool
 	registry          map[string]*serviceSet

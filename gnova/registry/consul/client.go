@@ -98,9 +98,11 @@ func (c *Client) Service(ctx context.Context, service string, index uint64, pass
 	return c.resolver(ctx, entries), meta.LastIndex, nil
 }
 
-// Register register service instance to consul
+// Register register service instance to consul  核心
 func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enableHealthCheck bool) error {
+	//  构造 对象  用的参数
 	addresses := make(map[string]api.ServiceAddress, len(svc.Endpoints))
+	// 健康检查
 	checkAddresses := make([]string, 0, len(svc.Endpoints))
 	for _, endpoint := range svc.Endpoints {
 		raw, err := url.Parse(endpoint)
@@ -111,6 +113,7 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 		port, _ := strconv.ParseUint(raw.Port(), 10, 16)
 
 		checkAddresses = append(checkAddresses, net.JoinHostPort(addr, strconv.FormatUint(port, 10)))
+		// TaggedAddresses：key=scheme（http），value=地址+端口 因为构造Consul服务注册对象需要这样的
 		addresses[raw.Scheme] = api.ServiceAddress{Address: endpoint, Port: int(port)}
 	}
 	asr := &api.AgentServiceRegistration{
@@ -118,46 +121,69 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 		Name:            svc.Name,
 		Meta:            svc.Metadata,
 		Tags:            []string{fmt.Sprintf("version=%s", svc.Version)},
-		TaggedAddresses: addresses,
+		TaggedAddresses: addresses, // 先存起来  服务发现直接用
 	}
 	if len(checkAddresses) > 0 {
-		host, portRaw, _ := net.SplitHostPort(checkAddresses[0])
+		// Consul 的 Service.Address / Service.Port 只能有一个
+		host, portRaw, _ := net.SplitHostPort(checkAddresses[0]) // 拿到 host 和 prot 但是是string
 		port, _ := strconv.ParseInt(portRaw, 10, 32)
 		asr.Address = host
 		asr.Port = int(port)
 	}
 	if enableHealthCheck {
+		// 每一个 endpoint，都单独注册一个 TCP Check
 		for _, address := range checkAddresses {
 			asr.Checks = append(asr.Checks, &api.AgentServiceCheck{
-				TCP:                            address,
-				Interval:                       fmt.Sprintf("%ds", c.healthcheckInterval),
+				TCP: address,
+				//每隔Interval  执行一次 net.Dial("tcp", address)
+				Interval: fmt.Sprintf("%ds", c.healthcheckInterval),
+				// 如果这个 check 连续 600 秒都是 critical → 自动删除服务实例  没有这个，你的 Consul 会积一堆僵尸实例
 				DeregisterCriticalServiceAfter: fmt.Sprintf("%ds", c.deregisterCriticalServiceAfter),
 				Timeout:                        "5s",
 			})
 		}
 	}
 	if c.heartbeat {
+		// TTL如果应用不汇报：  TTL 过期    状态 = critical
 		asr.Checks = append(asr.Checks, &api.AgentServiceCheck{
-			CheckID:                        "service:" + svc.ID,
+			CheckID: "service:" + svc.ID, //格式必须这个
+			// *2  是 避免一次调度抖动就误判  给 GC / STW / 网络抖动留缓冲
 			TTL:                            fmt.Sprintf("%ds", c.healthcheckInterval*2),
 			DeregisterCriticalServiceAfter: fmt.Sprintf("%ds", c.deregisterCriticalServiceAfter),
 		})
 	}
 
-	// custom checks
+	// custom checks  用户自定义健康检查配置
 	asr.Checks = append(asr.Checks, c.serviceChecks...)
 
 	err := c.cli.Agent().ServiceRegister(asr)
 	if err != nil {
 		return err
 	}
+
+	/*
+		ServiceRegister()
+		   ↓
+		Agent 接收
+		   ↓
+		Check 定义创建
+		   ↓
+		调度器启动
+		   ↓
+		Check 可被 UpdateTTL
+	*/
+
 	if c.heartbeat {
+		// 启动 TTL 心跳 goroutine  这个Register 函数 直接返回 不去阻塞自己
 		go func() {
+			//ServiceRegister 是异步的  Check 可能还没完全创建
 			time.Sleep(time.Second)
+			// 证明是活的  pass 健康
 			err = c.cli.Agent().UpdateTTL("service:"+svc.ID, "pass", "pass")
 			if err != nil {
 				log.Errorf("[Consul]update ttl heartbeat to consul failed!err:=%v", err)
 			}
+			// 每healthcheckInterval 这些秒 发送一次 定时任务
 			ticker := time.NewTicker(time.Second * time.Duration(c.healthcheckInterval))
 			defer ticker.Stop()
 			for {
@@ -178,6 +204,6 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 
 // Deregister deregister service by service ID
 func (c *Client) Deregister(_ context.Context, serviceID string) error {
-	c.cancel()
+	c.cancel() //goroutine 停止
 	return c.cli.Agent().ServiceDeregister(serviceID)
 }

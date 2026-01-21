@@ -1,11 +1,11 @@
 package rpcserver
 
 import (
+	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
+	"Advanced_Shop/gnova/server/rpcserver/resolver/discovery"
 	"context"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc/grpclog"
-	"mxshop/gmicro/server/rpcserver/clientinterceptors"
-	"mxshop/gmicro/server/rpcserver/resolver/discovery"
 
 	grpcinsecure "google.golang.org/grpc/credentials/insecure"
 
@@ -139,12 +139,16 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 		grpc.WithChainStreamInterceptor(streamInts...),
 	}
 
-	//TODO 服务发现的选项
+	//  服务发现的选项
 	if options.discovery != nil {
-		grpcOpts = append(grpcOpts, grpc.WithResolvers(
+		// 有大用
+		grpcOpts = append(grpcOpts, grpc.WithResolvers( // 填一个 实现过 Build  和 Scheme 两个方法的 Builder
+			// 自己实现接口的实例
 			discovery.NewBuilder(
+				// 这里要传一个 没有初始化 也不能初始化写死  正好 调用 dial 会传一个
 				options.discovery,
-				discovery.WithInsecure(insecure),
+				discovery.WithInsecure(insecure), // 安全吗
+
 			),
 		))
 	}
@@ -168,6 +172,6 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 	//if err != nil {
 	//	return nil, err
 	//}
-
+	// DialOption 也就是  我们传入的grpcOpts  本质上是 grpc  NewClient 的参数“（options）
 	return grpc.DialContext(ctx, options.endpoint, grpcOpts...)
 }
