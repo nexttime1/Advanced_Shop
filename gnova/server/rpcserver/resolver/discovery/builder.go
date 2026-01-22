@@ -56,6 +56,7 @@ func (b *builder) Build(target resolver.Target, cc resolver.ClientConn, opts res
 	done := make(chan struct{}, 1)
 	ctx, cancel := context.WithCancel(context.Background())
 	go func() {
+		// b.discoverer 这个就是 consul 也可以是别的  它内部的watch
 		w, err = b.discoverer.Watch(ctx, strings.TrimPrefix(target.URL.Path, "/"))
 		close(done)
 	}()

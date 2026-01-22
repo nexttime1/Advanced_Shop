@@ -73,7 +73,7 @@ func (r *discoveryResolver) update(ins []*registry.ServiceInstance) {
 		log.Warnf("[resolver] Zero endpoint found,refused to write, instances: %v", ins)
 		return
 	}
-	err := r.cc.UpdateState(resolver.State{Addresses: addrs})
+	err := r.cc.UpdateState(resolver.State{Addresses: addrs}) // gRPC 客户端更新地址列表
 	if err != nil {
 		log.Errorf("[resolver] failed to update state: %s", err)
 	}

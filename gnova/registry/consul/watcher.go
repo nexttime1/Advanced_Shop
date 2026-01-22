@@ -3,7 +3,7 @@ package consul
 import (
 	"context"
 
-	"mxshop/gmicro/registry"
+	"Advanced_Shop/gnova/registry"
 )
 
 type watcher struct {

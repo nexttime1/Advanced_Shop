@@ -160,31 +160,33 @@ func (r *Registry) Watch(ctx context.Context, name string) (registry.Watcher, er
 	r.lock.Lock()
 	defer r.lock.Unlock()
 	set, ok := r.registry[name]
+	// 刚开始肯定没有 所有就创建放进去 如果服务名一样 复用 set
 	if !ok {
 		set = &serviceSet{
+			// 管理该服务名下的所有活跃监听者，空结构体不占用内存，仅用于标记监听者的 “存在性”（后续服务实例变化时，遍历该 map 通知所有监听者）
 			watcher:     make(map[*watcher]struct{}),
-			services:    &atomic.Value{},
+			services:    &atomic.Value{}, // 原子值类型 用于 读多 写少  服务实例列表
 			serviceName: name,
 		}
 		r.registry[name] = set
 	}
 
 	// 初始化watcher
-	w := &watcher{
+	w := &watcher{ // 代表 一个订阅者
 		event: make(chan struct{}, 1),
 	}
 	w.ctx, w.cancel = context.WithCancel(context.Background())
 	w.set = set
 	set.lock.Lock()
+	// 把这一个订阅者 放进map中
 	set.watcher[w] = struct{}{}
 	set.lock.Unlock()
+	// 原子读取存储的服务实例列表
 	ss, _ := set.services.Load().([]*registry.ServiceInstance)
-	if len(ss) > 0 {
-		// If the service has a value, it needs to be pushed to the watcher,
-		// otherwise the initial data may be blocked forever during the watch.
+	if len(ss) > 0 { // 非首次监听  里面有  我直接让你去取 那边阻塞了 next方法
 		w.event <- struct{}{}
 	}
-
+	// 也就是 刚初始化 还没有 serviceSet
 	if !ok {
 		err := r.resolve(set)
 		if err != nil {
@@ -194,16 +196,22 @@ func (r *Registry) Watch(ctx context.Context, name string) (registry.Watcher, er
 	return w, nil
 }
 
+// 刚开始执行的函数
 func (r *Registry) resolve(ss *serviceSet) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	// 首次查询 Consul 健康服务实例   idx 是 Consul 的一致性索引（Consistent Index）
+	//idx 是 Consul 服务端数据版本的标识 —— 每次服务实例变化（新增 / 删除 / 健康状态变更），该索引会递增
 	services, idx, err := r.cli.Service(ctx, ss.serviceName, 0, true)
+	// 返回：Consul 返回的服务实例列表（包含实例地址、端口、元数据、健康状态等）
 	cancel()
 	if err != nil {
 		return err
 	} else if len(services) > 0 {
+		// 广播 更新 s.services 这个  服务实例列表
 		ss.broadcast(services)
 	}
 	go func() {
+		// 创建一个定时器 1秒的
 		ticker := time.NewTicker(time.Second)
 		defer ticker.Stop()
 		for {

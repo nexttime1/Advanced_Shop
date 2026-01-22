@@ -8,10 +8,10 @@ import (
 func init() {
 	resolver.Register(NewBuilder())
 
-	/*
-		func Register(b Builder) {
-			m[b.Scheme()] = b
-		}
+	/*  注册到 grpc 全局的 map中
+	func Register(b Builder) {
+		m[b.Scheme()] = b
+	}
 	*/
 }
 
