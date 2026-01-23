@@ -61,11 +61,13 @@ func (r *discoveryResolver) update(ins []*registry.ServiceInstance) {
 			continue
 		}
 		endpoints[endpoint] = struct{}{}
+		// 封装成 gRPC 标准的 resolver.Address（必须转成这个结构体，gRPC 才能识别）
 		addr := resolver.Address{
 			ServerName: in.Name,
 			Attributes: parseAttributes(in.Metadata),
 			Addr:       endpoint,
 		}
+		// 把原始服务实例挂载到 Attributes 里（后续负载均衡可读取自定义字段） 因为我喜欢 registry.ServiceInstance 我自己的
 		addr.Attributes = addr.Attributes.WithValue("rawServiceInstance", in)
 		addrs = append(addrs, addr)
 	}
