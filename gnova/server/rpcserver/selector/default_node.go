@@ -3,7 +3,7 @@ package selector
 import (
 	"strconv"
 
-	"mxshop/gmicro/registry"
+	"Advanced_Shop/gnova/registry"
 )
 
 // DefaultNode is selector node

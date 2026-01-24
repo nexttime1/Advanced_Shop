@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync"
 
-	selector2 "mxshop/gmicro/server/rpcserver/selector"
-	"mxshop/gmicro/server/rpcserver/selector/node/direct"
+	selector2 "Advanced_Shop/gnova/server/rpcserver/selector"
+	"Advanced_Shop/gnova/server/rpcserver/selector/node/direct"
 )
 
 const (

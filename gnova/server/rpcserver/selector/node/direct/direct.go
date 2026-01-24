@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	selector2 "mxshop/gmicro/server/rpcserver/selector"
+	selector2 "Advanced_Shop/gnova/server/rpcserver/selector"
 )
 
 const (

@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	selector2 "Advanced_Shop/gnova/server/rpcserver/selector"
 	"github.com/go-kratos/kratos/v2/errors"
-	selector2 "mxshop/gmicro/server/rpcserver/selector"
 )
 
 const (

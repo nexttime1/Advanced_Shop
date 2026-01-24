@@ -2,7 +2,6 @@ package rpcserver
 
 import (
 	"Advanced_Shop/gnova/registry"
-
 	"Advanced_Shop/gnova/server/rpcserver/selector"
 	"google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"
