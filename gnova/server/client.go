@@ -160,6 +160,7 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 
 	if len(options.rpcOpts) > 0 {
 		grpcOpts = append(grpcOpts, options.rpcOpts...)
+
 	}
 
 	//client, err := grpc.NewClient(options.endpoint, grpcOpts...)
