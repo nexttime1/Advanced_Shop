@@ -1,4 +1,4 @@
-package rpcserver
+package server
 
 import (
 	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
