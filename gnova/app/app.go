@@ -32,6 +32,7 @@ func New(opts ...Option) *App {
 	}
 
 	if id, err := uuid.NewUUID(); err == nil {
+		// 服务注册的 id
 		o.id = id.String()
 	}
 
@@ -57,23 +58,10 @@ func (a *App) Run() error {
 	a.instance = instance
 	a.lk.Unlock()
 
-	//if a.opts.rpcServer != nil {
-	//	// 启动rpc服务， 如果我想要给这个rpc服务设置port 我们想要给这个rpc服务register我们自定义的interceptor
-	//	a.opts.rpcServer.Serve()
-	//}
-
-	//重点， 写的很简单， http服务要启动
-	//if a.opts.rpcServer != nil {
-	//	err := a.opts.rpcServer.Start()
-	//	if err != nil {
-	//		return err
-	//	}
-	//}
-
-	//现在启动了两个server，一个是restserver，一个是rpcserver
+	//现在启动了两个server，一个是 restserver 一个是 rpcserver
 	/*
-		这两个server是否必须同时启动成功？
-		如果有一个启动失败，那么我们就要停止另外一个server
+		这两个 server 要必须同时启动成功
+		如果有一个启动失败，那么我们就要停止另外一个 server
 		如果启动了多个， 如果其中一个启动失败，其他的应该被取消
 			如果剩余的server的状态：
 				1. 还没有开始调用start
@@ -92,7 +80,7 @@ func (a *App) Run() error {
 	if a.opts.rpcServer != nil {
 		servers = append(servers, a.opts.rpcServer)
 	}
-
+	// 主 context
 	ctx, cancel := context.WithCancel(context.Background())
 	a.cancel = cancel
 	eg, ctx := errgroup.WithContext(ctx)
@@ -103,7 +91,7 @@ func (a *App) Run() error {
 		srv := srv
 		eg.Go(func() error {
 			<-ctx.Done() //wait for stop signal
-			//不可能无休止的等待stop
+			//不可能无休止的等待 stop
 			sctx, cancel := context.WithTimeout(context.Background(), a.opts.stopTimeout)
 			defer cancel()
 			return srv.Stop(sctx)
@@ -152,7 +140,8 @@ http basic 认证
 cache： 1. redis 2. memcache 3. local cache
 jwt
 */
-// 停止服务
+
+// Stop 停止服务
 func (a *App) Stop() error {
 	a.lk.Lock()
 	instance := a.instance
@@ -176,7 +165,7 @@ func (a *App) Stop() error {
 }
 
 // 创建服务注册结构体
-func (a *App) buildInstance() (*register.ServiceInstance, error) {
+func (a *App) buildInstance() (*registry.ServiceInstance, error) {
 	endpoints := make([]string, 0)
 	for _, e := range a.opts.endpoints {
 		endpoints = append(endpoints, e.String())
@@ -195,7 +184,7 @@ func (a *App) buildInstance() (*register.ServiceInstance, error) {
 		}
 	}
 
-	return &register.ServiceInstance{
+	return &registry.ServiceInstance{
 		ID:        a.opts.id,
 		Name:      a.opts.name,
 		Endpoints: endpoints,

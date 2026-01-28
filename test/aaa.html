@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      background: #f0f0f0; 
+    }
+    .cover {
+      width: 840px;
+      height: 400px;
+      background: linear-gradient(135deg, #7DD3E1 0%, #5BC4D4 30%, #4AB8C9 70%, #3AACBD 100%);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 50px 60px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -50px;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .text-content {
+      z-index: 10;
+      text-align: left;
+      flex: 1;
+    }
+    .main-title {
+      font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      font-size: 52px;
+      font-weight: bold;
+      color: #FFE135;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      white-space: nowrap;
+    }
+    .main-title span {
+      color: #FFFFFF;
+    }
+    .subtitle {
+      font-family: 'Microsoft YaHei', sans-serif;
+      font-size: 22px;
+      color: #FFFFFF;
+      opacity: 0.95;
+      letter-spacing: 2px;
+    }
+    .tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-size: 20px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(5px);
+      letter-spacing: 2px;
+    }
+    .image-placeholder {
+      width: 220px;
+      height: 220px;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="text-content">
+      <div class="tag">📖 Go 源码剖析</div>
+      <div class="main-title">
+        errgroup<span> 源码解析</span>
+      </div>
+      <div class="subtitle">深入理解并发协程管理 · Context取消机制</div>
+    </div>
+    <div class="image-placeholder"></div>
+  </div>
+</body>
+</html>

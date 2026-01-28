@@ -81,7 +81,6 @@ func NewServer(opts ...ServerOption) *Server {
 	for _, o := range opts {
 		o(srv)
 	}
-
 	srv.Use(mws.TracingHandler(srv.serviceName))
 	for _, m := range srv.middlewares {
 		mw, ok := mws.Middlewares[m]
@@ -109,13 +108,14 @@ func (s *Server) Start(ctx context.Context) error {
 		return errors.New("mode must be one of debug/release/test")
 	}
 
-	//设置开发模式，打印路由信息
+	//设置开发模式
 	gin.SetMode(s.mode)
+	// 打印路由信息 TODO
 	gin.DebugPrintRouteFunc = func(httpMethod, absolutePath, handlerName string, nuHandlers int) {
 		log.Infof("%-6s %-s --> %s(%d handlers)", httpMethod, absolutePath, handlerName, nuHandlers)
 	}
 
-	//TODO 初始化翻译器
+	// 初始化翻译器
 	err := s.initTrans(s.transName)
 	if err != nil {
 		log.Errorf("initTrans error %s", err.Error())
@@ -125,7 +125,7 @@ func (s *Server) Start(ctx context.Context) error {
 	//注册mobile验证码
 	validation.RegisterMobile(s.trans)
 
-	//根据配置初始化pprof路由
+	//根据配置初始化pprof路由 TODO 学习一下
 	if s.enableProfiling {
 		pprof.Register(s.Engine)
 	}
@@ -157,6 +157,7 @@ func (s *Server) Start(ctx context.Context) error {
 
 func (s *Server) Stop(ctx context.Context) error {
 	log.Infof("rest server is stopping")
+	// 优雅推出
 	if err := s.server.Shutdown(ctx); err != nil {
 		log.Errorf("rest server shutdown error: %s", err.Error())
 		return err

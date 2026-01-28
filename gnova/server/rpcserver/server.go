@@ -99,6 +99,7 @@ func NewServer(opts ...ServerOption) *Server {
 	// 都必须通过 RegisterXXXServer() 这个动作，把「服务的定义 + 服务的实现」挂载到 gRPC 服务端。
 	// 不管是健康检查、Metadata、还是你自己写的业务服务，底层逻辑完全一模一样 因为都是通过protoc + protoc-gen-go-grpc  生成
 	apimd.RegisterMetadataServer(srv.Server, srv.metadata)
+
 	reflection.Register(srv.Server)
 	//可以支持用户直接通过grpc的一个接口查看当前支持的所有的rpc服务
 

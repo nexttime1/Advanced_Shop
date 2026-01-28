@@ -2,6 +2,7 @@ package app
 
 import (
 	"Advanced_Shop/gnova/registry"
+	"Advanced_Shop/gnova/server/restserver"
 	"Advanced_Shop/gnova/server/rpcserver"
 	"net/url"
 	"os"
