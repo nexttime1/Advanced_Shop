@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoStart/telemetry/ch03/server/model"
+	"Advanced_Shop/test/telemetry/ch03/server/model"
 	"github.com/gin-gonic/gin"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -26,7 +26,7 @@ import (
 var tp *trace.TracerProvider
 
 const (
-	traceName = "mxshop-otel"
+	traceName = "shop-otel"
 )
 
 func tracerProvider() error {
