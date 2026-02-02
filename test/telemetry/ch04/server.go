@@ -3,7 +3,6 @@ package main
 import (
 	"Advanced_Shop/test/telemetry/ch04/common"
 	"context"
-	"encoding/json"
 	"fmt"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -14,22 +13,8 @@ import (
 func funcA(ctx context.Context) {
 	tr := otel.Tracer("basic_name")
 	_, span := tr.Start(ctx, "func-a")
-	span.SetAttributes(attribute.String("name", "funA"))
-
-	type _LogStruct struct {
-		CurrentTime time.Time `json:"current_time"`
-		PassWho     string    `json:"pass_who"`
-		Name        string    `json:"name"`
-	}
-
-	logTest := _LogStruct{
-		CurrentTime: time.Now(),
-		PassWho:     "bobby",
-		Name:        "func-a",
-	}
-
-	b, _ := json.Marshal(logTest)
-	span.SetAttributes(attribute.Key("这是测试日志的key").String(string(b)))
+	span.SetAttributes(attribute.String("测试Key", "独一无二"))
+	span.AddEvent("完成 funcA")
 	time.Sleep(time.Second)
 	span.End()
 }
@@ -68,7 +53,7 @@ func main() {
 		funcB(gctx)
 		return nil
 	})
-	
+
 	_ = gw.Wait()
 	span.End()
 

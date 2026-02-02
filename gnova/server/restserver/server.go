@@ -91,7 +91,7 @@ func NewServer(opts ...ServerOption) *Server {
 		}
 
 		log.Infof("intall middleware: %s", m)
-		srv.Use(mw)
+		srv.Engine.Use(mw)
 	}
 
 	return srv
