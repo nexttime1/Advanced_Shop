@@ -1,9 +1,9 @@
 package auth
 
 import (
+	"Advanced_Shop/gnova/server/restserver/middlewares"
 	ginjwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
-	"mxshop/gmicro/server/restserver/middlewares"
 )
 
 // AuthzAudience defines the value of jwt audience field.

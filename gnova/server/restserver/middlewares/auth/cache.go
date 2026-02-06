@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	"mxshop/gmicro/code"
-	"mxshop/gmicro/server/restserver/middlewares"
-	"mxshop/pkg/common/core"
+	"Advanced_Shop/gnova/code"
+	"Advanced_Shop/gnova/server/restserver/middlewares"
+	"Advanced_Shop/pkg/common/core"
 
+	"Advanced_Shop/pkg/errors"
 	jwt "github.com/dgrijalva/jwt-go/v4"
 	"github.com/gin-gonic/gin"
-	"mxshop/pkg/errors"
 )
 
 // Defined errors.
