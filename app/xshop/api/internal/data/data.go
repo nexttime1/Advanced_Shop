@@ -1,7 +1,7 @@
 package data
 
 import (
-	gpb "mxshop/api/goods/v1"
+	gpb "Advanced_Shop/api/goods/v1"
 )
 
 type DataFactory interface {

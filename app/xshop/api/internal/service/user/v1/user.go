@@ -1,17 +1,17 @@
 package v1
 
 import (
+	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/pkg/errors"
+	"Advanced_Shop/pkg/log"
+	"Advanced_Shop/pkg/storage"
 	"context"
 	"fmt"
-	"mxshop/app/pkg/code"
-	"mxshop/pkg/errors"
-	"mxshop/pkg/log"
-	"mxshop/pkg/storage"
 	"time"
 
-	"mxshop/app/mxshop/api/internal/data"
-	"mxshop/app/pkg/options"
-	"mxshop/gmicro/server/restserver/middlewares"
+	"Advanced_Shop/app/pkg/options"
+	"Advanced_Shop/app/xshop/api/internal/data"
+	"Advanced_Shop/gnova/server/restserver/middlewares"
 
 	"github.com/dgrijalva/jwt-go"
 )

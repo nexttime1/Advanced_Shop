@@ -1,9 +1,9 @@
 package user
 
 import (
+	"Advanced_Shop/gnova/server/restserver/middlewares"
+	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
-	"mxshop/gmicro/server/restserver/middlewares"
-	"mxshop/pkg/common/core"
 )
 
 func (us *userServer) GetUserDetail(ctx *gin.Context) {

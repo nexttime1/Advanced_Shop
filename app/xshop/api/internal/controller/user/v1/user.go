@@ -1,8 +1,8 @@
 package user
 
 import (
+	"Advanced_Shop/app/xshop/api/internal/service"
 	ut "github.com/go-playground/universal-translator"
-	"mxshop/app/mxshop/api/internal/service"
 )
 
 type userServer struct {

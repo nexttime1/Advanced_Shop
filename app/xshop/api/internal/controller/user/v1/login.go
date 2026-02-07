@@ -1,9 +1,9 @@
 package user
 
 import (
+	gin2 "Advanced_Shop/app/pkg/translator/gin"
+	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
-	gin2 "mxshop/app/pkg/translator/gin"
-	"mxshop/pkg/log"
 	"net/http"
 )
 

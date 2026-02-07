@@ -1,14 +1,14 @@
 package auth
 
 import (
-	"mxshop/pkg/common/core"
+	"Advanced_Shop/pkg/common/core"
 	"strings"
 
-	"mxshop/gmicro/code"
-	"mxshop/gmicro/server/restserver/middlewares"
+	"Advanced_Shop/gnova/code"
+	"Advanced_Shop/gnova/server/restserver/middlewares"
 
+	"Advanced_Shop/pkg/errors"
 	"github.com/gin-gonic/gin"
-	"mxshop/pkg/errors"
 )
 
 const authHeaderCount = 2

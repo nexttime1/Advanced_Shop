@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 
-	"mxshop/pkg/common/time"
+	"Advanced_Shop/pkg/common/time"
 )
 
 type User struct {

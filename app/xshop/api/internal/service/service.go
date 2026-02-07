@@ -1,11 +1,11 @@
 package service
 
 import (
-	"mxshop/app/mxshop/api/internal/data"
-	v1 "mxshop/app/mxshop/api/internal/service/goods/v1"
-	v12 "mxshop/app/mxshop/api/internal/service/sms/v1"
-	v13 "mxshop/app/mxshop/api/internal/service/user/v1"
-	"mxshop/app/pkg/options"
+	"Advanced_Shop/app/pkg/options"
+	"Advanced_Shop/app/xshop/api/internal/data"
+	v1 "Advanced_Shop/app/xshop/api/internal/service/goods/v1"
+	v12 "Advanced_Shop/app/xshop/api/internal/service/sms/v1"
+	v13 "Advanced_Shop/app/xshop/api/internal/service/user/v1"
 )
 
 type ServiceFactory interface {

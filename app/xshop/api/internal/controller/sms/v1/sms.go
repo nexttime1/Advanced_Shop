@@ -1,15 +1,15 @@
 package v1
 
 import (
+	"Advanced_Shop/app/pkg/code"
+	gin2 "Advanced_Shop/app/pkg/translator/gin"
+	"Advanced_Shop/app/xshop/api/internal/service"
+	v1 "Advanced_Shop/app/xshop/api/internal/service/sms/v1"
+	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/pkg/errors"
+	"Advanced_Shop/pkg/storage"
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
-	"mxshop/app/mxshop/api/internal/service"
-	v1 "mxshop/app/mxshop/api/internal/service/sms/v1"
-	"mxshop/app/pkg/code"
-	gin2 "mxshop/app/pkg/translator/gin"
-	"mxshop/pkg/common/core"
-	"mxshop/pkg/errors"
-	"mxshop/pkg/storage"
 	"time"
 )
 
@@ -35,7 +35,7 @@ func (sc *SmsController) SendSms(c *gin.Context) {
 	}
 
 	smsCode := v1.GenerateSmsCode(6)
-	err := sc.sf.Sms().SendSms(c, sendSmsForm.Mobile, "SMS_181850725", "{\"code\":"+smsCode+"}")
+	err := sc.sf.Sms().SendSms(c, sendSmsForm.Mobile)
 	if err != nil {
 		core.WriteResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
 		return
