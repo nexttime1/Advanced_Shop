@@ -6,17 +6,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type userDetailResponse struct {
+	NickName string `json:"nick_name"`
+	Birthday string `json:"birthday"`
+	Gender   string `json:"gender"`
+	Mobile   string `json:"mobile"`
+}
+
 func (us *userServer) GetUserDetail(ctx *gin.Context) {
 	userID, _ := ctx.Get(middlewares.KeyUserID)
 	userDTO, err := us.sf.Users().Get(ctx, uint64(userID.(float64)))
 	if err != nil {
-		core.WriteResponse(ctx, err, nil)
+		core.WriteErrResponse(ctx, err, nil)
 		return
 	}
-	core.WriteResponse(ctx, nil, gin.H{
-		"name":     userDTO.NickName,
-		"birthday": userDTO.Birthday.Format("2006-01-02"),
-		"gender":   userDTO.Gender,
-		"mobile":   userDTO.Mobile,
+	core.OkWithData(ctx, userDetailResponse{
+		NickName: userDTO.NickName,
+		Birthday: userDTO.Birthday.Format("2006-01-02"),
+		Gender:   userDTO.Gender,
+		Mobile:   userDTO.Mobile,
 	})
 }

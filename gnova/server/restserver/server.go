@@ -75,7 +75,7 @@ func NewServer(opts ...ServerOption) *Server {
 		},
 		Engine:      gin.Default(),
 		transName:   "zh",
-		serviceName: "gmicro",
+		serviceName: "gnova",
 	}
 
 	for _, o := range opts {

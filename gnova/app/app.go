@@ -99,8 +99,8 @@ func (a *App) Run() error {
 
 		wg.Add(1)
 		eg.Go(func() error {
-			wg.Done()
-			log.Info("start rest server")
+			defer wg.Done()
+			log.Info("start server")
 			return srv.Start(ctx)
 		})
 	}

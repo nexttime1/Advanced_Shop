@@ -14,7 +14,7 @@ type TelemetryOptions struct {
 
 func NewTelemetryOptions() *TelemetryOptions {
 	return &TelemetryOptions{
-		Name:     "mxshop",
+		Name:     "xshop",
 		Endpoint: "http://127.0.0.1:14268/api/traces",
 		Sampler:  1.0,
 		Batcher:  "jaeger",

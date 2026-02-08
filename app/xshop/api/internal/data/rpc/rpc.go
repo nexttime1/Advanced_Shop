@@ -1,16 +1,16 @@
 package rpc
 
 import (
+	gpb "Advanced_Shop/api/goods/v1"
+	upb "Advanced_Shop/api/user/v1"
+	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/app/pkg/options"
+	"Advanced_Shop/app/xshop/api/internal/data"
+	"Advanced_Shop/gnova/registry"
+	"Advanced_Shop/gnova/registry/consul"
+	errors2 "Advanced_Shop/pkg/errors"
 	"fmt"
 	cosulAPI "github.com/hashicorp/consul/api"
-	gpb "mxshop/api/goods/v1"
-	upb "mxshop/api/user/v1"
-	"mxshop/app/mxshop/api/internal/data"
-	"mxshop/app/pkg/code"
-	"mxshop/app/pkg/options"
-	"mxshop/gmicro/registry"
-	"mxshop/gmicro/registry/consul"
-	errors2 "mxshop/pkg/errors"
 	"sync"
 )
 
@@ -25,8 +25,7 @@ func (g grpcData) Goods() gpb.GoodsClient {
 }
 
 func (g grpcData) Users() data.UserData {
-	//TODO implement me
-	panic("implement me")
+	return NewUsers(g.uc)
 }
 
 func NewDiscovery(opts *options.RegistryOptions) registry.Discovery {
@@ -46,7 +45,7 @@ var (
 	once      sync.Once
 )
 
-// rpc的连接， 基于服务发现
+// GetDataFactoryOr rpc的连接， 基于服务发现
 func GetDataFactoryOr(options *options.RegistryOptions) (data.DataFactory, error) {
 	if options == nil && dbFactory == nil {
 		return nil, fmt.Errorf("failed to get grpc store fatory")

@@ -41,7 +41,7 @@ func tracerProvider() error {
 		trace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("mxshop-user"),
+				semconv.ServiceNameKey.String("xshop-user"),
 				attribute.String("environment", "dev"),
 				attribute.Int("ID", 1),
 			),
@@ -53,7 +53,7 @@ func tracerProvider() error {
 }
 
 func Server(c *gin.Context) {
-	dsn := "root:root@tcp(127.0.0.1:3306)/mxshop_user_srv?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(127.0.0.1:3306)/xshop_user_srv?charset=utf8mb4&parseTime=True&loc=Local"
 
 	newLogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer

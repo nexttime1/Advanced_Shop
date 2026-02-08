@@ -25,10 +25,10 @@ type ErrResponse struct {
 	Reference string `json:"reference,omitempty"`
 }
 
-// WriteResponse write an error or the response data into http response body.
+// WriteErrResponse write an error or the response data into http response body.
 // It use errors.ParseCoder to parse any error into errors.Coder
 // errors.Coder contains error code, user-safe error message and http status code.
-func WriteResponse(c *gin.Context, err error, data interface{}) {
+func WriteErrResponse(c *gin.Context, err error, data interface{}) {
 	if err != nil {
 		errStr := fmt.Sprintf("%#+v", err)
 		coder := errors.ParseCoder(err)
@@ -43,4 +43,43 @@ func WriteResponse(c *gin.Context, err error, data interface{}) {
 	}
 
 	c.JSON(http.StatusOK, data)
+}
+
+type SuccessBaseResponse struct {
+	Data any    `json:"data"`
+	Msg  string `json:"msg"`
+}
+
+type DataListResponse struct {
+	List  any   `json:"list"`
+	Count int32 `json:"count"`
+}
+
+var empty = map[string]interface{}{}
+
+func response(c *gin.Context, data interface{}, msg string) {
+	c.JSON(http.StatusOK, SuccessBaseResponse{
+		Data: data,
+		Msg:  msg,
+	})
+}
+
+func OK(c *gin.Context, data interface{}, msg string) {
+	response(c, data, msg)
+}
+
+func OkWithMessage(c *gin.Context, msg string) {
+	response(c, empty, msg)
+}
+
+func OkWithData(c *gin.Context, data interface{}) {
+	response(c, data, "成功")
+}
+
+func OkWithList(c *gin.Context, list interface{}, count int32) {
+	response(c, DataListResponse{
+		List:  list,
+		Count: count,
+	}, "成功")
+
 }

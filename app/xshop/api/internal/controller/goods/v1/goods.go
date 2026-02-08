@@ -3,13 +3,13 @@ package goods
 import (
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
-	proto "mxshop/api/goods/v1"
-	"mxshop/app/mxshop/api/internal/domain/request"
-	"mxshop/app/mxshop/api/internal/service"
-	v1 "mxshop/app/mxshop/api/internal/service/goods/v1"
-	gin2 "mxshop/app/pkg/translator/gin"
-	"mxshop/pkg/common/core"
-	"mxshop/pkg/log"
+	proto "xshop/api/goods/v1"
+	gin2 "xshop/app/pkg/translator/gin"
+	"xshop/app/xshop/api/internal/domain/request"
+	"xshop/app/xshop/api/internal/service"
+	v1 "xshop/app/xshop/api/internal/service/goods/v1"
+	"xshop/pkg/common/core"
+	"xshop/pkg/log"
 )
 
 type goodsController struct {

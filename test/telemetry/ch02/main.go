@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	traceName = "mxshop-otel"
+	traceName = "xshop-otel"
 )
 
 func funcA(ctx context.Context, wg *sync.WaitGroup) {
@@ -64,7 +64,7 @@ func main() {
 		trace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("mxshop-user"),
+				semconv.ServiceNameKey.String("xshop-user"),
 				attribute.String("environment", "dev"),
 				attribute.Int("ID", 1),
 			),

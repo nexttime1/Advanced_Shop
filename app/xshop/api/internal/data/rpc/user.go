@@ -1,20 +1,20 @@
 package rpc
 
 import (
+	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/gnova/server/rpcserver"
+	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
+	"Advanced_Shop/pkg/errors"
 	"context"
-	"mxshop/app/pkg/code"
-	"mxshop/gmicro/server/rpcserver"
-	"mxshop/gmicro/server/rpcserver/clientinterceptors"
-	"mxshop/pkg/errors"
 	"time"
 
-	upbv1 "mxshop/api/user/v1"
-	"mxshop/app/mxshop/api/internal/data"
-	"mxshop/gmicro/registry"
-	itime "mxshop/pkg/common/time"
+	upbv1 "Advanced_Shop/api/user/v1"
+	"Advanced_Shop/app/xshop/api/internal/data"
+	"Advanced_Shop/gnova/registry"
+	itime "Advanced_Shop/pkg/common/time"
 )
 
-const serviceName = "discovery:///mxshop-user-srv"
+const serviceName = "discovery:///xshop-user-srv"
 
 type users struct {
 	uc upbv1.UserClient

@@ -1,35 +1,35 @@
 package user
 
 import (
+	gin2 "Advanced_Shop/app/pkg/translator/gin"
+	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
-	gin2 "mxshop/app/pkg/translator/gin"
-	"mxshop/pkg/common/core"
 )
 
-type RegisterForm struct {
-	Mobile   string `form:"mobile" json:"mobile" binding:"required,mobile"` //手机号码格式有规范可寻， 自定义validator
-	PassWord string `form:"password" json:"password" binding:"required,min=3,max=20"`
-	Code     string `form:"code" json:"code" binding:"required,min=6,max=6"`
+type UserRegisterRequest struct {
+	Mobile   string `json:"mobile" binding:"required,mobile" `
+	Password string `json:"password" binding:"required"`
+	Code     string `json:"code" binding:"required"`
 }
 
 func (us *userServer) Register(ctx *gin.Context) {
-	regForm := RegisterForm{}
-	if err := ctx.ShouldBind(&regForm); err != nil {
+	var cr UserRegisterRequest
+	if err := ctx.ShouldBind(&cr); err != nil {
 		gin2.HandleValidatorError(ctx, err, us.trans)
 		return
 	}
 
-	userDTO, err := us.sf.Users().Register(ctx, regForm.Mobile, regForm.PassWord, regForm.Code)
+	userDTO, err := us.sf.Users().Register(ctx, cr.Mobile, cr.Password, cr.Code)
 	if err != nil {
-		core.WriteResponse(ctx, err, nil)
+		core.WriteErrResponse(ctx, err, nil)
 		return
 	}
 
-	core.WriteResponse(ctx, nil, gin.H{
-		"id":         userDTO.ID,
-		"nick_name":  userDTO.NickName,
-		"token":      userDTO.Token,
-		"expired_at": userDTO.ExpiresAt,
+	core.OkWithData(ctx, UserResponse{
+		ID:        userDTO.ID,
+		NickName:  userDTO.NickName,
+		Token:     userDTO.Token,
+		ExpiredAt: userDTO.ExpiresAt,
 	})
 
 }

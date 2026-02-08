@@ -1,6 +1,7 @@
 package user
 
 import (
+	"Advanced_Shop/pkg/common/core"
 	"net/http"
 
 	"Advanced_Shop/pkg/log"
@@ -20,14 +21,14 @@ func GetCaptcha(ctx *gin.Context) {
 	cp := base64Captcha.NewCaptcha(driver, store)
 	captchaId, base64s, answer, err := cp.Generate()
 	if err != nil {
-		log.Errorf("生成验证码错误,: ", err.Error())
+		log.Errorf("生成验证码错误: ", err.Error())
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"msg": "生成验证码错误",
 		})
 	}
 
 	log.Infof("Answer : %s", answer)
-	ctx.JSON(http.StatusOK, CaptchaResponse{
+	core.OkWithData(ctx, CaptchaResponse{
 		CaptchaId:     captchaId,
 		CaptchaBase64: base64s,
 	})

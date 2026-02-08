@@ -78,6 +78,7 @@ message UpdateUserInfo {
     string nickName = 2;
     string gender = 3;
     uint64 birthDay = 4;
+    string password = 5;
 }
 
 message UserInfoResponse {

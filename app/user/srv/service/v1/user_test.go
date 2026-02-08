@@ -2,10 +2,10 @@ package v1
 
 import (
 	"context"
-	metav1 "mxshop/pkg/common/meta/v1"
+	metav1 "xshop/pkg/common/meta/v1"
 
-	"mxshop/app/user/srv/data/v1/mock"
 	"testing"
+	"xshop/app/user/srv/data/v1/mock"
 )
 
 func TestUserList(t *testing.T) {

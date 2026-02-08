@@ -45,7 +45,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		header := c.Request.Header.Get("Authorization")
 		if len(header) == 0 {
-			core.WriteResponse(c, errors.WithCode(code.ErrMissingHeader, "Authorization header cannot be empty."), nil)
+			core.WriteErrResponse(c, errors.WithCode(code.ErrMissingHeader, "Authorization header cannot be empty."), nil)
 			c.Abort()
 
 			return
@@ -83,7 +83,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 			return []byte(secret.Key), nil
 		}, jwt.WithAudience(AuthzAudience))
 		if err != nil || !parsedT.Valid {
-			core.WriteResponse(c, errors.WithCode(code.ErrSignatureInvalid, err.Error()), nil)
+			core.WriteErrResponse(c, errors.WithCode(code.ErrSignatureInvalid, err.Error()), nil)
 			c.Abort()
 
 			return
@@ -91,7 +91,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 
 		if KeyExpired(secret.Expires) {
 			tm := time.Unix(secret.Expires, 0).Format("2006-01-02 15:04:05")
-			core.WriteResponse(c, errors.WithCode(code.ErrExpired, "expired at: %s", tm), nil)
+			core.WriteErrResponse(c, errors.WithCode(code.ErrExpired, "expired at: %s", tm), nil)
 			c.Abort()
 
 			return

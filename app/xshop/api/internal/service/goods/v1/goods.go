@@ -1,9 +1,9 @@
 package v1
 
 import (
+	gpb "Advanced_Shop/api/goods/v1"
+	"Advanced_Shop/app/xshop/api/internal/data"
 	"context"
-	gpb "mxshop/api/goods/v1"
-	"mxshop/app/mxshop/api/internal/data"
 )
 
 type GoodsSrv interface {

@@ -62,17 +62,18 @@ func NewAPIApp(cfg *config.Config) (*gapp.App, error) {
 		SSLInsecureSkipVerify: cfg.Redis.SSLInsecureSkipVerify,
 		EnableTracing:         cfg.Redis.EnableTracing,
 	}
+
 	go storage.ConnectToRedis(context.Background(), redisConfig)
 
 	//生成http服务
-	rpcServer, err := NewAPIHTTPServer(cfg)
+	restServer, err := NewAPIHTTPServer(cfg)
 	if err != nil {
 		return nil, err
 	}
 
 	return gapp.New(
 		gapp.WithName(cfg.Server.Name),
-		gapp.WithRestServer(rpcServer),
+		gapp.WithRestServer(restServer),
 		gapp.WithRegistrar(register),
 	), nil
 }

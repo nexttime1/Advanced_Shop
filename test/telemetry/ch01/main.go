@@ -24,7 +24,7 @@ func main() {
 		trace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("mxshop-user"),
+				semconv.ServiceNameKey.String("xshop-user"),
 				attribute.String("environment", "dev"),
 				attribute.Int("ID", 1),
 			),
@@ -41,7 +41,7 @@ func main() {
 		}
 	}(ctx)
 
-	tr := otel.Tracer("mxshop-otel")
+	tr := otel.Tracer("xshop-otel")
 	_, span := tr.Start(ctx, "func-main")
 	var attrs []attribute.KeyValue
 	attrs = append(attrs, attribute.String("key1", "value1"))

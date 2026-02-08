@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	traceName = "mxshop-otel"
+	traceName = "xshop-otel"
 )
 
 var tp *trace.TracerProvider
@@ -33,7 +33,7 @@ func tracerProvider() error {
 		trace.WithResource(
 			resource.NewWithAttributes(
 				semconv.SchemaURL,
-				semconv.ServiceNameKey.String("mxshop-user"),
+				semconv.ServiceNameKey.String("xshop-user"),
 				attribute.String("environment", "dev"),
 				attribute.Int("ID", 1),
 			),

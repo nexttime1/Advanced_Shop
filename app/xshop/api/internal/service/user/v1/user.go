@@ -126,8 +126,17 @@ func (us *userService) Register(ctx context.Context, mobile, password, codes str
 }
 
 func (u *userService) Update(ctx context.Context, userDTO *UserDTO) error {
-	//TODO implement me
-	panic("implement me")
+
+	err := u.data.Users().Update(ctx, &data.User{
+		NickName: userDTO.NickName,
+		Gender:   userDTO.Gender,
+		Birthday: userDTO.Birthday,
+		PassWord: userDTO.PassWord,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (us *userService) Get(ctx context.Context, userID uint64) (*UserDTO, error) {
@@ -139,13 +148,21 @@ func (us *userService) Get(ctx context.Context, userID uint64) (*UserDTO, error)
 }
 
 func (u *userService) GetByMobile(ctx context.Context, mobile string) (*UserDTO, error) {
-	//TODO implement me
-	panic("implement me")
+	byMobile, err := u.data.Users().GetByMobile(ctx, mobile)
+	if err != nil {
+		return nil, err
+	}
+	return &UserDTO{User: byMobile}, nil
+
 }
 
 func (u *userService) CheckPassWord(ctx context.Context, password, EncryptedPassword string) (bool, error) {
-	//TODO implement me
-	panic("implement me")
+	err := u.data.Users().CheckPassWord(ctx, password, EncryptedPassword)
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+
 }
 
 var _ UserSrv = &userService{}

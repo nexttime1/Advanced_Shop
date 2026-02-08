@@ -1,15 +1,15 @@
 package rpc
 
 import (
+	gpbv1 "Advanced_Shop/api/goods/v1"
+	"Advanced_Shop/gnova/server/rpcserver"
+	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
 	"context"
-	gpbv1 "mxshop/api/goods/v1"
-	"mxshop/gmicro/server/rpcserver"
-	"mxshop/gmicro/server/rpcserver/clientinterceptors"
 
-	"mxshop/gmicro/registry"
+	"Advanced_Shop/gnova/registry"
 )
 
-const goodsserviceName = "discovery:///mxshop-goods-srv"
+const goodsserviceName = "discovery:///xshop-goods-srv"
 
 func NewGoodsServiceClient(r registry.Discovery) gpbv1.GoodsClient {
 	conn, err := rpcserver.DialInsecure(

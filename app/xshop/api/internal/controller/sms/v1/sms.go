@@ -13,10 +13,9 @@ import (
 	"time"
 )
 
-type SendSmsForm struct {
-	Mobile string `form:"mobile" json:"mobile" binding:"required,mobile"` //手机号码格式有规范可寻， 自定义validator
-	Type   uint   `form:"type" json:"type" binding:"required,oneof=1 2"`
-	//1. 注册发送短信验证码和动态验证码登录发送验证码
+type SendSmsRequest struct {
+	Mobile string `json:"mobile" binding:"required,mobile"`
+	Role   string `json:"role" binding:"required,oneof=1 2 3"` // 1 代表 管理员 2代表普通用户 3代表游客
 }
 
 type SmsController struct {
@@ -29,25 +28,25 @@ func NewSmsController(sf service.ServiceFactory, trans ut.Translator) *SmsContro
 }
 
 func (sc *SmsController) SendSms(c *gin.Context) {
-	sendSmsForm := SendSmsForm{}
-	if err := c.ShouldBind(&sendSmsForm); err != nil {
+	var cr SendSmsRequest
+	if err := c.ShouldBind(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, sc.trans)
 	}
 
 	smsCode := v1.GenerateSmsCode(6)
-	err := sc.sf.Sms().SendSms(c, sendSmsForm.Mobile)
+	err := sc.sf.Sms().SendSms(c, cr.Mobile)
 	if err != nil {
-		core.WriteResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
+		core.WriteErrResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
 		return
 	}
 
 	//将验证码保存起来 - redis
 	rstore := storage.RedisCluster{}
-	err = rstore.SetKey(c, sendSmsForm.Mobile, smsCode, 5*time.Minute)
+	err = rstore.SetKey(c, cr.Mobile, smsCode, 5*time.Minute)
 	if err != nil {
-		core.WriteResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
+		core.WriteErrResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
 		return
 	}
 
-	core.WriteResponse(c, nil, nil)
+	core.OkWithMessage(c, "发送成功")
 }

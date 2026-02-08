@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
+	"Advanced_Shop/gnova/registry"
 	"github.com/hashicorp/consul/api"
-	"mxshop/gmicro/registry"
 )
 
 func tcpServer(t *testing.T, lis net.Listener) {

@@ -66,5 +66,5 @@ func (so *ServerOptions) AddFlags(fs *pflag.FlagSet) {
 
 	fs.IntVar(&so.HttpPort, "server.http-port", so.HttpPort, "server http port default is 8079")
 
-	fs.StringVar(&so.Name, "server.name", so.Name, "server name default is mxshop-user-srv")
+	fs.StringVar(&so.Name, "server.name", so.Name, "server name default is xshop-user-srv")
 }
