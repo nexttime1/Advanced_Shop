@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body{
+            display:flex; justify-content:center; align-items:center;
+            min-height:100vh; background:#f3f6f9;
+            font-family: "Microsoft YaHei","PingFang SC",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+        }
+
+        .cover{
+            width: 840px;
+            height: 400px;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            padding: 48px 56px;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* 核心修改1：更换科技感蓝紫渐变背景，适配微服务/框架解析主题 */
+            background: linear-gradient(135deg,
+            #6366F1 0%,   /* 浅紫蓝 */
+            #4F46E5 28%,  /* 中紫蓝 */
+            #3B82F6 58%,  /* 天蓝色 */
+            #2563EB 100%  /* 深宝蓝 */
+            );
+        }
+
+        .cover::before{
+            content:"";
+            position:absolute;
+            top:-140px; right:-160px;
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%,
+            rgba(255,255,255,0.22) 0%,
+            rgba(255,255,255,0.10) 38%,
+            rgba(255,255,255,0.00) 70%
+            );
+            filter: blur(0.2px);
+        }
+        .cover::after{
+            content:"";
+            position:absolute;
+            bottom:-180px; left:-120px;
+            width: 460px; height: 460px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 60% 40%,
+            rgba(255,255,255,0.16) 0%,
+            rgba(255,255,255,0.08) 40%,
+            rgba(255,255,255,0.00) 72%
+            );
+        }
+
+        .pattern{
+            position:absolute; inset:0;
+            opacity: 0.28;
+            background-image:
+                    radial-gradient(rgba(255,255,255,0.55) 1.2px, transparent 1.2px);
+            background-size: 22px 22px;
+            pointer-events:none;
+            z-index: 1;
+            mask-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.65) 55%, rgba(0,0,0,0.15) 100%);
+        }
+
+        .decor svg{ width:100%; height:100%; }
+
+        .content{
+            z-index: 10;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            margin-bottom: 60px;
+            padding: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .tag{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.96);
+            font-size: 16px;
+            letter-spacing: 1px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.22);
+            margin-bottom: 18px;
+        }
+        /* 核心修改2：将圆形dot改为六边形，更贴合技术主题 */
+        .dot{
+            width:10px;
+            height:10px;
+            background: #FFE46B;
+            box-shadow: 0 0 0 6px rgba(255,228,107,0.22);
+            flex-shrink:0;
+            /* 六边形样式 */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .title{
+            font-size: 46px;
+            font-weight: 900;
+            line-height: 1.15;
+            color: #FFE46B;
+            text-shadow: 0 6px 18px rgba(0,0,0,0.18);
+            margin-bottom: 14px;
+        }
+        .title span{
+            color: #FFFFFF;
+        }
+
+        .subtitle{
+            font-size: 20px;
+            line-height: 1.35;
+            color: rgba(255,255,255,0.96);
+            letter-spacing: 1.2px;
+            text-shadow: 0 4px 14px rgba(0,0,0,0.16);
+            max-width: 700px; /* 加宽适配副标题长度 */
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+
+        .image-slot{
+            z-index: 5;
+            width: 100%;
+            /* 核心修改3：图片大小可控，你可自行调整以下2个属性 */
+            height: 3000px; /* 调大图片高度（原200px），可自行增减（推荐200-300px） */
+            max-width: 400px; /* 可选：限制图片最大宽度，避免溢出封面，可删除或修改 */
+            position: relative;
+            margin: 0 auto; /* 图片插槽自身居中，消除右偏 */
+            /* 关键修改：在原有垂直偏移基础上，增加向左偏移（-80px可根据需求调整） */
+            transform: translateY(-160px) translateX(-40px);
+        }
+
+        .image-slot small{
+            display:block;
+            opacity: 0.9;
+            font-size: 13px;
+            line-height: 1.4;
+            letter-spacing: .6px;
+            text-align: center;
+        }
+
+        .image-slot img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display:block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+<div class="cover">
+    <div class="pattern"></div>
+
+    <div class="content">
+        <!-- 核心修改3：替换tag文字，贴合Kratos服务注册主题 -->
+        <div class="tag"><span class="dot"></span><span>Kratos 源码解析 · 服务注册</span></div>
+        <!-- 核心修改4：主标题突出核心内容，视觉层次更优 -->
+        <div class="title">深度解析Kratos <span>服务注册</span></div>
+        <!-- 核心修改5：副标题使用文章核心副标题，简洁精准 -->
+        <div class="subtitle">从框架入口到Consul落地实现</div>
+    </div>
+
+    <div class="image-slot">
+        <img src="go_004.png" alt="Kratos服务注册配图"> <!-- 建议替换为Kratos/Consul相关配图 -->
+    </div>
+</div>
+</body>
+</html>

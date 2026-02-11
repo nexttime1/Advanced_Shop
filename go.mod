@@ -10,7 +10,6 @@ require (
 	github.com/alibabacloud-go/dypnsapi-20170525/v3 v3.0.0
 	github.com/alibabacloud-go/tea v1.4.0
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.9
-	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18
 	github.com/anaskhan96/go-password-encoder v0.0.0-20201010210601-c765b799fd72
 	github.com/appleboy/gin-jwt/v2 v2.10.3
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2
@@ -38,7 +37,7 @@ require (
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/penglongli/gin-metrics v0.1.13
 	github.com/pkg/errors v0.9.1
-	github.com/prometheus/client_golang v1.19.1
+	github.com/prometheus/client_golang v1.21.1
 	github.com/redis/go-redis/extra/redisotel/v9 v9.17.2
 	github.com/redis/go-redis/v9 v9.17.2
 	github.com/satori/go.uuid v1.2.0
@@ -50,6 +49,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	github.com/uptrace/opentelemetry-go-extra/otelutil v0.3.2
 	github.com/valyala/fasthttp v1.69.0
+	github.com/zeromicro/go-zero v1.9.4
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.64.0
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.34.0
 	go.opentelemetry.io/otel v1.39.0
@@ -76,6 +76,7 @@ require (
 	github.com/ClickHouse/clickhouse-go/v2 v2.30.0 // indirect
 	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.5 // indirect
 	github.com/alibabacloud-go/debug v1.0.1 // indirect
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.18 // indirect
 	github.com/aliyun/credentials-go v1.4.5 // indirect
 	github.com/andybalholm/brotli v1.2.0 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
@@ -101,7 +102,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
-	github.com/go-sql-driver/mysql v1.8.1 // indirect
+	github.com/go-sql-driver/mysql v1.9.0 // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/goccy/go-yaml v1.19.0 // indirect
@@ -120,9 +121,9 @@ require (
 	github.com/hashicorp/serf v0.10.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
-	github.com/jackc/pgx/v5 v5.5.5 // indirect
-	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.7.4 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -138,15 +139,16 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/openzipkin/zipkin-go v0.4.3 // indirect
 	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/prometheus/client_model v0.5.0 // indirect
-	github.com/prometheus/common v0.48.0 // indirect
-	github.com/prometheus/procfs v0.12.0 // indirect
+	github.com/prometheus/client_model v0.6.1 // indirect
+	github.com/prometheus/common v0.62.0 // indirect
+	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.57.1 // indirect
 	github.com/redis/go-redis/extra/rediscmd/v9 v9.17.2 // indirect
