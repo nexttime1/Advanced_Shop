@@ -7,19 +7,33 @@ import (
 
 type ServiceFactory interface {
 	Goods() GoodsSrv
+	Brands() BrandsSrv
+	Category() CategorySrv
+	CategoryBrands() CategoryBrandSrv
 }
 
-type service struct {
+type serviceFactory struct {
 	data       v1.DataFactory
 	dataSearch v12.SearchFactory
 }
 
-func NewService(store v1.DataFactory, dataSearch v12.SearchFactory) *service {
-	return &service{data: store, dataSearch: dataSearch}
+func NewService(store v1.DataFactory, dataSearch v12.SearchFactory) ServiceFactory {
+	return &serviceFactory{data: store, dataSearch: dataSearch}
 }
 
-var _ ServiceFactory = &service{}
+var _ ServiceFactory = &serviceFactory{}
 
-func (s *service) Goods() GoodsSrv {
+func (s *serviceFactory) Goods() GoodsSrv {
 	return newGoods(s)
+}
+
+func (s *serviceFactory) Brands() BrandsSrv {
+	return newBrand(s)
+}
+func (s *serviceFactory) Category() CategorySrv {
+	return newCategory(s)
+}
+
+func (s *serviceFactory) CategoryBrands() CategoryBrandSrv {
+	return newCategoryBrand(s)
 }

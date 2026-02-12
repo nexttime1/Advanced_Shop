@@ -27,6 +27,11 @@ type GoodsSrv interface {
 	// 更新商品
 	Update(ctx context.Context, goods *dto.GoodsDTO) error
 
+	// 事务
+	CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error
+	// 事务
+	UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) error
+
 	// 删除商品
 	Delete(ctx context.Context, ID uint64) error
 
@@ -41,7 +46,7 @@ type goodsService struct {
 	searchData v12.SearchFactory
 }
 
-func newGoods(srv *service) *goodsService {
+func newGoods(srv *serviceFactory) GoodsSrv {
 	return &goodsService{
 		data:       srv.data,
 		searchData: srv.dataSearch,
@@ -120,25 +125,36 @@ func (gs *goodsService) Get(ctx context.Context, ID uint64) (*dto.GoodsDTO, erro
 	}, nil
 }
 
+// Create TODO canal
 func (gs *goodsService) Create(ctx context.Context, goods *dto.GoodsDTO) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+// Update TODO canal
+func (gs *goodsService) Update(ctx context.Context, goods *dto.GoodsDTO) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error {
 	/*
 		数据先写mysql，然后写es
 	*/
-	_, err := gs.data.Brands().Get(ctx, uint64(goods.BrandsID))
+	_, err := gs.data.Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
 	if err != nil {
 		return err
 	}
 
-	_, err = gs.data.Categorys().Get(ctx, uint64(goods.CategoryID))
+	_, err = gs.data.Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
 	if err != nil {
 		return err
 	}
 
-	//之前的入es的方案是给gorm添加aftercreate
-	//分布式事务， 异构数据库的事务， 基于可靠消息最终一致性
-	//比较重的方案： 每次都要发送一个事务消息
-	txn := gs.data.Begin() //非常小心， 这种方案是不是就没有问题了呢
-	defer func() { //很重要
+	// 分布式事务， 异构数据库的事务， 基于可靠消息最终一致性
+	// TODO canal
+	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
+	defer func() {         // 很重要
 		if err := recover(); err != nil {
 			txn.Rollback()
 			log.Errorf("goodsService.Create panic: %v", err)
@@ -146,27 +162,35 @@ func (gs *goodsService) Create(ctx context.Context, goods *dto.GoodsDTO) error {
 		}
 	}()
 
-	err = gs.data.Goods().CreateInTxn(ctx, txn, &goods.GoodsDO)
+	err = gs.data.Goods().CreateInTxn(ctx, txn, goods)
 	if err != nil {
 		log.Errorf("data.CreateInTxn err: %v", err)
 		txn.Rollback()
 		return err
 	}
+	model := goods.GoodsDO
 	searchDO := do.GoodsSearchDO{
-		ID:          goods.ID,
-		CategoryID:  goods.CategoryID,
-		BrandsID:    goods.BrandsID,
-		OnSale:      goods.OnSale,
-		ShipFree:    goods.ShipFree,
-		IsNew:       goods.IsNew,
-		IsHot:       goods.IsHot,
-		Name:        goods.Name,
-		ClickNum:    goods.ClickNum,
-		SoldNum:     goods.SoldNum,
-		FavNum:      goods.FavNum,
-		MarketPrice: goods.MarketPrice,
-		GoodsBrief:  goods.GoodsBrief,
-		ShopPrice:   goods.ShopPrice,
+		ID:          model.ID,
+		CategoryID:  model.CategoryID,
+		BrandsID:    model.BrandsID,
+		Name:        model.Name,
+		ClickNum:    model.ClickNum,
+		FavNum:      model.FavNum,
+		MarketPrice: model.MarketPrice,
+		GoodsBrief:  model.GoodsBrief,
+		ShopPrice:   model.ShopPrice,
+	}
+	if model.OnSale != nil {
+		searchDO.OnSale = *model.OnSale
+	}
+	if model.ShipFree != nil {
+		searchDO.ShipFree = *model.ShipFree
+	}
+	if model.IsNew != nil {
+		searchDO.IsNew = *model.IsNew
+	}
+	if model.IsHot != nil {
+		searchDO.IsHot = *model.IsHot
 	}
 
 	err = gs.searchData.Goods().Create(ctx, &searchDO) //这个接口如果超时了
@@ -174,27 +198,85 @@ func (gs *goodsService) Create(ctx context.Context, goods *dto.GoodsDTO) error {
 		txn.Rollback()
 		return err
 	}
-	txn.Commit()
-	return nil
+
+	return txn.Commit().Error
+
 }
 
-func (gs *goodsService) Update(ctx context.Context, goods *dto.GoodsDTO) error {
-	//TODO implement me
-	panic("implement me")
+func (gs *goodsService) UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) error {
+	if goods.GoodsDO.BrandsID != 0 {
+		_, err := gs.data.Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
+		if err != nil {
+			return err
+		}
+	}
+	if goods.GoodsDO.CategoryID != 0 {
+		_, err := gs.data.Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
+		if err != nil {
+			return err
+		}
+	}
+
+	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
+	defer func() {         // 很重要
+		if err := recover(); err != nil {
+			txn.Rollback()
+			log.Errorf("goodsService.Create panic: %v", err)
+			return
+		}
+	}()
+
+	err := gs.data.Goods().UpdateInTxn(ctx, txn, goods)
+	if err != nil {
+		return err
+	}
+	// search 层   (es)
+	model := goods.GoodsDO
+	searchDO := do.GoodsSearchDO{
+		ID:          model.ID,
+		CategoryID:  model.CategoryID,
+		BrandsID:    model.BrandsID,
+		Name:        model.Name,
+		ClickNum:    model.ClickNum,
+		FavNum:      model.FavNum,
+		MarketPrice: model.MarketPrice,
+		GoodsBrief:  model.GoodsBrief,
+		ShopPrice:   model.ShopPrice,
+	}
+	if model.OnSale != nil {
+		searchDO.OnSale = *model.OnSale
+	}
+	if model.ShipFree != nil {
+		searchDO.ShipFree = *model.ShipFree
+	}
+	if model.IsNew != nil {
+		searchDO.IsNew = *model.IsNew
+	}
+	if model.IsHot != nil {
+		searchDO.IsHot = *model.IsHot
+	}
+
+	err = gs.searchData.Goods().Update(ctx, &searchDO) //这个接口如果超时了
+	if err != nil {
+		txn.Rollback()
+		return err
+	}
+
+	return txn.Commit().Error
+
 }
 
 func (gs *goodsService) Delete(ctx context.Context, ID uint64) error {
-	//TODO implement me
-	panic("implement me")
+	err := gs.data.Goods().Delete(ctx, ID)
+	return err
 }
 
 func (gs *goodsService) BatchGet(ctx context.Context, ids []uint64) ([]*dto.GoodsDTO, error) {
-	//go-zero 非常好用， 但是我们自己去做并发的话 - 一次性启动多个goroutine
+	// TODO go-zero 非常好用  一次性启动多个goroutine
 	var ret []*dto.GoodsDTO
 	var callFuncs []func() error
 	var mu sync.Mutex
 	for _, value := range ids {
-		//大坑
 		tmp := value
 		callFuncs = append(callFuncs, func() error {
 			goodsDTO, err := gs.Get(ctx, tmp)
@@ -204,19 +286,13 @@ func (gs *goodsService) BatchGet(ctx context.Context, ids []uint64) ([]*dto.Good
 			return err
 		})
 	}
+
 	err := mr.Finish(callFuncs...)
+
 	if err != nil {
 		return nil, err
 	}
-	//ds, err := gs.data.ListByIDs(ctx, ids, []string{})
-	//if err != nil {
-	//	return nil, err
-	//}
-	//for _, value := range ds.Items {
-	//	ret = append(ret, &dto.GoodsDTO{
-	//		GoodsDO: *value,
-	//	})
-	//}
+
 	return ret, nil
 }
 

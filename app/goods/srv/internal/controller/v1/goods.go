@@ -1,13 +1,15 @@
 package v1
 
 import (
-	"Advanced_Shop/app/goods/srv/internal/domain/dto"
-	v12 "Advanced_Shop/pkg/common/meta/v1"
-	"context"
-
 	proto "Advanced_Shop/api/goods/v1"
+	good "Advanced_Shop/app/goods/srv/internal/data/v1"
+	"Advanced_Shop/app/goods/srv/internal/domain/do"
+	"Advanced_Shop/app/goods/srv/internal/domain/dto"
 	v1 "Advanced_Shop/app/goods/srv/internal/service/v1"
+	"Advanced_Shop/app/pkg/gorm"
+	v12 "Advanced_Shop/pkg/common/meta/v1"
 	"Advanced_Shop/pkg/log"
+	"context"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -16,35 +18,60 @@ type goodsServer struct {
 	srv v1.ServiceFactory
 }
 
-func ModelToResponse(goods *dto.GoodsDTO) *proto.GoodsInfoResponse {
-	return &proto.GoodsInfoResponse{
-		Id:              goods.ID,
-		CategoryId:      goods.CategoryID,
-		Name:            goods.Name,
-		GoodsSn:         goods.GoodsSn,
-		ClickNum:        goods.ClickNum,
-		SoldNum:         goods.SoldNum,
-		FavNum:          goods.FavNum,
-		MarketPrice:     goods.MarketPrice,
-		ShopPrice:       goods.ShopPrice,
-		GoodsBrief:      goods.GoodsBrief,
-		ShipFree:        goods.ShipFree,
-		GoodsFrontImage: goods.GoodsFrontImage,
-		IsNew:           goods.IsNew,
-		IsHot:           goods.IsHot,
-		OnSale:          goods.OnSale,
-		DescImages:      goods.DescImages,
-		Images:          goods.Images,
-		Category: &proto.CategoryBriefInfoResponse{
-			Id:   goods.Category.ID,
-			Name: goods.Category.Name,
-		},
-		Brand: &proto.BrandInfoResponse{
-			Id:   goods.Brands.ID,
-			Name: goods.Brands.Name,
-			Logo: goods.Brands.Logo,
-		},
+func GoodInfoFunction(goods *dto.GoodsDTO) *proto.GoodsInfoResponse {
+	// 封面图
+	firstImage := ""
+	// 详情图 type = 2
+	var descImages []string
+	// 其他图 type = 3
+	var otherImages []string
+	for _, imageModel := range goods.Images {
+		if imageModel.IsMain {
+			firstImage = imageModel.ImageURL
+		}
+		if imageModel.ImageType == do.DetailImageType {
+			descImages = append(descImages, imageModel.ImageURL)
+		}
+		if imageModel.ImageType == do.OtherImageType {
+			otherImages = append(otherImages, imageModel.ImageURL)
+		}
 	}
+	var response proto.GoodsInfoResponse
+	if goods.ShipFree != nil {
+		response.ShipFree = goods.ShipFree
+	}
+	if goods.IsNew != nil {
+		response.IsNew = goods.IsNew
+	}
+	if goods.IsHot != nil {
+		response.IsHot = goods.IsHot
+	}
+	if goods.OnSale != nil {
+		response.OnSale = goods.OnSale
+	}
+	response.Id = goods.ID
+	response.Name = goods.Name
+	response.CategoryId = goods.CategoryID
+	response.GoodsSn = goods.GoodsSn
+	response.ClickNum = goods.ClickNum
+	response.SoldNum = goods.SoldNum
+	response.FavNum = goods.FavNum
+	response.MarketPrice = goods.MarketPrice
+	response.ShopPrice = goods.ShopPrice
+	response.GoodsBrief = goods.GoodsBrief
+	response.GoodsFrontImage = firstImage
+	response.DescImages = descImages
+	response.Images = otherImages
+	response.Brand = &proto.BrandInfoResponse{
+		Id:   goods.Brands.ID,
+		Name: goods.Brands.Name,
+		Logo: goods.Brands.Logo,
+	}
+	response.Category = &proto.CategoryBriefInfoResponse{
+		Id:   goods.Category.ID,
+		Name: goods.Category.Name,
+	}
+	return &response
 }
 
 func (gs *goodsServer) GoodsList(ctx context.Context, request *proto.GoodsFilterRequest) (*proto.GoodsListResponse, error) {
@@ -56,7 +83,7 @@ func (gs *goodsServer) GoodsList(ctx context.Context, request *proto.GoodsFilter
 	var ret proto.GoodsListResponse
 	ret.Total = int32(list.TotalCount)
 	for _, item := range list.Items {
-		ret.Data = append(ret.Data, ModelToResponse(item))
+		ret.Data = append(ret.Data, GoodInfoFunction(item))
 	}
 	return &ret, nil
 }
@@ -72,74 +99,110 @@ func (gs *goodsServer) BatchGetGoods(ctx context.Context, info *proto.BatchGoods
 	}
 	var ret proto.GoodsListResponse
 	for _, item := range get {
-		ret.Data = append(ret.Data, ModelToResponse(item))
+		ret.Data = append(ret.Data, GoodInfoFunction(item))
 	}
 	return &ret, nil
 }
 
+// CreateGoods 创建商品
 func (gs *goodsServer) CreateGoods(ctx context.Context, info *proto.CreateGoodsInfo) (*proto.GoodsInfoResponse, error) {
-	//TODO implement me
-	panic("implement me")
+
+	goodsDO := &do.GoodsDO{
+		Name:        info.Name,
+		GoodsSn:     info.GoodsSn,
+		CategoryID:  info.CategoryId,
+		BrandsID:    info.BrandId,
+		MarketPrice: info.MarketPrice,
+		ShopPrice:   info.ShopPrice,
+		GoodsBrief:  info.GoodsBrief,
+		ShipFree:    info.ShipFree,
+		IsNew:       info.IsNew,
+		IsHot:       info.IsHot,
+		OnSale:      info.OnSale,
+	}
+
+	request := good.GoodsInfo{
+		GoodsDO:         *goodsDO,
+		Images:          info.Images,
+		DescImages:      info.DescImages,
+		GoodsFrontImage: info.GoodsFrontImage,
+	}
+
+	// 调用service层创建方法
+	err := gs.srv.Goods().CreateInTxn(ctx, &request)
+	if err != nil {
+		log.Errorf("create goods error: %v", err.Error())
+		return nil, err
+	}
+
+	// 查询创建后的商品详情
+	goodsDTO, err := gs.srv.Goods().Get(ctx, uint64(goodsDO.ID))
+	if err != nil {
+		log.Errorf("get created goods detail error: %v", err.Error())
+		return nil, err
+	}
+
+	return GoodInfoFunction(goodsDTO), nil
 }
 
+// DeleteGoods 删除商品
 func (gs *goodsServer) DeleteGoods(ctx context.Context, info *proto.DeleteGoodsInfo) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
+	// 调用service层删除方法
+	err := gs.srv.Goods().Delete(ctx, uint64(info.Id))
+	if err != nil {
+		log.Errorf("delete goods error, id: %d, err: %v", info.Id, err.Error())
+		return nil, err
+	}
+
+	// 返回空响应
+	return &emptypb.Empty{}, nil
 }
 
+// UpdateGoods 更新商品
 func (gs *goodsServer) UpdateGoods(ctx context.Context, info *proto.CreateGoodsInfo) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
+
+	goodsDO := &do.GoodsDO{
+		Model:       gorm.Model{ID: info.Id},
+		Name:        info.Name,
+		GoodsSn:     info.GoodsSn,
+		CategoryID:  info.CategoryId,
+		BrandsID:    info.BrandId,
+		MarketPrice: info.MarketPrice,
+		ShopPrice:   info.ShopPrice,
+		GoodsBrief:  info.GoodsBrief,
+		ShipFree:    info.ShipFree,
+		IsNew:       info.IsNew,
+		IsHot:       info.IsHot,
+		OnSale:      info.OnSale,
+	}
+
+	request := good.GoodsInfo{
+		GoodsDO:         *goodsDO,
+		Images:          info.Images,
+		DescImages:      info.DescImages,
+		GoodsFrontImage: info.GoodsFrontImage,
+	}
+
+	// 调用service层更新方法
+	err := gs.srv.Goods().UpdateInTxn(ctx, &request)
+	if err != nil {
+		log.Errorf("update goods error, id: %d, err: %v", info.Id, err.Error())
+		return nil, err
+	}
+	// 3. 返回空响应
+	return &emptypb.Empty{}, nil
 }
 
+// GetGoodsDetail 获取商品详情
 func (gs *goodsServer) GetGoodsDetail(ctx context.Context, request *proto.GoodInfoRequest) (*proto.GoodsInfoResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
+	// 调用service层获取商品详情
+	goodsDTO, err := gs.srv.Goods().Get(ctx, uint64(request.Id))
+	if err != nil {
+		log.Errorf("get goods detail error, id: %d, err: %v", request.Id, err.Error())
+		return nil, err
+	}
 
-func (gs *goodsServer) GetAllCategorysList(ctx context.Context, empty *emptypb.Empty) (*proto.CategoryListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) GetSubCategory(ctx context.Context, request *proto.CategoryListRequest) (*proto.SubCategoryListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) CreateCategory(ctx context.Context, request *proto.CategoryInfoRequest) (*proto.CategoryInfoResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) DeleteCategory(ctx context.Context, request *proto.DeleteCategoryRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) UpdateCategory(ctx context.Context, request *proto.CategoryInfoRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) BrandList(ctx context.Context, request *proto.BrandFilterRequest) (*proto.BrandListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) CreateBrand(ctx context.Context, request *proto.BrandRequest) (*proto.BrandInfoResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) DeleteBrand(ctx context.Context, request *proto.BrandRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) UpdateBrand(ctx context.Context, request *proto.BrandRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
+	return GoodInfoFunction(goodsDTO), nil
 }
 
 func (gs *goodsServer) BannerList(ctx context.Context, empty *emptypb.Empty) (*proto.BannerListResponse, error) {

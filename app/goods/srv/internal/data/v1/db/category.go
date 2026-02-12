@@ -15,18 +15,12 @@ type categorys struct {
 	db *gorm.DB
 }
 
-func newCategorys(factory *mysqlFactory) *categorys {
-	categorys := &categorys{
+func newCategories(factory *mysqlFactory) *categorys {
+	categories := &categorys{
 		db: factory.db,
 	}
-	return categorys
+	return categories
 }
-
-//func NewCategorys(db *gorm.DB) *categorys {
-//	return &categorys{
-//		db: db,
-//	}
-//}
 
 func (c *categorys) Get(ctx context.Context, ID uint64) (*do.CategoryDO, error) {
 	category := &do.CategoryDO{}
@@ -49,7 +43,7 @@ func (c *categorys) ListAll(ctx context.Context, orderby []string) (*do.Category
 		query = query.Order(value)
 	}
 
-	d := query.Where("level=1").Preload("SubCategory.SubCategory").Find(&ret.Items)
+	d := query.Where("level = 1").Preload("SubCategory.SubCategory").Find(&ret.Items)
 	return ret, d.Error
 }
 

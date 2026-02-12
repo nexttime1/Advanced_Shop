@@ -9,4 +9,16 @@ const (
 
 	// ErrBrandNotFound - 500: Es unmarshal error.
 	ErrEsUnmarshal
+
+	// ErrBannerNotFound - 404: Banner not found.
+	ErrBannerNotFound
+
+	// ErrBrandNotFound - 404: Brand not found.
+	ErrBrandNotFound
+
+	// ErrCategoryBrandNotFound - 404: CategoryBrand not found.
+	ErrCategoryBrandNotFound
+
+	// ErrGoodsImageNotFound - 404: GoodImage not found.
+	ErrGoodsImageNotFound
 )

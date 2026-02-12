@@ -1,44 +1,154 @@
 syntax = "proto3";
 import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
 option go_package = "./;proto";
 
 service Goods{
-  //商品接口
-  rpc GoodsList(GoodsFilterRequest) returns(GoodsListResponse);
-  //现在用户提交订单有多个商品，你得批量查询商品的信息吧
-  rpc BatchGetGoods(BatchGoodsIdInfo) returns(GoodsListResponse); //批量获取商品信息
-  rpc CreateGoods(CreateGoodsInfo) returns (GoodsInfoResponse);
-  rpc DeleteGoods(DeleteGoodsInfo) returns (google.protobuf.Empty);
-  rpc UpdateGoods(CreateGoodsInfo) returns (google.protobuf.Empty);
-  rpc GetGoodsDetail(GoodInfoRequest) returns(GoodsInfoResponse);
+  // 商品接口
+  rpc GoodsList(GoodsFilterRequest) returns (GoodsListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/good/list"
+    };
+  }; // 商品列表
+  rpc BatchGetGoods(BatchGoodsIdInfo) returns (GoodsListResponse){
+    option (google.api.http) = {
+      post: "/g/v1/good/batch"
+      body: "*"
+    };
+  }; // 批量获取商品信息
+  rpc CreateGoods(CreateGoodsInfo) returns (GoodsInfoResponse){
+    option (google.api.http) = {
+      post: "/g/v1/good"
+      body: "*"
+    };
+  }; // 创建商品
+  rpc DeleteGoods(DeleteGoodsInfo) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/g/v1/good/{id}"
+      body: "*"
+    };
+  }; // 删除商品
+  rpc UpdateGoods(CreateGoodsInfo) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      put: "/g/v1/good/{id}"
+      body: "*"
+    };
+  }; // 更新商品
+  rpc GetGoodsDetail(GoodInfoRequest) returns (GoodsInfoResponse){
+    option (google.api.http) = {
+      get: "/g/v1/good/{id}"
+    };
+  }; // 获取商品详情
 
-  //商品分类
-  rpc GetAllCategorysList(google.protobuf.Empty) returns(CategoryListResponse); //获取所有的分类
-  //获取子分类
-  rpc GetSubCategory(CategoryListRequest) returns(SubCategoryListResponse);
-  rpc CreateCategory(CategoryInfoRequest) returns(CategoryInfoResponse); //新建分类信息
-  rpc DeleteCategory(DeleteCategoryRequest) returns(google.protobuf.Empty); //删除分类
-  rpc UpdateCategory(CategoryInfoRequest) returns(google.protobuf.Empty); //修改分类信息
+  // 商品分类
+  rpc GetAllCategorysList(google.protobuf.Empty) returns (CategoryListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/categorys"
+    };
+  }; // 获取所有的分类
+  rpc GetSubCategory(CategoryListRequest) returns (SubCategoryListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/categorys/{id}"
+    };
+  }; // 获取子分类
+  rpc CreateCategory(CategoryInfoRequest) returns (CategoryInfoResponse){
+    option (google.api.http) = {
+      post: "/g/v1/categorys"
+      body: "*"
+    };
+  }; // 新建分类信息
+  rpc DeleteCategory(DeleteCategoryRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/g/v1/categorys/{id}"
+      body: "*"
+    };
+  }; // 删除分类
+  rpc UpdateCategory(CategoryInfoRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      put: "/g/v1/categorys/{id}"
+      body: "*"
+    };
+  }; // 修改分类信息
 
-  //品牌和轮播图
-  rpc BrandList(BrandFilterRequest) returns(BrandListResponse); //
-  rpc CreateBrand(BrandRequest) returns(BrandInfoResponse); //新建品牌信息
-  rpc DeleteBrand(BrandRequest) returns(google.protobuf.Empty); //删除品牌
-  rpc UpdateBrand(BrandRequest) returns(google.protobuf.Empty); //修改品牌信息
+  // 品牌和轮播图（品牌）
+  rpc BrandList(BrandFilterRequest) returns (BrandListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/brands"
+    };
+  }; // 品牌列表
+  rpc CreateBrand(BrandRequest) returns (BrandInfoResponse){
+    option (google.api.http) = {
+      post: "/g/v1/brands"
+      body: "*"
+    };
+  }; // 新建品牌信息
+  rpc DeleteBrand(BrandRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/g/v1/brands/{id}"
+      body: "*"
+    };
+  }; // 删除品牌
+  rpc UpdateBrand(BrandRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      put: "/g/v1/brands/{id}"
+      body: "*"
+    };
+  }; // 修改品牌信息
 
-  //轮播图
-  rpc BannerList(google.protobuf.Empty) returns(BannerListResponse); //获取轮播列表信息
-  rpc CreateBanner(BannerRequest) returns(BannerResponse); //添加banner图
-  rpc DeleteBanner(BannerRequest) returns(google.protobuf.Empty); //删除轮播图
-  rpc UpdateBanner(BannerRequest) returns(google.protobuf.Empty); //修改轮播图
+  // 轮播图
+  rpc BannerList(google.protobuf.Empty) returns (BannerListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/banners"
+    };
+  }; // 获取轮播列表信息
+  rpc CreateBanner(BannerRequest) returns (BannerResponse){
+    option (google.api.http) = {
+      post: "/g/v1/banners"
+      body: "*"
+    };
+  }; // 添加banner图
+  rpc DeleteBanner(BannerRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/g/v1/banners/{id}"
+      body: "*"
+    };
+  }; // 删除轮播图
+  rpc UpdateBanner(BannerRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      put: "/g/v1/banners/{id}"
+      body: "*"
+    };
+  }; // 修改轮播图
 
-  //品牌分类
-  rpc CategoryBrandList(CategoryBrandFilterRequest) returns(CategoryBrandListResponse); //获取轮播列表信息
-  //通过category获取brands
-  rpc GetCategoryBrandList(CategoryInfoRequest) returns(BrandListResponse);
-  rpc CreateCategoryBrand(CategoryBrandRequest) returns(CategoryBrandResponse); //添加banner图
-  rpc DeleteCategoryBrand(CategoryBrandRequest) returns(google.protobuf.Empty); //删除轮播图
-  rpc UpdateCategoryBrand(CategoryBrandRequest) returns(google.protobuf.Empty); //修改轮播图
+  // 品牌分类
+  rpc CategoryBrandList(CategoryBrandFilterRequest) returns (CategoryBrandListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/categorybrands"
+    };
+  }; // 获取分类品牌列表
+  rpc GetCategoryBrandList(CategoryInfoRequest) returns (BrandListResponse){
+    option (google.api.http) = {
+      get: "/g/v1/categorybrands/{id}"
+    };
+  }; // 通过分类ID获取品牌列表
+  rpc CreateCategoryBrand(CategoryBrandRequest) returns (CategoryBrandResponse){
+    option (google.api.http) = {
+      post: "/g/v1/categorybrands"
+      body: "*"
+    };
+  }; // 添加分类品牌关联
+  rpc DeleteCategoryBrand(CategoryBrandRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/g/v1/categorybrands/{id}"
+      body: "*"
+    };
+  }; // 删除分类品牌关联
+  rpc UpdateCategoryBrand(CategoryBrandRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      put: "/g/v1/categorybrands/{id}"
+      body: "*"
+    };
+  }; // 修改分类品牌关联
 }
 
 message CategoryListRequest {
@@ -46,12 +156,13 @@ message CategoryListRequest {
   int32 level = 2;
 }
 
+
 message CategoryInfoRequest {
   int32 id = 1;
   string name = 2;
-  int32 parentCategory = 3;
+  int32 parentCategoryID = 3;
   int32 level = 4;
-  bool isTab = 5;
+  optional bool isTab = 5;
 }
 
 message DeleteCategoryRequest {
@@ -66,10 +177,13 @@ message QueryCategoryRequest {
 message CategoryInfoResponse {
   int32 id = 1;
   string name = 2;
-  int32 parentCategory = 3;
+  int32 parentCategoryID = 3;
   int32 level = 4;
   bool isTab = 5;
+  // 当前分类的子分类列表（用于存放三级等分类）
+  repeated CategoryInfoResponse subCategorys = 6;
 }
+
 
 message CategoryListResponse {
   int32 total = 1;
@@ -78,9 +192,9 @@ message CategoryListResponse {
 }
 
 message SubCategoryListResponse {
-  int32 total = 1;
-  CategoryInfoResponse info = 2;
-  repeated CategoryInfoResponse subCategorys = 3;
+  int32 total = 1;          // 一级分类的直接子分类（二级）数量
+  CategoryInfoResponse info = 2;  // 被查询的根分类（比如一级分类）信息
+  repeated CategoryInfoResponse subCategorys = 3;  // 根分类的直接子分类（二级）列表（每个二级分类可嵌套三级）
 }
 
 message CategoryBrandFilterRequest  {
@@ -98,6 +212,7 @@ message CategoryBrandRequest{
   int32 categoryId = 2;
   int32 brandId = 3;
 }
+
 message CategoryBrandResponse{
   int32 id = 1;
   BrandInfoResponse brand = 2;
@@ -150,12 +265,9 @@ message CategoryBrandListResponse {
   repeated CategoryBrandResponse data = 2;
 }
 
-
-
 message BatchGoodsIdInfo {
   repeated int32 id = 1;
 }
-
 
 message DeleteGoodsInfo {
   int32 id = 1;
@@ -175,6 +287,7 @@ message GoodInfoRequest {
   int32 id = 1;
 }
 
+
 message CreateGoodsInfo {
   int32 id = 1;
   string name = 2;
@@ -184,13 +297,13 @@ message CreateGoodsInfo {
   float shopPrice = 9;
   string goodsBrief = 10;
   string goodsDesc = 11;
-  bool shipFree = 12;
+  optional bool shipFree = 12; // 新增显式optional
   repeated string images = 13;
   repeated string descImages = 14;
   string goodsFrontImage = 15;
-  bool isNew = 16;
-  bool isHot = 17;
-  bool onSale = 18;
+  optional bool isNew = 16;
+  optional bool isHot = 17;
+  optional bool onSale = 18;
   int32 categoryId = 19;
   int32 brandId = 20;
 }
@@ -222,23 +335,24 @@ message GoodsFilterRequest  {
 
 message GoodsInfoResponse {
   int32 id = 1;
-  int32 categoryId = 2;
+  int32 category_id = 2;
   string name = 3;
   string goodsSn = 4;
   int32 clickNum = 5;
   int32 soldNum = 6;
   int32 favNum = 7;
+  int32 stocks = 8;
   float marketPrice = 9;
   float shopPrice = 10;
   string goodsBrief = 11;
   string goodsDesc = 12;
-  bool shipFree = 13;
+  optional bool shipFree = 13;
   repeated string images = 14;
   repeated string descImages = 15;
   string goodsFrontImage = 16;
-  bool isNew = 17;
-  bool isHot = 18;
-  bool onSale = 19;
+  optional bool isNew = 17;
+  optional bool isHot = 18;
+  optional bool onSale = 19;
   int64 addTime = 20;
   CategoryBriefInfoResponse category = 21;
   BrandInfoResponse brand = 22;

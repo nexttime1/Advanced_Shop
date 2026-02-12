@@ -1,7 +1,7 @@
 package code
 
 import (
-	"mxshop/pkg/errors"
+	"Advanced_Shop/pkg/errors"
 	"net/http"
 
 	"github.com/novalagung/gubrak"

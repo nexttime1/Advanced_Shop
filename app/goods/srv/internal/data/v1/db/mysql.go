@@ -34,13 +34,13 @@ func (mf *mysqlFactory) Goods() v1.GoodsStore {
 }
 
 func (mf *mysqlFactory) Categorys() v1.CategoryStore {
-	return newCategorys(mf)
+	return newCategories(mf)
 }
 
 func (mf *mysqlFactory) Brands() v1.BrandsStore {
 	return newBrands(mf)
 }
- 
+
 func (mf *mysqlFactory) Banners() v1.BannerStore {
 	return newBanner(mf)
 }
