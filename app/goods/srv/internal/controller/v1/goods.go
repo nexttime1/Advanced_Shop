@@ -205,51 +205,6 @@ func (gs *goodsServer) GetGoodsDetail(ctx context.Context, request *proto.GoodIn
 	return GoodInfoFunction(goodsDTO), nil
 }
 
-func (gs *goodsServer) BannerList(ctx context.Context, empty *emptypb.Empty) (*proto.BannerListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) CreateBanner(ctx context.Context, request *proto.BannerRequest) (*proto.BannerResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) DeleteBanner(ctx context.Context, request *proto.BannerRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) UpdateBanner(ctx context.Context, request *proto.BannerRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) CategoryBrandList(ctx context.Context, request *proto.CategoryBrandFilterRequest) (*proto.CategoryBrandListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) GetCategoryBrandList(ctx context.Context, request *proto.CategoryInfoRequest) (*proto.BrandListResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) CreateCategoryBrand(ctx context.Context, request *proto.CategoryBrandRequest) (*proto.CategoryBrandResponse, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) DeleteCategoryBrand(ctx context.Context, request *proto.CategoryBrandRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsServer) UpdateCategoryBrand(ctx context.Context, request *proto.CategoryBrandRequest) (*emptypb.Empty, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
 func NewGoodsServer(srv v1.ServiceFactory) *goodsServer {
 	return &goodsServer{srv: srv}
 }

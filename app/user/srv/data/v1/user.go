@@ -1,7 +1,7 @@
 package v1
 
 import (
-	bgorm "Advanced_Shop/app/pkg/grom"
+	bgorm "Advanced_Shop/app/pkg/gorm"
 	"context"
 	"time"
 
@@ -16,6 +16,11 @@ type UserDO struct {
 	Birthday    *time.Time `gorm:"type:datetime" structs:"birthday"`
 	Gender      string     `gorm:"column:gender;default:male;type:varchar(6)"  structs:"gender"`
 	Role        int        `gorm:"column: role;default 2"  structs:"role"` // 1管理员  2 普通用户
+}
+
+func (UserDO) TableName() string {
+	return "user_models"
+
 }
 
 type UserDOList struct {

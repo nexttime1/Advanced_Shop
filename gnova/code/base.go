@@ -22,6 +22,12 @@ const (
 
 	// ErrPageNotFound - 404: Page not found.
 	ErrPageNotFound
+
+	// ErrConnectGRPC - 404: GRPC not Connect.
+	ErrConnectGRPC
+
+	// ErrConnectDB - 404: DB not Connect.
+	ErrConnectDB
 )
 
 // common: database errors.

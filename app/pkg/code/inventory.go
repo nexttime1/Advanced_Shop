@@ -9,4 +9,7 @@ const (
 
 	// ErrInvNotEnough - 400: Inventory not enough.
 	ErrInvNotEnough
+
+	// ErrOptimisticRetry - 400: Optimistic Retry Over.
+	ErrOptimisticRetry
 )

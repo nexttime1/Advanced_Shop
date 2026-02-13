@@ -320,16 +320,16 @@ message BatchCategoryInfoRequest {
 }
 
 message GoodsFilterRequest  {
-  int32 priceMin = 1;
-  int32 priceMax = 2;
-  bool  isHot = 3;
-  bool  isNew = 4;
-  bool  isTab = 5;
-  int32 topCategory = 6;
-  int32 pages = 7;
-  int32 pagePerNums = 8;
-  string keyWords = 9;
-  int32 brand = 10;
+  int32 PriceMin = 1;
+  int32 PriceMax = 2;
+  bool  IsHot = 3;
+  bool  IsNew = 4;
+  bool  IsTab = 5;
+  int32 TopCategoryID = 6;
+  int32 Pages = 7;
+  int32 PagePerNums = 8;
+  string KeyWords = 9;
+  int32 brandID = 10;
 }
 
 

@@ -41,6 +41,38 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	goodsRouter := v1.Group("goods")
 	{
 		goodsController := goods.NewGoodsController(serviceFactory, g.Translator())
-		goodsRouter.GET("", goodsController.List)
+		// 商品相关
+		goodsRouter.GET("good/list", goodsController.GetGoodListView) // 限流
+		goodsRouter.POST("good", goodsController.CreateGoodView)
+		goodsRouter.GET("good/:id", goodsController.GoodDetailView)
+		goodsRouter.PUT("good/:id", goodsController.GoodUpdateView)
+		goodsRouter.PATCH("good/:id", goodsController.GoodPatchUpdateView)
+		goodsRouter.DELETE("good/:id", goodsController.GoodDeleteView)
+
+		// 图片相关
+		goodsRouter.GET("banners", goodsController.GetBannerListView)
+		goodsRouter.POST("banners", goodsController.CreateBannerView)
+		goodsRouter.PUT("banners/:id", goodsController.UpdateBannerView)
+		goodsRouter.DELETE("banners/:id", goodsController.DeleteBannerView)
+
+		// 分类相关
+		goodsRouter.GET("categorys", goodsController.GetAllCategoryView)
+		goodsRouter.GET("categorys/:id", goodsController.GetSubCategoryView)
+		goodsRouter.POST("categorys", goodsController.CreateCategoryView)
+		goodsRouter.PUT("categorys/:id", goodsController.UpdateCategoryView)
+		goodsRouter.DELETE("categorys/:id", goodsController.DeleteCategoryView)
+
+		// 品牌相关
+		goodsRouter.GET("brands", goodsController.BrandListView)
+		goodsRouter.POST("brands", goodsController.CreateBrandView)
+		goodsRouter.PUT("brands/:id", goodsController.UpdateBrandView)
+		goodsRouter.DELETE("brands/:id", goodsController.DeleteBrandView)
+
+		// 第三张表
+		goodsRouter.GET("categorybrands", goodsController.CategoryBrandListView)    //所有的 第三张表
+		goodsRouter.GET("categorybrands/:id", goodsController.CategoryAllBrandView) //某个分类下的所有品牌
+		goodsRouter.POST("categorybrands", goodsController.CreateCategoryBrandView)
+		goodsRouter.PUT("categorybrands/:id", goodsController.UpdateCategoryBrandView)
+		goodsRouter.DELETE("categorybrands/:id", goodsController.DeleteCategoryBrandView)
 	}
 }

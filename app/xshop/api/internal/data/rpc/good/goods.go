@@ -1,4 +1,4 @@
-package rpc
+package good
 
 import (
 	gpbv1 "Advanced_Shop/api/goods/v1"
@@ -10,6 +10,14 @@ import (
 )
 
 const goodsserviceName = "discovery:///xshop-goods-srv"
+
+type Goods struct {
+	gc gpbv1.GoodsClient
+}
+
+func NewGoods(g gpbv1.GoodsClient) *Goods {
+	return &Goods{g}
+}
 
 func NewGoodsServiceClient(r registry.Discovery) gpbv1.GoodsClient {
 	conn, err := rpcserver.DialInsecure(

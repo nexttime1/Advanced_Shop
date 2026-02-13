@@ -3,9 +3,10 @@ package rpc
 import (
 	gpb "Advanced_Shop/api/goods/v1"
 	upb "Advanced_Shop/api/user/v1"
-	"Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/app/xshop/api/internal/data"
+	"Advanced_Shop/app/xshop/api/internal/data/rpc/good"
+	code2 "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
 	errors2 "Advanced_Shop/pkg/errors"
@@ -14,14 +15,14 @@ import (
 	"sync"
 )
 
+// grpcData 实现工厂接口
 type grpcData struct {
 	gc gpb.GoodsClient
 	uc upb.UserClient
 }
 
 func (g grpcData) Goods() gpb.GoodsClient {
-	//TODO implement me
-	panic("implement me")
+	return g.gc
 }
 
 func (g grpcData) Users() data.UserData {
@@ -55,7 +56,7 @@ func GetDataFactoryOr(options *options.RegistryOptions) (data.DataFactory, error
 	once.Do(func() {
 		discovery := NewDiscovery(options)
 		userClient := NewUserServiceClient(discovery)
-		goodsClient := NewGoodsServiceClient(discovery)
+		goodsClient := good.NewGoodsServiceClient(discovery)
 		dbFactory = &grpcData{
 			gc: goodsClient,
 			uc: userClient,
@@ -63,7 +64,7 @@ func GetDataFactoryOr(options *options.RegistryOptions) (data.DataFactory, error
 	})
 
 	if dbFactory == nil {
-		return nil, errors2.WithCode(code.ErrConnectGRPC, "failed to get grpc store factory")
+		return nil, errors2.WithCode(code2.ErrConnectGRPC, "failed to get grpc store factory")
 	}
 	return dbFactory, nil
 }

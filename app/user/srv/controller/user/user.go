@@ -2,6 +2,7 @@ package user
 
 import (
 	v1 "Advanced_Shop/api/user/v1"
+	"Advanced_Shop/app/pkg/gorm"
 	DOv1 "Advanced_Shop/app/user/srv/data/v1"
 	DTOv1 "Advanced_Shop/app/user/srv/service/v1"
 	srv1 "Advanced_Shop/app/user/srv/service/v1"
@@ -116,7 +117,7 @@ func (u *userServer) UpdateUser(ctx context.Context, info *v1.UpdateUserInfo) (*
 
 	birthDay := time.Unix(int64(info.BirthDay), 0)
 	userDO := DOv1.UserDO{
-		Model: DOv1.Model{
+		Model: gorm.Model{
 			ID: info.Id,
 		},
 		NickName: info.NickName,

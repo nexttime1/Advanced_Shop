@@ -10,6 +10,7 @@ type ServiceFactory interface {
 	Brands() BrandsSrv
 	Category() CategorySrv
 	CategoryBrands() CategoryBrandSrv
+	Banner() BannerSrv
 }
 
 type serviceFactory struct {
@@ -32,6 +33,10 @@ func (s *serviceFactory) Brands() BrandsSrv {
 }
 func (s *serviceFactory) Category() CategorySrv {
 	return newCategory(s)
+}
+
+func (s *serviceFactory) Banner() BannerSrv {
+	return newBanner(s)
 }
 
 func (s *serviceFactory) CategoryBrands() CategoryBrandSrv {

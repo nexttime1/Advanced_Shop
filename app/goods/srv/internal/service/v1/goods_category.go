@@ -21,6 +21,8 @@ type CategoryBrandSrv interface {
 
 	// Delete 删除分类-品牌关联关系
 	Delete(ctx context.Context, ID uint64) error
+
+	ListByCategoryID(ctx context.Context, categoryID uint64) ([]*do.BrandsDO, error)
 }
 
 // categoryBrandService 分类-品牌关联业务服务具体实现
@@ -62,4 +64,32 @@ func (cb *categoryBrandService) Delete(ctx context.Context, ID uint64) error {
 	return err
 }
 
-var _ CategoryBrandService = &categoryBrandService{}
+func (cb *categoryBrandService) ListByCategoryID(ctx context.Context, categoryID uint64) ([]*do.BrandsDO, error) {
+	// 先查询该分类下所有的分类-品牌关联记录
+	gcbList, err := cb.data.CategoryBrands().List(ctx, metav1.ListMeta{}, []string{"id asc"})
+	if err != nil {
+		return nil, err
+	}
+
+	// 筛选出指定分类ID的关联记录，收集品牌ID
+	var brandIDs []uint64
+	for _, gcb := range gcbList.Items {
+		if uint64(gcb.CategoryID) == categoryID {
+			brandIDs = append(brandIDs, uint64(gcb.BrandsID))
+		}
+	}
+
+	// 批量查询品牌信息
+	var brands []*do.BrandsDO
+	for _, bid := range brandIDs {
+		brand, err := cb.data.Brands().Get(ctx, bid)
+		if err != nil {
+			continue // 忽略不存在的品牌，也可根据业务返回错误
+		}
+		brands = append(brands, brand)
+	}
+
+	return brands, nil
+}
+
+var _ CategoryBrandSrv = &categoryBrandService{}

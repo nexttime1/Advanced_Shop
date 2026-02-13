@@ -1,21 +1,21 @@
 package goods
 
 import (
+	proto "Advanced_Shop/api/goods/v1"
+	gin2 "Advanced_Shop/app/pkg/translator/gin"
+	"Advanced_Shop/app/xshop/api/internal/domain/request"
+	"Advanced_Shop/app/xshop/api/internal/service"
+	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/pkg/log"
+
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
-	proto "xshop/api/goods/v1"
-	gin2 "xshop/app/pkg/translator/gin"
-	"xshop/app/xshop/api/internal/domain/request"
-	"xshop/app/xshop/api/internal/service"
-	v1 "xshop/app/xshop/api/internal/service/goods/v1"
-	"xshop/pkg/common/core"
-	"xshop/pkg/log"
+	"strconv"
 )
 
 type goodsController struct {
-	trans    ut.Translator
-	srv      service.ServiceFactory
-	goodssrv v1.GoodsSrv
+	trans ut.Translator
+	srv   service.ServiceFactory
 }
 
 func NewGoodsController(srv service.ServiceFactory, trans ut.Translator) *goodsController {
@@ -25,64 +25,252 @@ func NewGoodsController(srv service.ServiceFactory, trans ut.Translator) *goodsC
 	}
 }
 
-func (gc *goodsController) List(ctx *gin.Context) {
+func (gc *goodsController) GetGoodListView(c *gin.Context) {
 	log.Info("goods list function called ...")
 
-	var r request.GoodsFilter
-
-	if err := ctx.ShouldBindQuery(&r); err != nil {
-		gin2.HandleValidatorError(ctx, err, gc.trans)
-		return
-	}
-
-	gfr := proto.GoodsFilterRequest{
-		IsNew:       r.IsNew,
-		IsHot:       r.IsHot,
-		PriceMax:    r.PriceMax,
-		PriceMin:    r.PriceMin,
-		TopCategory: r.TopCategory,
-		Brand:       r.Brand,
-		KeyWords:    r.KeyWords,
-		Pages:       r.Pages,
-		PagePerNums: r.PagePerNums,
-	}
-
-	goodsDTOList, err := gc.srv.Goods().List(ctx, &gfr)
+	var cr request.GoodListRequest
+	err := c.ShouldBindQuery(&cr)
 	if err != nil {
-		core.WriteResponse(ctx, err, nil)
+		core.WriteErrResponse(c, err, nil)
 		return
 	}
 
-	reMap := map[string]interface{}{
-		"total": goodsDTOList.Total,
+	list, err := gc.srv.Goods().List(c, &proto.GoodsFilterRequest{
+		PriceMin:      cr.PriceMin,
+		PriceMax:      cr.PriceMax,
+		IsHot:         cr.IsHot,
+		IsNew:         cr.IsNew,
+		TopCategoryID: cr.TopCategoryID,
+		Pages:         cr.Page,
+		PagePerNums:   cr.Limit,
+		KeyWords:      cr.Key,
+		BrandID:       cr.BrandID,
+	})
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
 	}
-	goodsList := make([]interface{}, 0)
-	for _, value := range goodsDTOList.Data {
-		goodsList = append(goodsList, map[string]interface{}{
-			"id":          value.Id,
-			"name":        value.Name,
-			"goods_brief": value.GoodsBrief,
-			"desc":        value.GoodsDesc,
-			"ship_free":   value.ShipFree,
-			"images":      value.Images,
-			"desc_images": value.DescImages,
-			"front_image": value.GoodsFrontImage,
-			"shop_price":  value.ShopPrice,
-			"category": map[string]interface{}{
-				"id":   value.Category.Id,
-				"name": value.Category.Name,
+	var response []request.GoodsInfoResponse
+	for _, model := range list.Data {
+		info := request.GoodsInfoResponse{
+			ID:              model.Id,
+			CategoryID:      model.CategoryId,
+			Name:            model.Name,
+			GoodsSn:         model.GoodsSn,
+			ClickNum:        model.ClickNum,
+			SoldNum:         model.SoldNum,
+			FavNum:          model.FavNum,
+			Stocks:          model.Stocks,
+			MarketPrice:     model.MarketPrice,
+			ShopPrice:       model.ShopPrice,
+			GoodsBrief:      model.GoodsBrief,
+			GoodsDesc:       model.GoodsDesc,
+			ShipFree:        model.ShipFree,
+			Images:          model.Images,
+			DescImages:      model.DescImages,
+			GoodsFrontImage: model.GoodsFrontImage,
+			IsNew:           model.IsNew,
+			IsHot:           model.IsHot,
+			OnSale:          model.OnSale,
+			AddTime:         model.AddTime,
+			Category: request.CategoryBriefInfoResponse{
+				ID:   model.Category.Id,
+				Name: model.Category.Name,
 			},
-			"brand": map[string]interface{}{
-				"id":   value.Brand.Id,
-				"name": value.Brand.Name,
-				"logo": value.Brand.Logo,
+			Brand: request.BrandInfoResponse{
+				ID:   model.Brand.Id,
+				Name: model.Brand.Name,
+				Logo: model.Brand.Logo,
 			},
-			"is_hot":  value.IsHot,
-			"is_new":  value.IsNew,
-			"on_sale": value.OnSale,
-		})
+		}
+		response = append(response, info)
 	}
-	reMap["data"] = goodsList
+	core.OkWithList(c, response, list.Total)
 
-	core.WriteResponse(ctx, nil, reMap)
+}
+
+func (gc *goodsController) CreateGoodView(c *gin.Context) {
+
+	var cr request.GoodCreateRequest
+	err := c.ShouldBindJSON(&cr)
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	_, err = gc.srv.Goods().CreateGoods(c, &proto.CreateGoodsInfo{
+		Name:            cr.Name,
+		GoodsSn:         cr.GoodsSn,
+		Stocks:          cr.Stocks,
+		MarketPrice:     cr.MarketPrice,
+		ShopPrice:       cr.ShopPrice,
+		GoodsBrief:      cr.GoodsBrief,
+		ShipFree:        cr.ShipFree,
+		Images:          cr.Images,
+		DescImages:      cr.DescImages,
+		GoodsFrontImage: cr.FrontImage,
+		CategoryId:      cr.CategoryId,
+		BrandId:         cr.Brand,
+	})
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	core.OkWithMessage(c, "创建成功")
+}
+
+func (gc *goodsController) GoodDetailView(c *gin.Context) {
+
+	var cr request.GoodDetailRequest
+	err := c.ShouldBindUri(&cr)
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+
+	goodInfo, err := gc.srv.Goods().GetGoodsDetail(c, &proto.GoodInfoRequest{
+		Id: cr.Id,
+	})
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	// TODO
+	//stockClient, clientConn, err := connect.StockConnectService(c)
+	//if err != nil {
+	//	return
+	//}
+	//defer clientConn.Close()
+	//detail, err := stockClient.InvDetail(context.Background(), &proto.GoodsInvInfo{
+	//	GoodsId: goodInfo.Id,
+	//})
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	response := request.GoodsInfoResponse{
+		ID:              goodInfo.Id,
+		CategoryID:      goodInfo.CategoryId,
+		Name:            goodInfo.Name,
+		GoodsSn:         goodInfo.GoodsSn,
+		ClickNum:        goodInfo.ClickNum,
+		SoldNum:         goodInfo.SoldNum,
+		FavNum:          goodInfo.FavNum,
+		Stocks:          detail.Num,
+		MarketPrice:     goodInfo.MarketPrice,
+		ShopPrice:       goodInfo.ShopPrice,
+		GoodsBrief:      goodInfo.GoodsBrief,
+		GoodsDesc:       goodInfo.GoodsDesc,
+		ShipFree:        goodInfo.ShipFree,
+		Images:          goodInfo.Images,
+		DescImages:      goodInfo.DescImages,
+		GoodsFrontImage: goodInfo.GoodsFrontImage,
+		IsNew:           goodInfo.IsNew,
+		IsHot:           goodInfo.IsHot,
+		OnSale:          goodInfo.OnSale,
+		AddTime:         goodInfo.AddTime,
+		Category: request.CategoryBriefInfoResponse{
+			ID:   goodInfo.Category.Id,
+			Name: goodInfo.Category.Name,
+		},
+		Brand: request.BrandInfoResponse{
+			ID:   goodInfo.Brand.Id,
+			Name: goodInfo.Brand.Name,
+			Logo: goodInfo.Brand.Logo,
+		},
+	}
+
+	core.OkWithData(c, response)
+
+}
+
+func (gc *goodsController) GoodUpdateView(c *gin.Context) {
+
+	var cr request.GoodUpdateRequest
+	idString := c.Param("id")
+	id, err := strconv.Atoi(idString)
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+
+	err = c.ShouldBindJSON(&cr)
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	_, err = gc.srv.Goods().UpdateGoods(c, &proto.CreateGoodsInfo{
+		Id:              int32(id),
+		Name:            cr.Name,
+		GoodsSn:         cr.GoodsSn,
+		Stocks:          cr.Stocks,
+		MarketPrice:     cr.MarketPrice,
+		ShopPrice:       cr.ShopPrice,
+		GoodsBrief:      cr.GoodsBrief,
+		ShipFree:        cr.ShipFree,
+		Images:          cr.Images,
+		DescImages:      cr.DescImages,
+		GoodsFrontImage: cr.FrontImage,
+		CategoryId:      cr.CategoryId,
+		BrandId:         cr.Brand,
+	})
+
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	core.OkWithMessage(c, "更新成功")
+
+}
+
+func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) {
+
+	idString := c.Param("id")
+	id, err := strconv.Atoi(idString)
+	if err != nil {
+		gin2.HandleValidatorError(c, err, gc.trans)
+		return
+	}
+	var cr request.GoodPatchUpdateRequest
+	err = c.ShouldBindJSON(&cr)
+	if err != nil {
+		gin2.HandleValidatorError(c, err, gc.trans)
+		return
+	}
+
+	_, err = gc.srv.Goods().UpdateGoods(c, &proto.CreateGoodsInfo{
+		Id:         int32(id),
+		IsNew:      cr.IsNew,
+		IsHot:      cr.IsHot,
+		OnSale:     cr.OnSale,
+		CategoryId: 0,
+		BrandId:    0,
+	})
+
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	core.OkWithMessage(c, "更新成功")
+}
+
+func (gc *goodsController) GoodDeleteView(c *gin.Context) {
+
+	var cr request.GoodDeleteRequest
+
+	err := c.ShouldBindUri(&cr)
+	if err != nil {
+		gin2.HandleValidatorError(c, err, gc.trans)
+		return
+	}
+
+	_, err = gc.srv.Goods().DeleteGoods(c, &proto.DeleteGoodsInfo{
+		Id: cr.Id,
+	})
+
+	if err != nil {
+		core.WriteErrResponse(c, err, nil)
+		return
+	}
+	core.OkWithMessage(c, "删除成功")
+
 }
