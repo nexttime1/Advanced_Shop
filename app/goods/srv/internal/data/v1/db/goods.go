@@ -226,20 +226,11 @@ func (g *goods) List(ctx context.Context, orderby []string, opts metav1.ListMeta
 	ret := &do.GoodsDOList{}
 
 	//分页
-	var limit, offset int
-	if opts.PageSize == 0 {
-		limit = 10
-	} else {
-		limit = opts.PageSize
-	}
+	limit := opts.GetLimit()
+	offset := opts.GetOffset()
 
-	if opts.Page > 0 {
-		offset = (opts.Page - 1) * limit
-	}
-
-	//排序
 	query := g.db.Preload("Category").Preload("Brands")
-
+	//排序
 	for _, value := range orderby {
 		query = query.Order(value)
 	}

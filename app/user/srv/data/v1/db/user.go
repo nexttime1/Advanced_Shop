@@ -67,16 +67,9 @@ var _ dv1.UserStore = &users{}
 func (u *users) List(ctx context.Context, orderby []string, opts metav1.ListMeta) (*dv1.UserDOList, error) {
 	ret := &dv1.UserDOList{}
 
-	var limit, offset int
-	if opts.PageSize == 0 {
-		limit = 10
-	} else {
-		limit = opts.PageSize
-	}
-
-	if opts.Page > 0 {
-		offset = (opts.Page - 1) * limit
-	}
+	//分页
+	limit := opts.GetLimit()
+	offset := opts.GetOffset()
 
 	query := u.db
 	for _, value := range orderby {

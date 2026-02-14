@@ -7,6 +7,12 @@ const (
 	// ErrSubmitOrder - 400: Submit order error.
 	ErrSubmitOrder
 
-	// ErrOrderNotFound - 404: No Goods selected.
+	// ErrNoGoodsSelect - 404: No Goods selected.
 	ErrNoGoodsSelect
+
+	// ErrOrderNotFound - 404: Order Not found
+	ErrOrderNotFound
+
+	// ErrOrderStatus - 404: Order Status fail
+	ErrOrderStatus
 )

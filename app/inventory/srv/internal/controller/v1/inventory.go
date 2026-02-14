@@ -14,6 +14,8 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
+// TODO DTM (Distributed Transactions Manager)
+
 type inventoryServer struct {
 	invpb.UnimplementedInventoryServer
 	srv v1.ServiceFactory
