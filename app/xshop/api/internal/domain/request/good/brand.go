@@ -1,4 +1,4 @@
-package request
+package good
 
 type BrandCreateRequest struct {
 	Name string `form:"name" json:"name" binding:"required,min=3,max=10"`

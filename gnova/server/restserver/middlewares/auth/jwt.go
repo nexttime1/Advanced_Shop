@@ -7,7 +7,7 @@ import (
 )
 
 // AuthzAudience defines the value of jwt audience field.
-const AuthzAudience = "xshop.imooc.com"
+const AuthzAudience = "xshop.com"
 
 // JWTStrategy defines jwt bearer authentication strategy.
 type JWTStrategy struct {

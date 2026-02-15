@@ -3,7 +3,7 @@ package goods
 import (
 	proto "Advanced_Shop/api/goods/v1"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/app/xshop/api/internal/domain/request"
+	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/pkg/common/core"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
@@ -31,7 +31,7 @@ func (gc *goodsController) GetAllCategoryView(c *gin.Context) {
 }
 
 func (gc *goodsController) GetSubCategoryView(c *gin.Context) {
-	var cr request.CategoryIdRequest
+	var cr good.CategoryIdRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -53,11 +53,11 @@ func (gc *goodsController) GetSubCategoryView(c *gin.Context) {
 }
 
 // 辅助函数：转换CategoryInfoResponse → CategoryInfoResponse
-func protoToWebCategoryInfo(protoInfo *proto.CategoryInfoResponse) *request.CategoryInfoResponse {
+func protoToWebCategoryInfo(protoInfo *proto.CategoryInfoResponse) *good.CategoryInfoResponse {
 	if protoInfo == nil {
 		return nil
 	}
-	webInfo := &request.CategoryInfoResponse{
+	webInfo := &good.CategoryInfoResponse{
 		Id:               protoInfo.Id,
 		Name:             protoInfo.Name,
 		ParentCategoryID: protoInfo.ParentCategoryID,
@@ -67,7 +67,7 @@ func protoToWebCategoryInfo(protoInfo *proto.CategoryInfoResponse) *request.Cate
 
 	// 递归处理子分类（三级/四级）
 	if protoInfo.SubCategorys != nil && len(protoInfo.SubCategorys) > 0 {
-		webSubs := make([]*request.CategoryInfoResponse, 0, len(protoInfo.SubCategorys))
+		webSubs := make([]*good.CategoryInfoResponse, 0, len(protoInfo.SubCategorys))
 		for _, protoSub := range protoInfo.SubCategorys {
 			webSubs = append(webSubs, protoToWebCategoryInfo(protoSub))
 		}
@@ -77,7 +77,7 @@ func protoToWebCategoryInfo(protoInfo *proto.CategoryInfoResponse) *request.Cate
 }
 
 // ProtoToWebSubCategory 转换SubCategoryListResponse（proto）→ SubCategoryResponse（web）
-func ProtoToWebSubCategory(protoCategory *proto.SubCategoryListResponse) *request.SubCategoryResponse {
+func ProtoToWebSubCategory(protoCategory *proto.SubCategoryListResponse) *good.SubCategoryResponse {
 	if protoCategory == nil {
 		return nil
 	}
@@ -86,16 +86,16 @@ func ProtoToWebSubCategory(protoCategory *proto.SubCategoryListResponse) *reques
 	webInfo := protoToWebCategoryInfo(protoCategory.Info)
 
 	// 转换直接子分类列表
-	var webSubs []*request.CategoryInfoResponse
+	var webSubs []*good.CategoryInfoResponse
 	if protoCategory.SubCategorys != nil && len(protoCategory.SubCategorys) > 0 {
-		webSubs = make([]*request.CategoryInfoResponse, 0, len(protoCategory.SubCategorys))
+		webSubs = make([]*good.CategoryInfoResponse, 0, len(protoCategory.SubCategorys))
 		for _, protoSub := range protoCategory.SubCategorys {
 			webSubs = append(webSubs, protoToWebCategoryInfo(protoSub))
 		}
 	}
 
 	// 3. 构建Web层最终响应
-	webCategory := &request.SubCategoryResponse{
+	webCategory := &good.SubCategoryResponse{
 		Total:         protoCategory.Total, // 直接子分类数量
 		Info:          webInfo,             // 根分类信息（含嵌套子分类）
 		SubCategories: webSubs,             // 直接子分类列表（含三级）
@@ -105,7 +105,7 @@ func ProtoToWebSubCategory(protoCategory *proto.SubCategoryListResponse) *reques
 
 func (gc *goodsController) CreateCategoryView(c *gin.Context) {
 
-	var cr request.CategoryCreateRequest
+	var cr good.CategoryCreateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -137,7 +137,7 @@ func (gc *goodsController) UpdateCategoryView(c *gin.Context) {
 		return
 	}
 
-	var cr request.UpdateCategoryRequest
+	var cr good.UpdateCategoryRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -158,7 +158,7 @@ func (gc *goodsController) UpdateCategoryView(c *gin.Context) {
 
 func (gc *goodsController) DeleteCategoryView(c *gin.Context) {
 
-	var cr request.CategoryIdRequest
+	var cr good.CategoryIdRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)

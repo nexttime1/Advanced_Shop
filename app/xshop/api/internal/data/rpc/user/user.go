@@ -1,4 +1,4 @@
-package rpc
+package user
 
 import (
 	"Advanced_Shop/app/pkg/code"

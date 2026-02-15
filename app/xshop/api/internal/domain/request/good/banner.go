@@ -1,4 +1,4 @@
-package request
+package good
 
 type BannerCreateRequest struct {
 	Image string `form:"image" json:"image" binding:"url"`

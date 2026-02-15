@@ -10,25 +10,30 @@ import (
 )
 
 func newJWTAuth(opts *options.JwtOptions) middlewares.AuthStrategy {
-	gjwt, _ := ginjwt.New(&ginjwt.GinJWTMiddleware{
+	gjwt, err := ginjwt.New(&ginjwt.GinJWTMiddleware{
 		Realm:            opts.Realm,
 		SigningAlgorithm: "HS256",
 		Key:              []byte(opts.Key),
 		Timeout:          opts.Timeout,
 		MaxRefresh:       opts.MaxRefresh,
-		LogoutResponse: func(c *gin.Context, code int) {
-			c.JSON(code, nil)
-		},
-		IdentityHandler: claimHandlerFun,
-		IdentityKey:     middlewares.KeyUserID,
-		TokenLookup:     "header: Authorization:, query: token, cookie: jwt",
-		TokenHeadName:   "Bearer",
+		LogoutResponse:   func(c *gin.Context, code int) { c.JSON(code, nil) },
+		IdentityHandler:  claimHandlerFunc,
+		IdentityKey:      middlewares.KeyUserID,
+		TokenLookup:      "header: Authorization:, query: token, cookie: jwt",
+		TokenHeadName:    "Bearer",
+		// 关闭默认未登录响应 改为自定义函数返回err
+		Unauthorized: func(c *gin.Context, code int, message string) {},
 	})
+	if err != nil {
+		panic("JWT中间件初始化失败：" + err.Error())
+	}
 	return auth.NewJWTStrategy(*gjwt)
 }
 
-func claimHandlerFun(c *gin.Context) interface{} {
+func claimHandlerFunc(c *gin.Context) interface{} {
 	claims := ginjwt.ExtractClaims(c)
+	// 存入userid 和 role   JWT解析后数值为float64，暂存
 	c.Set(middlewares.KeyUserID, claims[middlewares.KeyUserID])
-	return claims[ginjwt.IdentityKey]
+	c.Set(middlewares.KeyRole, claims[middlewares.KeyRole])
+	return claims[middlewares.KeyUserID]
 }

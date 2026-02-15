@@ -3,7 +3,7 @@ package goods
 import (
 	proto "Advanced_Shop/api/goods/v1"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/app/xshop/api/internal/domain/request"
+	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/app/xshop/api/internal/service"
 	"Advanced_Shop/pkg/common/core"
 	"Advanced_Shop/pkg/log"
@@ -28,10 +28,10 @@ func NewGoodsController(srv service.ServiceFactory, trans ut.Translator) *goodsC
 func (gc *goodsController) GetGoodListView(c *gin.Context) {
 	log.Info("goods list function called ...")
 
-	var cr request.GoodListRequest
+	var cr good.GoodListRequest
 	err := c.ShouldBindQuery(&cr)
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
+		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
 
@@ -50,9 +50,9 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 		core.WriteErrResponse(c, err, nil)
 		return
 	}
-	var response []request.GoodsInfoResponse
+	var response []good.GoodsInfoResponse
 	for _, model := range list.Data {
-		info := request.GoodsInfoResponse{
+		info := good.GoodsInfoResponse{
 			ID:              model.Id,
 			CategoryID:      model.CategoryId,
 			Name:            model.Name,
@@ -73,11 +73,11 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 			IsHot:           model.IsHot,
 			OnSale:          model.OnSale,
 			AddTime:         model.AddTime,
-			Category: request.CategoryBriefInfoResponse{
+			Category: good.CategoryBriefInfoResponse{
 				ID:   model.Category.Id,
 				Name: model.Category.Name,
 			},
-			Brand: request.BrandInfoResponse{
+			Brand: good.BrandInfoResponse{
 				ID:   model.Brand.Id,
 				Name: model.Brand.Name,
 				Logo: model.Brand.Logo,
@@ -91,10 +91,10 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 
 func (gc *goodsController) CreateGoodView(c *gin.Context) {
 
-	var cr request.GoodCreateRequest
+	var cr good.GoodCreateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
+		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
 	_, err = gc.srv.Goods().CreateGoods(c, &proto.CreateGoodsInfo{
@@ -120,10 +120,10 @@ func (gc *goodsController) CreateGoodView(c *gin.Context) {
 
 func (gc *goodsController) GoodDetailView(c *gin.Context) {
 
-	var cr request.GoodDetailRequest
+	var cr good.GoodDetailRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
+		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
 
@@ -147,7 +147,7 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 		core.WriteErrResponse(c, err, nil)
 		return
 	}
-	response := request.GoodsInfoResponse{
+	response := good.GoodsInfoResponse{
 		ID:              goodInfo.Id,
 		CategoryID:      goodInfo.CategoryId,
 		Name:            goodInfo.Name,
@@ -168,11 +168,11 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 		IsHot:           goodInfo.IsHot,
 		OnSale:          goodInfo.OnSale,
 		AddTime:         goodInfo.AddTime,
-		Category: request.CategoryBriefInfoResponse{
+		Category: good.CategoryBriefInfoResponse{
 			ID:   goodInfo.Category.Id,
 			Name: goodInfo.Category.Name,
 		},
-		Brand: request.BrandInfoResponse{
+		Brand: good.BrandInfoResponse{
 			ID:   goodInfo.Brand.Id,
 			Name: goodInfo.Brand.Name,
 			Logo: goodInfo.Brand.Logo,
@@ -185,17 +185,17 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 
 func (gc *goodsController) GoodUpdateView(c *gin.Context) {
 
-	var cr request.GoodUpdateRequest
+	var cr good.GoodUpdateRequest
 	idString := c.Param("id")
 	id, err := strconv.Atoi(idString)
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
+		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
 
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
+		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
 	_, err = gc.srv.Goods().UpdateGoods(c, &proto.CreateGoodsInfo{
@@ -230,7 +230,7 @@ func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
-	var cr request.GoodPatchUpdateRequest
+	var cr good.GoodPatchUpdateRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -255,7 +255,7 @@ func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) {
 
 func (gc *goodsController) GoodDeleteView(c *gin.Context) {
 
-	var cr request.GoodDeleteRequest
+	var cr good.GoodDeleteRequest
 
 	err := c.ShouldBindUri(&cr)
 	if err != nil {

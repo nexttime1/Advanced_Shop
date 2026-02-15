@@ -1,4 +1,4 @@
-package request
+package good
 
 type CategoryIdRequest struct {
 	Id int32 `uri:"id" binding:"required,min=1"`

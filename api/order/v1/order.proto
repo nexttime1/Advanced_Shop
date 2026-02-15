@@ -38,7 +38,7 @@ message CartItemRequest {
     string goodsImage = 5;
     float goodsPrice = 6;
     int32 nums = 7;
-    bool checked = 8;
+    optional bool checked = 8;
 }
 
 message OrderRequest {

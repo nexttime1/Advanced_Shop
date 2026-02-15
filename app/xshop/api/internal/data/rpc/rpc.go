@@ -2,10 +2,13 @@ package rpc
 
 import (
 	gpb "Advanced_Shop/api/goods/v1"
+	opb "Advanced_Shop/api/order/v1"
 	upb "Advanced_Shop/api/user/v1"
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/app/xshop/api/internal/data"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc/good"
+	"Advanced_Shop/app/xshop/api/internal/data/rpc/order"
+	"Advanced_Shop/app/xshop/api/internal/data/rpc/user"
 	code2 "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
@@ -19,6 +22,7 @@ import (
 type grpcData struct {
 	gc gpb.GoodsClient
 	uc upb.UserClient
+	oc opb.OrderClient
 }
 
 func (g grpcData) Goods() gpb.GoodsClient {
@@ -26,7 +30,11 @@ func (g grpcData) Goods() gpb.GoodsClient {
 }
 
 func (g grpcData) Users() data.UserData {
-	return NewUsers(g.uc)
+	return user.NewUsers(g.uc)
+}
+
+func (g grpcData) Order() opb.OrderClient {
+	return g.oc
 }
 
 func NewDiscovery(opts *options.RegistryOptions) registry.Discovery {
@@ -55,11 +63,13 @@ func GetDataFactoryOr(options *options.RegistryOptions) (data.DataFactory, error
 	//这里负责依赖的所有的rpc连接
 	once.Do(func() {
 		discovery := NewDiscovery(options)
-		userClient := NewUserServiceClient(discovery)
+		userClient := user.NewUserServiceClient(discovery)
 		goodsClient := good.NewGoodsServiceClient(discovery)
+		orderClient := order.NewOrderServiceClient(discovery)
 		dbFactory = &grpcData{
 			gc: goodsClient,
 			uc: userClient,
+			oc: orderClient,
 		}
 	})
 

@@ -1,4 +1,4 @@
-package request
+package good
 
 import "Advanced_Shop/app/pkg/common"
 

@@ -58,9 +58,9 @@ func (us *userService) MobileLogin(ctx context.Context, mobile, password string)
 	//生成token
 	j := middlewares.NewJWT(us.jwtOpts.Key)
 	claims := middlewares.CustomClaims{
-		ID:          uint(user.ID),
-		NickName:    user.NickName,
-		AuthorityId: uint(user.Role),
+		ID:       uint(user.ID),
+		NickName: user.NickName,
+		Role:     int(user.Role),
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix(),                                   //签名的生效时间
 			ExpiresAt: (time.Now().Local().Add(us.jwtOpts.Timeout)).Unix(), //30天过期
@@ -104,9 +104,9 @@ func (us *userService) Register(ctx context.Context, mobile, password, codes str
 	//生成token
 	j := middlewares.NewJWT(us.jwtOpts.Key)
 	claims := middlewares.CustomClaims{
-		ID:          uint(user.ID),
-		NickName:    user.NickName,
-		AuthorityId: uint(user.Role),
+		ID:       uint(user.ID),
+		NickName: user.NickName,
+		Role:     int(user.Role),
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix(),                                   //签名的生效时间
 			ExpiresAt: (time.Now().Local().Add(us.jwtOpts.Timeout)).Unix(), //30天过期

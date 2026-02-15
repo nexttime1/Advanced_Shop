@@ -32,7 +32,7 @@ func (b BasicStrategy) AuthFunc() gin.HandlerFunc {
 		auth := strings.SplitN(c.Request.Header.Get("Authorization"), " ", 2)
 
 		if len(auth) != 2 || auth[0] != "Basic" {
-			core.WriteResponse(
+			core.WriteErrResponse(
 				c,
 				errors.WithCode(code.ErrSignatureInvalid, "Authorization header format is wrong."),
 				nil,
@@ -46,7 +46,7 @@ func (b BasicStrategy) AuthFunc() gin.HandlerFunc {
 		pair := strings.SplitN(string(payload), ":", 2)
 
 		if len(pair) != 2 || !b.compare(pair[0], pair[1]) {
-			core.WriteResponse(
+			core.WriteErrResponse(
 				c,
 				errors.WithCode(code.ErrSignatureInvalid, "Authorization header format is wrong."),
 				nil,

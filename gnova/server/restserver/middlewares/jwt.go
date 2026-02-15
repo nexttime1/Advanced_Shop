@@ -7,12 +7,11 @@ import (
 )
 
 type CustomClaims struct {
-	ID          uint `json:"userid"`
-	NickName    string
-	AuthorityId uint
+	ID       uint   `json:"userid"`    // 用户ID
+	Role     int    `json:"role"`      // 角色（1=管理员，2=普通用户）
+	NickName string `json:"nick_name"` // 用户名
 	jwt.StandardClaims
 }
-
 type JWT struct {
 	SigningKey []byte
 }
@@ -68,7 +67,7 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 
 }
 
-// RefreshToken 更新token
+// RefreshToken 更新token  旧 token 快过期时，无需重新登录，直接刷新生成新 token；
 func (j *JWT) RefreshToken(tokenString string) (string, error) {
 	jwt.TimeFunc = func() time.Time {
 		return time.Unix(0, 0)

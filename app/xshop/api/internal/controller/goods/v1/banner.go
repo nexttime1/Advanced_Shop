@@ -3,7 +3,7 @@ package goods
 import (
 	proto "Advanced_Shop/api/goods/v1"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/app/xshop/api/internal/domain/request"
+	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/protobuf/ptypes/empty"
@@ -17,10 +17,10 @@ func (gc *goodsController) GetBannerListView(c *gin.Context) {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
-	var response []request.BannerListResponse
+	var response []good.BannerListResponse
 
 	for _, model := range list.Data {
-		response = append(response, request.BannerListResponse{
+		response = append(response, good.BannerListResponse{
 			Id:    model.Id,
 			Index: model.Index,
 			Image: model.Image,
@@ -34,7 +34,7 @@ func (gc *goodsController) GetBannerListView(c *gin.Context) {
 
 func (gc *goodsController) CreateBannerView(c *gin.Context) {
 
-	var cr request.BannerCreateRequest
+	var cr good.BannerCreateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -58,7 +58,7 @@ func (gc *goodsController) CreateBannerView(c *gin.Context) {
 
 func (gc *goodsController) DeleteBannerView(c *gin.Context) {
 
-	var cr request.BannerIdRequest
+	var cr good.BannerIdRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
@@ -84,7 +84,7 @@ func (gc *goodsController) UpdateBannerView(c *gin.Context) {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
-	var cr request.BannerUpdateRequest
+	var cr good.BannerUpdateRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)

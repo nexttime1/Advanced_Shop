@@ -4,7 +4,7 @@ import (
 	proto "Advanced_Shop/api/goods/v1"
 	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/app/xshop/api/internal/domain/request"
+	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
 	"strconv"
@@ -31,7 +31,7 @@ func (gc *goodsController) BrandListView(c *gin.Context) {
 }
 
 func (gc *goodsController) CreateBrandView(c *gin.Context) {
-	var cr request.BrandCreateRequest
+	var cr good.BrandCreateRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -53,7 +53,7 @@ func (gc *goodsController) CreateBrandView(c *gin.Context) {
 }
 
 func (gc *goodsController) UpdateBrandView(c *gin.Context) {
-	var cr request.BrandUpdateRequest
+	var cr good.BrandUpdateRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -80,7 +80,7 @@ func (gc *goodsController) UpdateBrandView(c *gin.Context) {
 }
 
 func (gc *goodsController) DeleteBrandView(c *gin.Context) {
-	var cr request.BrandIdRequest
+	var cr good.BrandIdRequest
 	if err := c.ShouldBindUri(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -113,16 +113,16 @@ func (gc *goodsController) CategoryBrandListView(c *gin.Context) {
 		core.WriteErrResponse(c, err, nil)
 		return
 	}
-	var response []request.BrandCategoryItem
+	var response []good.BrandCategoryItem
 	for _, model := range list.Data {
-		response = append(response, request.BrandCategoryItem{
-			Brand: request.Brand{
+		response = append(response, good.BrandCategoryItem{
+			Brand: good.Brand{
 				Id:   model.Brand.Id,
 				Name: model.Brand.Name,
 				Logo: model.Brand.Logo,
 			},
 
-			Category: request.Category{
+			Category: good.Category{
 				Id:               model.Category.Id,
 				Name:             model.Category.Name,
 				ParentCategoryID: model.Category.ParentCategoryID,
@@ -137,7 +137,7 @@ func (gc *goodsController) CategoryBrandListView(c *gin.Context) {
 }
 
 func (gc *goodsController) CategoryAllBrandView(c *gin.Context) {
-	var cr request.BrandIdRequest
+	var cr good.BrandIdRequest
 	if err := c.ShouldBindUri(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -155,7 +155,7 @@ func (gc *goodsController) CategoryAllBrandView(c *gin.Context) {
 }
 
 func (gc *goodsController) CreateCategoryBrandView(c *gin.Context) {
-	var cr request.CreateCategoryBrandRequest
+	var cr good.CreateCategoryBrandRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -176,7 +176,7 @@ func (gc *goodsController) CreateCategoryBrandView(c *gin.Context) {
 }
 
 func (gc *goodsController) DeleteCategoryBrandView(c *gin.Context) {
-	var cr request.BrandIdRequest
+	var cr good.BrandIdRequest
 	if err := c.ShouldBindUri(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
@@ -194,7 +194,7 @@ func (gc *goodsController) DeleteCategoryBrandView(c *gin.Context) {
 }
 
 func (gc *goodsController) UpdateCategoryBrandView(c *gin.Context) {
-	var cr request.UpdateCategoryBrandRequest
+	var cr good.UpdateCategoryBrandRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return

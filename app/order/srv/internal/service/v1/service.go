@@ -7,11 +7,16 @@ import (
 
 type ServiceFactory interface {
 	Orders() OrderSrv
+	Cart() CartSrv
 }
 
 type service struct {
 	data    v1.DataFactory
 	dtmopts *options.DtmOptions
+}
+
+func (s *service) Cart() CartSrv {
+	return NewCartService(s)
 }
 
 func (s *service) Orders() OrderSrv {

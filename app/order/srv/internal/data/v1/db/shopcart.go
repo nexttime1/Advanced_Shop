@@ -1,15 +1,15 @@
 package db
 
 import (
+	v1 "Advanced_Shop/app/order/srv/internal/data/v1"
+	"Advanced_Shop/app/order/srv/internal/domain/do"
 	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/app/pkg/struct_to_map"
 	code2 "Advanced_Shop/gnova/code"
+	metav1 "Advanced_Shop/pkg/common/meta/v1"
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"context"
-
-	v1 "Advanced_Shop/app/order/srv/internal/data/v1"
-	"Advanced_Shop/app/order/srv/internal/domain/do"
-	metav1 "Advanced_Shop/pkg/common/meta/v1"
 	"gorm.io/gorm"
 )
 
@@ -58,12 +58,12 @@ func (sc *shopCarts) List(ctx context.Context, userID uint64, checked bool, meta
 	return ret, nil
 }
 
-func (sc *shopCarts) Create(ctx context.Context, cartItem *do.ShoppingCartDO) error {
+func (sc *shopCarts) Create(ctx context.Context, cartItem *do.ShoppingCartDO) (int32, error) {
 	tx := sc.db.Create(cartItem)
 	if tx.Error != nil {
-		return errors.WithCode(code2.ErrDatabase, tx.Error.Error())
+		return 0, errors.WithCode(code2.ErrDatabase, tx.Error.Error())
 	}
-	return nil
+	return cartItem.ID, nil
 }
 
 func (sc *shopCarts) Get(ctx context.Context, userID, goodsID uint64) (*do.ShoppingCartDO, error) {
@@ -79,13 +79,29 @@ func (sc *shopCarts) Get(ctx context.Context, userID, goodsID uint64) (*do.Shopp
 }
 
 func (sc *shopCarts) UpdateNum(ctx context.Context, cartItem *do.ShoppingCartDO) error {
-	return sc.db.Model(&do.ShoppingCartDO{}).Where("user = ? AND goods = ?", cartItem.User, cartItem.Goods).Update("nums", cartItem.Nums).Update("checked", cartItem.Checked).Error
+	cartInfo, err := sc.Get(ctx, uint64(cartItem.User), uint64(cartItem.Goods))
+	if err != nil {
+		return err
+	}
+
+	structMap := do.CartUpdateMap{
+		Nums:    cartItem.Nums,
+		Checked: cartItem.Checked,
+	}
+	toMap := struct_to_map.StructToMap(structMap)
+	err = sc.db.Debug().Model(&cartInfo).Updates(toMap).Error
+	if err != nil {
+		log.Errorf("update cart info error: %v", err)
+		return errors.WithCode(code2.ErrDatabase, err.Error())
+	}
+	return nil
 }
 
-func (sc *shopCarts) Delete(ctx context.Context, ID uint64) error {
-	err := sc.db.Where("id = ?", ID).Delete(&do.ShoppingCartDO{}).Error
+func (sc *shopCarts) Delete(ctx context.Context, userID uint64, goodID uint64) error {
+	var model do.ShoppingCartDO
+	err := sc.db.Where("user = ? and goods = ?", userID, goodID).Take(&model).Error
 	if err != nil {
-		log.Errorf(err.Error())
+		log.Errorf("Delete cart info error: %v", err)
 		return errors.WithCode(code2.ErrDatabase, err.Error())
 	}
 	return nil
