@@ -45,6 +45,7 @@ require (
 	github.com/redis/go-redis/extra/redisotel/v9 v9.17.2
 	github.com/redis/go-redis/v9 v9.17.2
 	github.com/satori/go.uuid v1.2.0
+	github.com/smartwalle/alipay/v3 v3.2.29
 	github.com/sony/sonyflake v1.3.0
 	github.com/speps/go-hashids v2.0.0+incompatible
 	github.com/spf13/cobra v1.10.2
@@ -167,6 +168,9 @@ require (
 	github.com/shirou/gopsutil/v3 v3.23.12 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
+	github.com/smartwalle/ncrypto v1.0.4 // indirect
+	github.com/smartwalle/ngx v1.1.0 // indirect
+	github.com/smartwalle/nsign v1.0.9 // indirect
 	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
 	github.com/spf13/afero v1.15.0 // indirect
 	github.com/spf13/cast v1.10.0 // indirect

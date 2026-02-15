@@ -55,6 +55,37 @@ func (o *orders) Get(ctx context.Context, detail dto.OrderDetailRequest) (*dto.O
 
 	return &response, nil
 }
+func (o *orders) GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error) {
+
+	var model do.OrderInfoDO
+	err := o.db.Where("order_sn = ?", orderSn).Take(&model).Error
+	if err != nil {
+		log.Errorf("get order info error: %v", err)
+		return nil, errors.WithCode(code.ErrOrderNotFound, "get order info error")
+	}
+	response := dto.OrderInfoResponse{
+		OrderInfoDO: do.OrderInfoDO{
+			Model:        gorm2.Model{ID: model.ID},
+			User:         model.User,
+			OrderSn:      model.OrderSn,
+			PayType:      model.PayType,
+			Status:       model.Status,
+			TradeNo:      model.TradeNo,
+			OrderMount:   model.OrderMount,
+			PayTime:      model.PayTime,
+			Address:      model.Address,
+			SignerName:   model.SignerName,
+			SignerMobile: model.SignerMobile,
+			Post:         model.Post,
+		},
+	}
+	// 找一下商品
+	var goodModels []*do.OrderGoodsModel
+	o.db.Where("`order` = ?", model.ID).Find(&goodModels)
+	response.OrderGoods = goodModels
+
+	return &response, nil
+}
 
 func (o *orders) List(ctx context.Context, userID uint64, meta metav1.ListMeta, orderby []string) (*do.OrderInfoDOList, error) {
 	ret := &do.OrderInfoDOList{}

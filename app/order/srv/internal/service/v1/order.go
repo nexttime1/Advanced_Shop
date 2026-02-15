@@ -20,10 +20,11 @@ import (
 type OrderSrv interface {
 	Get(ctx context.Context, orderSn dto.OrderDetailRequest) (*dto.OrderInfoResponse, error)
 	List(ctx context.Context, userID uint64, meta v1.ListMeta, orderby []string) (*dto.OrderDTOList, error)
-	Submit(ctx context.Context, order *dto.OrderDTO) error
+	Submit(ctx context.Context, order *dto.OrderDTO) (float32, error)
 	Create(ctx context.Context, order *dto.OrderInfoResponse) error
 	CreateCom(ctx context.Context, order *dto.OrderDTO) error //这是create的补偿
 	UpdateStatus(ctx context.Context, orderSn string, status string) error
+	GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error)
 }
 
 type orderService struct {
@@ -84,6 +85,14 @@ func (os *orderService) Get(ctx context.Context, detail dto.OrderDetailRequest) 
 
 	return orderInfo, nil
 }
+func (os *orderService) GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error) {
+	orderInfo, err := os.data.Orders().GetByOrderSn(ctx, orderSn)
+	if err != nil {
+		return nil, err
+	}
+
+	return orderInfo, nil
+}
 
 func (os *orderService) List(ctx context.Context, userID uint64, meta v1.ListMeta, orderby []string) (*dto.OrderDTOList, error) {
 	orders, err := os.data.Orders().List(ctx, userID, meta, orderby)
@@ -100,13 +109,13 @@ func (os *orderService) List(ctx context.Context, userID uint64, meta v1.ListMet
 	return &ret, nil
 }
 
-func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) error {
+func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) (float32, error) {
 
 	//先拿到 选中的 good ID
 	response, err := os.data.ShopCarts().GetBatchByUser(ctx, order.User)
 	if err != nil {
 		log.Errorf("购物车中没有商品，无法下单")
-		return err
+		return 0, err
 	}
 
 	goods, err := os.data.Goods().BatchGetGoods(ctx, &proto3.BatchGoodsIdInfo{
@@ -114,7 +123,7 @@ func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) error {
 	})
 	if err != nil {
 		log.Errorf("批量获取商品信息失败，goodids: %v, err:%v", response.GoodsId, err)
-		return err
+		return 0, err
 	}
 
 	var PriceSum float32
@@ -175,7 +184,7 @@ func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) error {
 	saga.WaitResult = true
 	err = saga.Submit()
 	//通过OrderSn查询一下， 当前的状态如何状态一直值Submitted那么就你一直不要给前端返回， 如果是failed那么你提示给前端说下单失败，重新下单
-	return err
+	return PriceSum, err
 }
 
 func (os *orderService) UpdateStatus(ctx context.Context, orderSn string, status string) error {

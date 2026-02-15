@@ -3,6 +3,7 @@ package admin
 import (
 	"Advanced_Shop/app/xshop/api/config"
 	"Advanced_Shop/app/xshop/api/internal/controller/goods/v1"
+	v13 "Advanced_Shop/app/xshop/api/internal/controller/order/v1
 	v12 "Advanced_Shop/app/xshop/api/internal/controller/sms/v1"
 	"Advanced_Shop/app/xshop/api/internal/controller/user/v1"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc"
@@ -11,10 +12,15 @@ import (
 )
 
 func initRouter(g *restserver.Server, cfg *config.Config) {
-	v1 := g.Group("/v1")
+	// 服务
+	userGroup := g.Group("/u")
+	// 版本
+	v1 := userGroup.Group("/v1")
+	jwtAuth := newJWTAuth(cfg.Jwt)
+	// 路由前缀
 	ugroup := v1.Group("/user")
-
 	data, err := rpc.GetDataFactoryOr(cfg.Registry)
+
 	if err != nil {
 		panic(err)
 	}
@@ -25,7 +31,6 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 		ugroup.POST("pwd_login", uController.Login)
 		ugroup.POST("register", uController.Register)
 
-		jwtAuth := newJWTAuth(cfg.Jwt)
 		ugroup.GET("detail", jwtAuth.AuthFunc(), uController.GetUserDetail)
 		ugroup.PATCH("update", jwtAuth.AuthFunc(), uController.GetUserDetail)
 	}
@@ -38,6 +43,11 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	}
 
 	//商品相关的api
+
+	// 服务
+	goodGroup := g.Group("/g")
+	// 版本
+	v1 = goodGroup.Group("/v1")
 	goodsRouter := v1.Group("goods")
 	{
 		goodsController := goods.NewGoodsController(serviceFactory, g.Translator())
@@ -75,4 +85,34 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 		goodsRouter.PUT("categorybrands/:id", goodsController.UpdateCategoryBrandView)
 		goodsRouter.DELETE("categorybrands/:id", goodsController.DeleteCategoryBrandView)
 	}
+
+	// 订单路由
+	// 服务
+	orderGroup := g.Group("/o")
+	// 版本
+	v1 = orderGroup.Group("/v1")
+	orderRouter := v1.Group("orders")
+	{
+		orderController := v13.NewOrderController(serviceFactory, g.Translator(), cfg.Aliyun)
+
+		{
+			// order 相关
+			orderRouter.GET("", jwtAuth.AuthFunc(), orderController.OrderListView)       // 查看所有订单
+			orderRouter.POST("", jwtAuth.AuthFunc(), orderController.OrderCreateView)    // 创建订单
+			orderRouter.GET("/:id", jwtAuth.AuthFunc(), orderController.OrderDetailView) // 订单细节
+		}
+		// cart 相关
+		cartRouter := v1.Group("shopcarts")
+		{
+			cartRouter.GET("", orderController.CartListView)              // 购物车列表
+			cartRouter.DELETE("/:id", orderController.DeleteCartItemView) // 删除条目
+			cartRouter.POST("", orderController.AddItemView)              // 添加商品到购物车
+			cartRouter.PATCH("/:id", orderController.UpdatePatchView)     // 更新购物车中的某个商品
+		}
+		// 阿里云回调
+		alipayRouter := v1.Group("/pay")
+		alipayRouter.POST("/callback", orderController.AlipayCallBackView)
+
+	}
+
 }

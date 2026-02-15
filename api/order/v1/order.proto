@@ -14,10 +14,12 @@ service Order {
     //订单
     rpc CreateOrder(CreateRequest) returns (google.protobuf.Empty); //创建订单 Saga
     rpc CreateOrderCom(OrderRequest) returns (google.protobuf.Empty); //创建订单补偿
-    rpc SubmitOrder(OrderRequest) returns (google.protobuf.Empty); //提交订单
+    rpc SubmitOrder(OrderRequest) returns (SubmitResponse); //提交订单
     rpc OrderList(OrderFilterRequest) returns (OrderListResponse); // 订单列表
     rpc OrderDetail(OrderRequest) returns (OrderInfoDetailResponse); // 订单详情
     rpc UpdateOrderStatus(OrderStatus) returns (google.protobuf.Empty); // 修改订单状态
+    // OrderDetailByOrderSn 获取订单详情  用于支付宝回调
+    rpc OrderDetailByOrderSn(AlipayOrderSnRequest) returns (OrderInfoDetailResponse);
 }
 
 message UserInfo {
@@ -53,6 +55,14 @@ message OrderRequest {
 }
 
 
+message SubmitResponse{
+    float PriceSum = 1;
+}
+
+message AlipayOrderSnRequest {
+    string orderSn = 1; // 订单编号（唯一标识）
+    string Status = 2; // 查找状态
+}
 
 message CreateRequest {
     int32 userId = 1;
@@ -86,7 +96,7 @@ message ShopCartInfoResponse {
     int32 userId = 2;
     int32 goodsId = 3;
     int32 nums = 4;
-    bool checked = 5;
+    optional bool checked = 5;
 }
 
 message OrderItemResponse {

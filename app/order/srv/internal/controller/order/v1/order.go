@@ -13,7 +13,6 @@ import (
 
 type orderServer struct {
 	pb.UnimplementedOrderServer
-
 	srv service.ServiceFactory
 }
 
@@ -57,7 +56,7 @@ func (os *orderServer) CreateOrderCom(ctx context.Context, request *pb.OrderRequ
 	return &emptypb.Empty{}, nil
 }
 
-func (os *orderServer) SubmitOrder(ctx context.Context, request *pb.OrderRequest) (*emptypb.Empty, error) {
+func (os *orderServer) SubmitOrder(ctx context.Context, request *pb.OrderRequest) (*pb.SubmitResponse, error) {
 	//从购物车中得到选中的商品
 	orderDTO := dto.OrderDTO{
 		OrderInfoDO: do.OrderInfoDO{
@@ -69,13 +68,15 @@ func (os *orderServer) SubmitOrder(ctx context.Context, request *pb.OrderRequest
 			OrderSn:      request.OrderSn,
 		},
 	}
-	err := os.srv.Orders().Submit(ctx, &orderDTO)
+	total, err := os.srv.Orders().Submit(ctx, &orderDTO)
 	if err != nil {
 		log.Errorf("新建订单失败: %v", err)
 		return nil, err
 	}
+
 	//另外一款解决ioc的库，wire
-	return &emptypb.Empty{}, nil
+
+	return &pb.SubmitResponse{PriceSum: total}, nil
 }
 
 func (os *orderServer) OrderList(ctx context.Context, request *pb.OrderFilterRequest) (*pb.OrderListResponse, error) {
@@ -154,6 +155,42 @@ func (os *orderServer) UpdateOrderStatus(ctx context.Context, status *pb.OrderSt
 		return nil, err
 	}
 	return &emptypb.Empty{}, nil
+
+}
+
+func (os *orderServer) OrderDetailByOrderSn(ctx context.Context, request *pb.AlipayOrderSnRequest) (*pb.OrderInfoDetailResponse, error) {
+	resp, err := os.srv.Orders().GetByOrderSn(ctx, request.OrderSn)
+	if err != nil {
+		return nil, err
+	}
+	var response *pb.OrderInfoDetailResponse
+	// 构建返回
+	response.OrderInfo = &pb.OrderInfoResponse{
+		Id:      resp.ID,
+		UserId:  resp.User,
+		OrderSn: resp.OrderSn,
+		PayType: resp.PayType,
+		Status:  resp.Status,
+		Post:    resp.Post,
+		Total:   resp.OrderMount,
+		Address: resp.Address,
+		Name:    resp.SignerName,
+		Mobile:  resp.SignerMobile,
+	}
+	var Goods []*pb.OrderItemResponse
+	for _, item := range resp.OrderGoods {
+		Goods = append(Goods, &pb.OrderItemResponse{
+			Id:         item.ID,
+			OrderId:    item.Order,
+			GoodsId:    item.Goods,
+			GoodsName:  item.GoodsName,
+			GoodsPrice: item.GoodsPrice,
+			Nums:       item.Nums,
+		})
+	}
+	response.Goods = Goods
+
+	return response, nil
 
 }
 

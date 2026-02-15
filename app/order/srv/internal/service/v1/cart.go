@@ -1,6 +1,8 @@
 package service
 
 import (
+	proto "Advanced_Shop/api/goods/v1"
+	proto1 "Advanced_Shop/api/inventory/v1"
 	v12 "Advanced_Shop/app/order/srv/internal/data/v1"
 	"Advanced_Shop/app/order/srv/internal/domain/do"
 	"Advanced_Shop/app/pkg/code"
@@ -8,6 +10,7 @@ import (
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"context"
+
 	"gorm.io/gorm"
 )
 
@@ -77,6 +80,22 @@ func (cs *cartService) List(ctx context.Context, userID uint64, checked bool, me
 func (cs *cartService) Create(ctx context.Context, cartItem *do.ShoppingCartDO) (int32, error) {
 	if cartItem == nil || cartItem.User == 0 || cartItem.Goods == 0 {
 		return 0, errors.WithCode(code.ErrInvalidParameter, "购物车数据不能为空，用户ID和商品ID必须指定")
+	}
+
+	_, err := cs.data.Goods().GetGoodsDetail(ctx, &proto.GoodInfoRequest{Id: cartItem.Goods})
+	if err != nil {
+		return 0, err
+	}
+
+	// 检查库存
+	detail, err := cs.data.Inventorys().InvDetail(ctx, &proto1.GoodsInvInfo{
+		GoodsId: cartItem.Goods,
+	})
+	if err != nil {
+		return 0, err
+	}
+	if cartItem.Nums > detail.Num {
+		return 0, errors.WithCode(code.ErrInvNotEnough, "库存不足")
 	}
 
 	id, err := cs.data.ShopCarts().Create(ctx, cartItem)

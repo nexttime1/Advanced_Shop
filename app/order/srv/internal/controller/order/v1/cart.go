@@ -22,7 +22,7 @@ func (os *orderServer) CartItemList(ctx context.Context, info *pb.UserInfo) (*pb
 			UserId:  model.User,
 			GoodsId: model.Goods,
 			Nums:    model.Nums,
-			Checked: *model.Checked,
+			Checked: model.Checked,
 		})
 
 	}
@@ -33,11 +33,12 @@ func (os *orderServer) CartItemList(ctx context.Context, info *pb.UserInfo) (*pb
 }
 
 func (os *orderServer) CreateCartItem(ctx context.Context, request *pb.CartItemRequest) (*pb.ShopCartInfoResponse, error) {
+	check := true
 	info := do.ShoppingCartDO{
 		User:    request.UserId,
 		Goods:   request.GoodsId,
 		Nums:    request.Nums,
-		Checked: request.Checked,
+		Checked: &check,
 	}
 	id, err := os.srv.Cart().Create(ctx, &info)
 	if err != nil {
