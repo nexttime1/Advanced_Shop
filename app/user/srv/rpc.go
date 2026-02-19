@@ -14,6 +14,7 @@ import (
 	"github.com/alibaba/sentinel-golang/pkg/datasource/nacos"
 )
 
+// NewNacosDataSource 	TODO Nacos 能拿到么
 func NewNacosDataSource(opts *options.NacosOptions) (*nacos.NacosDataSource, error) {
 	//nacos server地址
 	sc := []constant.ServerConfig{
@@ -24,7 +25,7 @@ func NewNacosDataSource(opts *options.NacosOptions) (*nacos.NacosDataSource, err
 		},
 	}
 
-	//nacos client 相关参数配置,具体配置可参考github.com/nacos-group/nacos-sdk-go
+	//nacos client 相关参数配置,具体配置可参考   github.com/nacos-group/nacos-sdk-go
 	cc := constant.ClientConfig{
 		NamespaceId: opts.Namespace,
 		TimeoutMs:   5000,
@@ -49,7 +50,7 @@ func NewNacosDataSource(opts *options.NacosOptions) (*nacos.NacosDataSource, err
 }
 
 func NewUserRPCServer(telemetry *options.TelemetryOptions, serverOpts *options.ServerOptions, userver upb.UserServer, dataNacos *nacos.NacosDataSource) (*rpcserver.Server, error) {
-	//初始化open-telemetry的exporter
+	//  初始化open-telemetry的exporter
 	trace.InitAgent(trace.Options{
 		telemetry.Name,
 		telemetry.Endpoint,
@@ -63,7 +64,7 @@ func NewUserRPCServer(telemetry *options.TelemetryOptions, serverOpts *options.S
 	opts = append(opts, rpcserver.WithAddress(rpcAddr))
 	if serverOpts.EnableLimit {
 		opts = append(opts, rpcserver.WithUnaryInterceptor(grpc.NewUnaryServerInterceptor()))
-		//我去初始化nacos
+		// 初始化 Nacos
 		err := dataNacos.Initialize()
 		if err != nil {
 			return nil, err
@@ -73,8 +74,5 @@ func NewUserRPCServer(telemetry *options.TelemetryOptions, serverOpts *options.S
 
 	upb.RegisterUserServer(urpcServer.Server, userver)
 
-	//r := gin.Default()
-	//upb.RegisterUserServerHTTPServer(userver, r)
-	//r.Run(":8075")
 	return urpcServer, nil
 }

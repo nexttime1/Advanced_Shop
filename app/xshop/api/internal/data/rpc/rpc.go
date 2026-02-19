@@ -1,12 +1,16 @@
 package rpc
 
 import (
+	apb "Advanced_Shop/api/action/v1"
 	gpb "Advanced_Shop/api/goods/v1"
+	ipb "Advanced_Shop/api/inventory/v1"
 	opb "Advanced_Shop/api/order/v1"
 	upb "Advanced_Shop/api/user/v1"
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/app/xshop/api/internal/data"
+	"Advanced_Shop/app/xshop/api/internal/data/rpc/action"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc/good"
+	"Advanced_Shop/app/xshop/api/internal/data/rpc/inventory"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc/order"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc/user"
 	code2 "Advanced_Shop/gnova/code"
@@ -23,6 +27,26 @@ type grpcData struct {
 	gc gpb.GoodsClient
 	uc upb.UserClient
 	oc opb.OrderClient
+	ac apb.AddressClient
+	mc apb.MessageClient
+	cc apb.UserFavClient
+	ic ipb.InventoryClient
+}
+
+func (g grpcData) Inventory() ipb.InventoryClient {
+	return g.ic
+}
+
+func (g grpcData) Address() apb.AddressClient {
+	return g.ac
+}
+
+func (g grpcData) Collection() apb.UserFavClient {
+	return g.cc
+}
+
+func (g grpcData) Message() apb.MessageClient {
+	return g.mc
 }
 
 func (g grpcData) Goods() gpb.GoodsClient {
@@ -66,10 +90,16 @@ func GetDataFactoryOr(options *options.RegistryOptions) (data.DataFactory, error
 		userClient := user.NewUserServiceClient(discovery)
 		goodsClient := good.NewGoodsServiceClient(discovery)
 		orderClient := order.NewOrderServiceClient(discovery)
+		ac, cc, mc := action.NewActionServiceClient(discovery)
+		ic := inventory.NewInventoryServiceClient(discovery)
 		dbFactory = &grpcData{
 			gc: goodsClient,
 			uc: userClient,
 			oc: orderClient,
+			ac: ac,
+			mc: mc,
+			cc: cc,
+			ic: ic,
 		}
 	})
 

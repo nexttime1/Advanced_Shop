@@ -3,7 +3,9 @@ package service
 import (
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/app/xshop/api/internal/data"
+	v3 "Advanced_Shop/app/xshop/api/internal/service/action/v1"
 	v1 "Advanced_Shop/app/xshop/api/internal/service/goods/v1"
+	v2 "Advanced_Shop/app/xshop/api/internal/service/inventory/v1"
 	v14 "Advanced_Shop/app/xshop/api/internal/service/order/v1"
 	v12 "Advanced_Shop/app/xshop/api/internal/service/sms/v1"
 	v13 "Advanced_Shop/app/xshop/api/internal/service/user/v1"
@@ -14,6 +16,10 @@ type ServiceFactory interface {
 	Users() v13.UserSrv
 	Sms() v12.SmsSrv
 	Order() v14.OrderSrv
+	Inventory() v2.InventorySrv
+	Address() v3.AddressSrv
+	Collection() v3.CollectionSrv
+	Message() v3.MessageSrv
 }
 
 type service struct {
@@ -22,6 +28,22 @@ type service struct {
 	smsOpts *options.SmsOptions
 
 	jwtOpts *options.JwtOptions
+}
+
+func (s *service) Address() v3.AddressSrv {
+	return v3.NewAddressService(s.data)
+}
+
+func (s *service) Collection() v3.CollectionSrv {
+	return v3.NewCollectionService(s.data)
+}
+
+func (s *service) Message() v3.MessageSrv {
+	return v3.NewMessageService(s.data)
+}
+
+func (s *service) Inventory() v2.InventorySrv {
+	return v2.NewInventoryService(s.data)
 }
 
 func (s *service) Sms() v12.SmsSrv {

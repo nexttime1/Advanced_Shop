@@ -1,12 +1,10 @@
-package server
+package rpcserver
 
 import (
 	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
 	"Advanced_Shop/gnova/server/rpcserver/resolver/discovery"
 	"context"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
-	"google.golang.org/grpc/grpclog"
-
 	grpcinsecure "google.golang.org/grpc/credentials/insecure"
 
 	"Advanced_Shop/gnova/registry"
@@ -21,18 +19,11 @@ type clientOptions struct {
 	endpoint string
 	timeout  time.Duration
 	// discovery接口
-	discovery    registry.Discovery
-	unaryInts    []grpc.UnaryClientInterceptor
-	streamInts   []grpc.StreamClientInterceptor
-	rpcOpts      []grpc.DialOption
-	balancerName string
-	/* 如果使用 withLog去传的话  这个要写成接口 不能是具体的log 因为 log里面有锁 复制锁有问题因为接口底层是
-	interface {
-	    tab  *itab   // 类型信息
-	    data unsafe.Pointer // 指向真实对象
-	}
-	所以是 复制指针  这样也是可以都用一把锁的   如果选择非接口 具体的结构体 那就这里传指针
-	*/
+	discovery     registry.Discovery
+	unaryInts     []grpc.UnaryClientInterceptor
+	streamInts    []grpc.StreamClientInterceptor
+	rpcOpts       []grpc.DialOption
+	balancerName  string
 	log           log.LogHelper
 	enableTracing bool
 	enableMetrics bool

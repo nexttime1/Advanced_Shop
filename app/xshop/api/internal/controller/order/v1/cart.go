@@ -9,7 +9,6 @@ import (
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 )
 
 func (oc orderController) CartListView(c *gin.Context) {
@@ -56,9 +55,7 @@ func (oc orderController) DeleteCartItemView(c *gin.Context) {
 		core.WriteErrResponse(c, err, nil)
 		return
 	}
-
 	core.OkWithMessage(c, "删除成功")
-
 }
 
 func (oc orderController) AddItemView(c *gin.Context) {
@@ -76,45 +73,49 @@ func (oc orderController) AddItemView(c *gin.Context) {
 		return
 	}
 	ctx := c.Request.Context()
-	oc.srv.Order().CreateCartItem(ctx, &proto.CartItemRequest{})
-	res.OkWithData(c, response)
+	res, err := oc.srv.Order().CreateCartItem(ctx, &proto.CartItemRequest{
+		UserId:  userID,
+		GoodsId: cr.GoodID,
+		Nums:    cr.Num,
+	})
+	response := order.CartAddResponse{
+		Id: res.Id,
+	}
+	core.OkWithData(c, response.Id)
 
 }
 
 func (oc orderController) UpdatePatchView(c *gin.Context) {
-	_claims, exist := c.Get("claims")
-	if !exist {
+	log.Info("UpdatePatchView function called ...")
+	userID, _, err := common.GetAuthUser(c)
+	if err != nil {
+		core.WriteErrResponse(c, errors.New("未登录"), nil)
 		return
 	}
-	claims := _claims.(*jwts.MyClaims)
-	var cr cart_srv.CartIdRequest
-	err := c.ShouldBindUri(&cr)
+
+	var cr order.CartIdRequest
+	err = c.ShouldBindUri(&cr)
 	if err != nil {
-		zap.S().Error(err)
-		res.FailWithErr(c, res.FailArgumentCode, err)
+		gin2.HandleValidatorError(c, err, nil)
+		return
 	}
-	var update cart_srv.CartUpdateRequest
+	var update order.CartUpdateRequest
 	err = c.ShouldBindJSON(&update)
 	if err != nil {
-		zap.S().Error(err)
-		res.FailWithErr(c, res.FailArgumentCode, err)
+		gin2.HandleValidatorError(c, err, nil)
 		return
 	}
-	orderClient, conn, err := connect.OrderConnectService(c)
-	if err != nil {
-		return
-	}
-	defer conn.Close()
-	_, err = orderClient.UpdateCartItem(context.WithValue(context.Background(), "ginContext", c), &proto.CartItemRequest{
-		UserId:  claims.UserID,
+	ctx := c.Request.Context()
+	_, err = oc.srv.Order().UpdateCartItem(ctx, &proto.CartItemRequest{
+		UserId:  userID,
 		GoodsId: cr.Id,
 		Nums:    update.Num,
 		Checked: update.Checked,
 	})
 	if err != nil {
-		res.FailWithServiceMsg(c, err)
+		core.WriteErrResponse(c, err, nil)
 		return
 	}
-	res.OkWithMessage(c, "更新成功")
+	core.OkWithMessage(c, "更新成功")
 
 }

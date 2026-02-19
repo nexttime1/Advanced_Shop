@@ -171,7 +171,7 @@ func (gs *goodsService) UpdateCategoryBrand(ctx context.Context, in *gpb.Categor
 }
 
 // NewGoods 创建goodsService实例
-func NewGoods(data data.DataFactory) *goodsService {
+func NewGoods(data data.DataFactory) GoodsSrv {
 	return &goodsService{data: data}
 }
 

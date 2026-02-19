@@ -2,6 +2,7 @@ package admin
 
 import (
 	"Advanced_Shop/app/xshop/api/config"
+	v2 "Advanced_Shop/app/xshop/api/internal/controller/action/v1"
 	"Advanced_Shop/app/xshop/api/internal/controller/goods/v1"
 	v13 "Advanced_Shop/app/xshop/api/internal/controller/order/v1
 	v12 "Advanced_Shop/app/xshop/api/internal/controller/sms/v1"
@@ -113,6 +114,42 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 		alipayRouter := v1.Group("/pay")
 		alipayRouter.POST("/callback", orderController.AlipayCallBackView)
 
+	}
+
+	// 服务
+	addressGroup := g.Group("/up")
+	v1 = addressGroup.Group("/v1")
+	// 地址核心路由组
+	addressRouter := v1.Group("address")
+	// 实例化地址控制器（请根据你的实际包路径调整）
+	ActionController := v2.NewActionController(serviceFactory, g.Translator())
+	{
+
+		// 地址相关接口（添加认证和Trace中间件）
+		addressRouter.GET("", jwtAuth.AuthFunc(), ActionController.AddressListView)          // 查看所有地址
+		addressRouter.DELETE("/:id", jwtAuth.AuthFunc(), ActionController.DeleteAddressView) // 删除地址
+		addressRouter.POST("", jwtAuth.AuthFunc(), ActionController.AddressCreateView)       // 创建地址
+		addressRouter.PUT("/:id", jwtAuth.AuthFunc(), ActionController.UpdateAddressView)    // 修改地址
+	}
+
+	// 收藏模块路由
+	// 服务分组
+	collectionRouter := v1.Group("userfavs")
+	{
+
+		collectionRouter.GET("", jwtAuth.AuthFunc(), ActionController.CollectionListView)               // 查看收藏
+		collectionRouter.DELETE("/:good_id", jwtAuth.AuthFunc(), ActionController.CollectionDeleteView) // 删除收藏
+		collectionRouter.POST("", jwtAuth.AuthFunc(), ActionController.CollectionAddView)               // 添加收藏
+		collectionRouter.GET("/:good_id", jwtAuth.AuthFunc(), ActionController.CollectionDetailView)    // 查看详情
+	}
+
+	// 消息核心路由组
+	messageRouter := v1.Group("message")
+	{
+
+		// 消息相关接口（添加认证和Trace中间件）
+		messageRouter.GET("", jwtAuth.AuthFunc(), ActionController.MessageListView)    // 消息列表
+		messageRouter.POST("", jwtAuth.AuthFunc(), ActionController.CreateMessageView) // 添加留言
 	}
 
 }

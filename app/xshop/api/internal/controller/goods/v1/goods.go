@@ -2,6 +2,7 @@ package goods
 
 import (
 	proto "Advanced_Shop/api/goods/v1"
+	ipb "Advanced_Shop/api/inventory/v1"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/app/xshop/api/internal/service"
@@ -126,23 +127,19 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 		gin2.HandleValidatorError(c, err, gc.trans)
 		return
 	}
+	ctx := c.Request.Context()
 
-	goodInfo, err := gc.srv.Goods().GetGoodsDetail(c, &proto.GoodInfoRequest{
+	goodInfo, err := gc.srv.Goods().GetGoodsDetail(ctx, &proto.GoodInfoRequest{
 		Id: cr.Id,
 	})
 	if err != nil {
 		core.WriteErrResponse(c, err, nil)
 		return
 	}
-	// TODO
-	//stockClient, clientConn, err := connect.StockConnectService(c)
-	//if err != nil {
-	//	return
-	//}
-	//defer clientConn.Close()
-	//detail, err := stockClient.InvDetail(context.Background(), &proto.GoodsInvInfo{
-	//	GoodsId: goodInfo.Id,
-	//})
+	detail, err := gc.srv.Inventory().InvDetail(ctx, &ipb.GoodsInvInfo{
+		GoodsId: goodInfo.Id,
+	})
+
 	if err != nil {
 		core.WriteErrResponse(c, err, nil)
 		return

@@ -15,27 +15,27 @@ import (
 )
 
 type GoodsSrv interface {
-	// 商品列表
+	// List 商品列表
 	List(ctx context.Context, opts metav1.ListMeta, req *proto.GoodsFilterRequest, orderby []string) (*dto.GoodsDTOList, error)
 
-	// 商品详情
+	// Get 商品详情
 	Get(ctx context.Context, ID uint64) (*dto.GoodsDTO, error)
 
-	// 创建商品
+	// Create 创建商品
 	Create(ctx context.Context, goods *dto.GoodsDTO) error
 
-	// 更新商品
+	// Update 更新商品
 	Update(ctx context.Context, goods *dto.GoodsDTO) error
 
-	// 事务
+	// CreateInTxn 事务
 	CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error
-	// 事务
+	// UpdateInTxn 事务
 	UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) error
 
-	// 删除商品
+	// Delete 删除商品
 	Delete(ctx context.Context, ID uint64) error
 
-	//批量查询商品
+	// BatchGet 批量查询商品
 	BatchGet(ctx context.Context, ids []uint64) ([]*dto.GoodsDTO, error)
 }
 
@@ -71,8 +71,8 @@ func (gs *goodsService) List(ctx context.Context, opts metav1.ListMeta, req *pro
 	searchReq := v12.GoodsFilterRequest{
 		GoodsFilterRequest: req,
 	}
-	if req.TopCategory > 0 {
-		category, err := gs.data.Categorys().Get(ctx, uint64(req.TopCategory))
+	if req.TopCategoryID > 0 {
+		category, err := gs.data.Categorys().Get(ctx, uint64(req.TopCategoryID))
 		if err != nil {
 			log.Errorf("categoryData.Get err: %v", err)
 			return nil, err
@@ -154,7 +154,7 @@ func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 	// 分布式事务， 异构数据库的事务， 基于可靠消息最终一致性
 	// TODO canal
 	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
-	defer func() {         // 很重要
+	defer func() { // 很重要
 		if err := recover(); err != nil {
 			txn.Rollback()
 			log.Errorf("goodsService.Create panic: %v", err)
@@ -218,7 +218,7 @@ func (gs *goodsService) UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 	}
 
 	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
-	defer func() {         // 很重要
+	defer func() { // 很重要
 		if err := recover(); err != nil {
 			txn.Rollback()
 			log.Errorf("goodsService.Create panic: %v", err)
