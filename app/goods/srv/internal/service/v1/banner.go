@@ -33,27 +33,27 @@ func newBanner(srv *serviceFactory) BannerSrv {
 // List 分页查询轮播图列表
 func (b *bannerService) List(ctx context.Context, opts metav1.ListMeta, orderby []string) (*do.BannerList, error) {
 
-	bannerList, err := b.data.Banners().List(ctx, opts, orderby)
+	bannerList, err := b.data.NewMysql().Banners().List(ctx, opts, orderby)
 	return bannerList, err
 }
 
 // Create 创建轮播图
 func (b *bannerService) Create(ctx context.Context, banner *do.BannerDO) error {
-	err := b.data.Banners().Create(ctx, nil, banner)
+	err := b.data.NewMysql().Banners().Create(ctx, nil, banner)
 	return err
 }
 
 // Update 更新轮播图
 func (b *bannerService) Update(ctx context.Context, banner *do.BannerDO) error {
 
-	err := b.data.Banners().Update(ctx, nil, banner)
+	err := b.data.NewMysql().Banners().Update(ctx, nil, banner)
 	return err
 }
 
 // Delete 删除轮播图
 func (b *bannerService) Delete(ctx context.Context, ID uint64) error {
 
-	err := b.data.Banners().Delete(ctx, ID)
+	err := b.data.NewMysql().Banners().Delete(ctx, ID)
 	return err
 }
 

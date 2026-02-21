@@ -40,33 +40,33 @@ func newCategoryBrand(srv *serviceFactory) CategoryBrandSrv {
 // List 分页查询分类-品牌关联列表
 func (cb *categoryBrandService) List(ctx context.Context, opts metav1.ListMeta, orderby []string) (*do.GoodsCategoryBrandList, error) {
 
-	gcbList, err := cb.data.CategoryBrands().List(ctx, opts, orderby)
+	gcbList, err := cb.data.NewMysql().CategoryBrands().List(ctx, opts, orderby)
 	return gcbList, err
 }
 
 // Create 创建分类-品牌关联
 func (cb *categoryBrandService) Create(ctx context.Context, gcb *do.GoodsCategoryBrandDO) error {
-	err := cb.data.CategoryBrands().Create(ctx, nil, gcb)
+	err := cb.data.NewMysql().CategoryBrands().Create(ctx, nil, gcb)
 	return err
 }
 
 // Update 更新分类-品牌关联
 func (cb *categoryBrandService) Update(ctx context.Context, gcb *do.GoodsCategoryBrandDO) error {
 	// data层Update需要txn参数，无事务场景传nil
-	err := cb.data.CategoryBrands().Update(ctx, nil, gcb)
+	err := cb.data.NewMysql().CategoryBrands().Update(ctx, nil, gcb)
 	return err
 }
 
 // Delete 删除分类-品牌关联
 func (cb *categoryBrandService) Delete(ctx context.Context, ID uint64) error {
 
-	err := cb.data.CategoryBrands().Delete(ctx, ID)
+	err := cb.data.NewMysql().CategoryBrands().Delete(ctx, ID)
 	return err
 }
 
 func (cb *categoryBrandService) ListByCategoryID(ctx context.Context, categoryID uint64) ([]*do.BrandsDO, error) {
 	// 先查询该分类下所有的分类-品牌关联记录
-	gcbList, err := cb.data.CategoryBrands().List(ctx, metav1.ListMeta{}, []string{"id asc"})
+	gcbList, err := cb.data.NewMysql().CategoryBrands().List(ctx, metav1.ListMeta{}, []string{"id asc"})
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (cb *categoryBrandService) ListByCategoryID(ctx context.Context, categoryID
 	// 批量查询品牌信息
 	var brands []*do.BrandsDO
 	for _, bid := range brandIDs {
-		brand, err := cb.data.Brands().Get(ctx, bid)
+		brand, err := cb.data.NewMysql().Brands().Get(ctx, bid)
 		if err != nil {
 			continue // 忽略不存在的品牌，也可根据业务返回错误
 		}

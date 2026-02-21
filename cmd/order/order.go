@@ -1,8 +1,8 @@
 package main
 
 import (
-	"math/rand"
 	"Advanced_Shop/app/order/srv"
+	"math/rand"
 	"os"
 	"runtime"
 	"time"

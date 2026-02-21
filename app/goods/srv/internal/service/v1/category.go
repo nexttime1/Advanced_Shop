@@ -38,32 +38,32 @@ func newCategory(srv *serviceFactory) CategorySrv {
 
 // Get 根据ID查询分类
 func (c *categoryService) Get(ctx context.Context, ID uint64) (*do.CategoryDO, error) {
-	categoryDO, err := c.data.Categorys().Get(ctx, ID)
+	categoryDO, err := c.data.NewMysql().Categorys().Get(ctx, ID)
 	return categoryDO, err
 }
 
 // ListAll 查询所有一级分类
 func (c *categoryService) ListAll(ctx context.Context, orderby []string) (*do.CategoryDOList, error) {
-	categoryDOList, err := c.data.Categorys().ListAll(ctx, orderby)
+	categoryDOList, err := c.data.NewMysql().Categorys().ListAll(ctx, orderby)
 	return categoryDOList, err
 }
 
 // Create 创建分类
 func (c *categoryService) Create(ctx context.Context, category *do.CategoryDO) error {
-	err := c.data.Categorys().Create(ctx, category)
+	err := c.data.NewMysql().Categorys().Create(ctx, category)
 	return err
 }
 
 // Update 更新分类
 func (c *categoryService) Update(ctx context.Context, category *do.CategoryDO) error {
 
-	err := c.data.Categorys().Update(ctx, category)
+	err := c.data.NewMysql().Categorys().Update(ctx, category)
 	return err
 }
 
 // Delete 删除分类
 func (c *categoryService) Delete(ctx context.Context, ID uint64) error {
-	err := c.data.Categorys().Delete(ctx, ID)
+	err := c.data.NewMysql().Categorys().Delete(ctx, ID)
 	return err
 }
 

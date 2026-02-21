@@ -22,10 +22,10 @@ type GoodsSrv interface {
 	Get(ctx context.Context, ID uint64) (*dto.GoodsDTO, error)
 
 	// Create 创建商品
-	Create(ctx context.Context, goods *dto.GoodsDTO) error
+	Create(ctx context.Context, goods *v1.GoodsInfo) error
 
 	// Update 更新商品
-	Update(ctx context.Context, goods *dto.GoodsDTO) error
+	Update(ctx context.Context, goods *v1.GoodsInfo) error
 
 	// CreateInTxn 事务
 	CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error
@@ -41,9 +41,10 @@ type GoodsSrv interface {
 
 type goodsService struct {
 	//工厂
-	data v1.DataFactory
+	data v1.DataFactory // 数据层（MySQL）
 
-	searchData v12.SearchFactory
+	searchData v12.SearchFactory // 搜索层（ES）
+
 }
 
 func newGoods(srv *serviceFactory) GoodsSrv {
@@ -72,9 +73,9 @@ func (gs *goodsService) List(ctx context.Context, opts metav1.ListMeta, req *pro
 		GoodsFilterRequest: req,
 	}
 	if req.TopCategoryID > 0 {
-		category, err := gs.data.Categorys().Get(ctx, uint64(req.TopCategoryID))
+		category, err := gs.data.NewMysql().Categorys().Get(ctx, uint64(req.TopCategoryID))
 		if err != nil {
-			log.Errorf("categoryData.Get err: %v", err)
+			log.Errorf("categorydata.NewMysql().Get err: %v", err)
 			return nil, err
 		}
 
@@ -87,7 +88,7 @@ func (gs *goodsService) List(ctx context.Context, opts metav1.ListMeta, req *pro
 
 	goodsList, err := gs.searchData.Goods().Search(ctx, &searchReq)
 	if err != nil {
-		log.Errorf("serachData.Search err: %v", err)
+		log.Errorf("serachdata.NewMysql().Search err: %v", err)
 		return nil, err
 	}
 
@@ -99,9 +100,9 @@ func (gs *goodsService) List(ctx context.Context, opts metav1.ListMeta, req *pro
 	}
 
 	//通过id批量查询mysql数据
-	goods, err := gs.data.Goods().ListByIDs(ctx, goodsIDs, orderby)
+	goods, err := gs.data.NewMysql().Goods().ListByIDs(ctx, goodsIDs, orderby)
 	if err != nil {
-		log.Errorf("data.ListByIDs err: %v", err)
+		log.Errorf("data.NewMysql().ListByIDs err: %v", err)
 		return nil, err
 	}
 	var ret dto.GoodsDTOList
@@ -115,9 +116,9 @@ func (gs *goodsService) List(ctx context.Context, opts metav1.ListMeta, req *pro
 }
 
 func (gs *goodsService) Get(ctx context.Context, ID uint64) (*dto.GoodsDTO, error) {
-	goods, err := gs.data.Goods().Get(ctx, ID)
+	goods, err := gs.data.NewMysql().Goods().Get(ctx, ID)
 	if err != nil {
-		log.Errorf("data.Get err: %v", err)
+		log.Errorf("data.NewMysql().Get err: %v", err)
 		return nil, err
 	}
 	return &dto.GoodsDTO{
@@ -126,34 +127,82 @@ func (gs *goodsService) Get(ctx context.Context, ID uint64) (*dto.GoodsDTO, erro
 }
 
 // Create TODO canal
-func (gs *goodsService) Create(ctx context.Context, goods *dto.GoodsDTO) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-// Update TODO canal
-func (gs *goodsService) Update(ctx context.Context, goods *dto.GoodsDTO) error {
-	//TODO implement me
-	panic("implement me")
-}
-
-func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error {
+func (gs *goodsService) Create(ctx context.Context, goods *v1.GoodsInfo) error {
 	/*
 		数据先写mysql，然后写es
 	*/
-	_, err := gs.data.Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
+	_, err := gs.data.NewMysql().Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
 	if err != nil {
 		return err
 	}
 
-	_, err = gs.data.Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
+	_, err = gs.data.NewMysql().Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
 	if err != nil {
 		return err
 	}
 
-	// 分布式事务， 异构数据库的事务， 基于可靠消息最终一致性
-	// TODO canal
-	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
+	txn := gs.data.NewMysql().Begin()
+	defer func() {
+		if err := recover(); err != nil {
+			txn.Rollback()
+			log.Errorf("goodsService.Create panic: %v", err)
+			return
+		}
+	}()
+
+	err = gs.data.NewMysql().Goods().CreateInTxn(ctx, txn, goods)
+	if err != nil {
+		log.Errorf("data.NewMysql().CreateInTxn err: %v", err)
+		txn.Rollback()
+		return err
+	}
+	model := goods.GoodsDO
+	searchDO := do.GoodsSearchDO{
+		ID:          model.ID,
+		CategoryID:  model.CategoryID,
+		BrandsID:    model.BrandsID,
+		Name:        model.Name,
+		ClickNum:    model.ClickNum,
+		FavNum:      model.FavNum,
+		MarketPrice: model.MarketPrice,
+		GoodsBrief:  model.GoodsBrief,
+		ShopPrice:   model.ShopPrice,
+	}
+	if model.OnSale != nil {
+		searchDO.OnSale = *model.OnSale
+	}
+	if model.ShipFree != nil {
+		searchDO.ShipFree = *model.ShipFree
+	}
+	if model.IsNew != nil {
+		searchDO.IsNew = *model.IsNew
+	}
+	if model.IsHot != nil {
+		searchDO.IsHot = *model.IsHot
+	}
+
+	// Canal会自动监听binlog，无需在Create方法中主动发送MQ
+	// 同步逻辑由Canal监听器（后台goroutine）处理
+
+	return txn.Commit().Error
+
+}
+
+func (gs *goodsService) Update(ctx context.Context, goods *v1.GoodsInfo) error {
+	if goods.GoodsDO.BrandsID != 0 {
+		_, err := gs.data.NewMysql().Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
+		if err != nil {
+			return err
+		}
+	}
+	if goods.GoodsDO.CategoryID != 0 {
+		_, err := gs.data.NewMysql().Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
+		if err != nil {
+			return err
+		}
+	}
+
+	txn := gs.data.NewMysql().Begin()
 	defer func() { // 很重要
 		if err := recover(); err != nil {
 			txn.Rollback()
@@ -162,9 +211,67 @@ func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 		}
 	}()
 
-	err = gs.data.Goods().CreateInTxn(ctx, txn, goods)
+	err := gs.data.NewMysql().Goods().UpdateInTxn(ctx, txn, goods)
 	if err != nil {
-		log.Errorf("data.CreateInTxn err: %v", err)
+		return err
+	}
+	// search 层   (es)
+	model := goods.GoodsDO
+	searchDO := do.GoodsSearchDO{
+		ID:          model.ID,
+		CategoryID:  model.CategoryID,
+		BrandsID:    model.BrandsID,
+		Name:        model.Name,
+		ClickNum:    model.ClickNum,
+		FavNum:      model.FavNum,
+		MarketPrice: model.MarketPrice,
+		GoodsBrief:  model.GoodsBrief,
+		ShopPrice:   model.ShopPrice,
+	}
+	if model.OnSale != nil {
+		searchDO.OnSale = *model.OnSale
+	}
+	if model.ShipFree != nil {
+		searchDO.ShipFree = *model.ShipFree
+	}
+	if model.IsNew != nil {
+		searchDO.IsNew = *model.IsNew
+	}
+	if model.IsHot != nil {
+		searchDO.IsHot = *model.IsHot
+	}
+
+	return txn.Commit().Error
+}
+
+func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) error {
+	/*
+		数据先写mysql，然后写es
+	*/
+	_, err := gs.data.NewMysql().Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
+	if err != nil {
+		return err
+	}
+
+	_, err = gs.data.NewMysql().Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
+	if err != nil {
+		return err
+	}
+
+	// 分布式事务， 异构数据库的事务， 基于可靠消息最终一致性
+	// TODO canal
+	txn := gs.data.NewMysql().Begin() // 非常小心， 这种方案 也有问题
+	defer func() {                    // 很重要
+		if err := recover(); err != nil {
+			txn.Rollback()
+			log.Errorf("goodsService.Create panic: %v", err)
+			return
+		}
+	}()
+
+	err = gs.data.NewMysql().Goods().CreateInTxn(ctx, txn, goods)
+	if err != nil {
+		log.Errorf("data.NewMysql().CreateInTxn err: %v", err)
 		txn.Rollback()
 		return err
 	}
@@ -205,20 +312,20 @@ func (gs *goodsService) CreateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 
 func (gs *goodsService) UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) error {
 	if goods.GoodsDO.BrandsID != 0 {
-		_, err := gs.data.Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
+		_, err := gs.data.NewMysql().Brands().Get(ctx, uint64(goods.GoodsDO.BrandsID))
 		if err != nil {
 			return err
 		}
 	}
 	if goods.GoodsDO.CategoryID != 0 {
-		_, err := gs.data.Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
+		_, err := gs.data.NewMysql().Categorys().Get(ctx, uint64(goods.GoodsDO.CategoryID))
 		if err != nil {
 			return err
 		}
 	}
 
-	txn := gs.data.Begin() // 非常小心， 这种方案 也有问题
-	defer func() { // 很重要
+	txn := gs.data.NewMysql().Begin() // 非常小心， 这种方案 也有问题
+	defer func() {                    // 很重要
 		if err := recover(); err != nil {
 			txn.Rollback()
 			log.Errorf("goodsService.Create panic: %v", err)
@@ -226,7 +333,7 @@ func (gs *goodsService) UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 		}
 	}()
 
-	err := gs.data.Goods().UpdateInTxn(ctx, txn, goods)
+	err := gs.data.NewMysql().Goods().UpdateInTxn(ctx, txn, goods)
 	if err != nil {
 		return err
 	}
@@ -267,7 +374,7 @@ func (gs *goodsService) UpdateInTxn(ctx context.Context, goods *v1.GoodsInfo) er
 }
 
 func (gs *goodsService) Delete(ctx context.Context, ID uint64) error {
-	err := gs.data.Goods().Delete(ctx, ID)
+	err := gs.data.NewMysql().Goods().Delete(ctx, ID)
 	return err
 }
 

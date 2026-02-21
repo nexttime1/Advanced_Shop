@@ -20,8 +20,8 @@ type App struct {
 
 	lk       sync.Mutex
 	instance *registry.ServiceInstance
-
-	cancel func()
+	ctx      context.Context
+	cancel   func()
 }
 
 func New(opts ...Option) *App {
@@ -82,6 +82,7 @@ func (a *App) Run() error {
 	}
 	// 主 context
 	ctx, cancel := context.WithCancel(context.Background())
+	a.ctx = ctx
 	a.cancel = cancel
 	eg, ctx := errgroup.WithContext(ctx)
 	wg := sync.WaitGroup{}
@@ -189,4 +190,8 @@ func (a *App) buildInstance() (*registry.ServiceInstance, error) {
 		Name:      a.opts.name,
 		Endpoints: endpoints,
 	}, nil
+}
+
+func (a *App) GetMainCtx() context.Context {
+	return a.ctx
 }

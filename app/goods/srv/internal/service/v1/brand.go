@@ -32,32 +32,32 @@ func newBrand(srv *serviceFactory) BrandsSrv {
 
 // Get 根据ID查询品牌
 func (b *brandService) Get(ctx context.Context, ID uint64) (*do.BrandsDO, error) {
-	brandDO, err := b.data.Brands().Get(ctx, ID)
+	brandDO, err := b.data.NewMysql().Brands().Get(ctx, ID)
 	// 错误直接向上层抛出
 	return brandDO, err
 }
 
 // List 分页查询品牌列表
 func (b *brandService) List(ctx context.Context, opts metav1.ListMeta, orderby []string) (*do.BrandsDOList, error) {
-	brandDOList, err := b.data.Brands().List(ctx, opts, orderby)
+	brandDOList, err := b.data.NewMysql().Brands().List(ctx, opts, orderby)
 	return brandDOList, err
 }
 
 // Create 创建品牌
 func (b *brandService) Create(ctx context.Context, brands *do.BrandsDO) error {
-	err := b.data.Brands().Create(ctx, nil, brands)
+	err := b.data.NewMysql().Brands().Create(ctx, nil, brands)
 	return err
 }
 
 // Update 更新品牌
 func (b *brandService) Update(ctx context.Context, brands *do.BrandsDO) error {
-	err := b.data.Brands().Update(ctx, nil, brands)
+	err := b.data.NewMysql().Brands().Update(ctx, nil, brands)
 	return err
 }
 
 // Delete 删除品牌，直接调用data层方法，错误向上抛
 func (b *brandService) Delete(ctx context.Context, ID uint64) error {
-	err := b.data.Brands().Delete(ctx, ID)
+	err := b.data.NewMysql().Brands().Delete(ctx, ID)
 	return err
 }
 

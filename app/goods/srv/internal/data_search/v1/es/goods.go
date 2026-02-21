@@ -70,11 +70,11 @@ func (g *goods) Search(ctx context.Context, req *v1.GoodsFilterRequest) (*do.Goo
 		q = q.Filter(elastic.NewRangeQuery("shop_price").Lte(req.PriceMax))
 	}
 
-	if req.Brand > 0 {
-		q = q.Filter(elastic.NewTermQuery("brands_id", req.Brand))
+	if req.BrandID > 0 {
+		q = q.Filter(elastic.NewTermQuery("brands_id", req.BrandID))
 	}
 
-	if req.TopCategory > 0 {
+	if req.TopCategoryID > 0 {
 		q = q.Filter(elastic.NewTermsQuery("category_id", req.CategoryIDs...))
 	}
 

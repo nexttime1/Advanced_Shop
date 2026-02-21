@@ -28,6 +28,24 @@ const (
 
 	// ErrConnectDB - 404: DB not Connect.
 	ErrConnectDB
+
+	// ErrConnectCanal - 500: Canal server connection failed.
+	ErrConnectCanal
+
+	// ErrCanalSubscribe - 500: Canal subscribe binlog failed.
+	ErrCanalSubscribe
+
+	// ErrCanalGetData - 500: Canal get binlog data failed.
+	ErrCanalGetData
+
+	// ErrConnectMQ - 500: RocketMQ server connection failed.
+	ErrConnectMQ
+
+	// ErrMQSendMessage - 500: RocketMQ producer initialize failed.
+	ErrMQSendMessage
+
+	// ErrInvalidOperation - 500: RocketMQ Listen Err.
+	ErrInvalidOperation
 )
 
 // common: database errors.
