@@ -5,6 +5,9 @@ package proto
 import (
 	gin "github.com/gin-gonic/gin"
 	http "net/http"
+	"strconv"
+	"github.com/golang/protobuf/ptypes/empty"
+
 )
 
 type GoodsHttpServer struct {
@@ -24,7 +27,7 @@ func (s *GoodsHttpServer) GoodsList_0(c *gin.Context) {
 	var in GoodsFilterRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -75,11 +78,16 @@ func (s *GoodsHttpServer) DeleteGoods_0(c *gin.Context) {
 	var in DeleteGoodsInfo
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
-	in.Id = c.Params.ByName("id")
 
 	out, err := s.server.DeleteGoods(c, &in)
 	if err != nil {
@@ -98,7 +106,12 @@ func (s *GoodsHttpServer) UpdateGoods_0(c *gin.Context) {
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.UpdateGoods(c, &in)
 	if err != nil {
@@ -113,11 +126,16 @@ func (s *GoodsHttpServer) GetGoodsDetail_0(c *gin.Context) {
 	var in GoodInfoRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.GetGoodsDetail(c, &in)
 	if err != nil {
@@ -129,10 +147,10 @@ func (s *GoodsHttpServer) GetGoodsDetail_0(c *gin.Context) {
 }
 
 func (s *GoodsHttpServer) GetAllCategorysList_0(c *gin.Context) {
-	var in Empty
+	in := empty.Empty{}
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -149,11 +167,16 @@ func (s *GoodsHttpServer) GetSubCategory_0(c *gin.Context) {
 	var in CategoryListRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.GetSubCategory(c, &in)
 	if err != nil {
@@ -185,11 +208,16 @@ func (s *GoodsHttpServer) DeleteCategory_0(c *gin.Context) {
 	var in DeleteCategoryRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.DeleteCategory(c, &in)
 	if err != nil {
@@ -208,7 +236,12 @@ func (s *GoodsHttpServer) UpdateCategory_0(c *gin.Context) {
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.UpdateCategory(c, &in)
 	if err != nil {
@@ -223,7 +256,7 @@ func (s *GoodsHttpServer) BrandList_0(c *gin.Context) {
 	var in BrandFilterRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -257,11 +290,16 @@ func (s *GoodsHttpServer) DeleteBrand_0(c *gin.Context) {
 	var in BrandRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.DeleteBrand(c, &in)
 	if err != nil {
@@ -280,7 +318,12 @@ func (s *GoodsHttpServer) UpdateBrand_0(c *gin.Context) {
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.UpdateBrand(c, &in)
 	if err != nil {
@@ -292,10 +335,10 @@ func (s *GoodsHttpServer) UpdateBrand_0(c *gin.Context) {
 }
 
 func (s *GoodsHttpServer) BannerList_0(c *gin.Context) {
-	var in Empty
+	in := empty.Empty{}
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -329,11 +372,16 @@ func (s *GoodsHttpServer) DeleteBanner_0(c *gin.Context) {
 	var in BannerRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.DeleteBanner(c, &in)
 	if err != nil {
@@ -352,7 +400,12 @@ func (s *GoodsHttpServer) UpdateBanner_0(c *gin.Context) {
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.UpdateBanner(c, &in)
 	if err != nil {
@@ -367,7 +420,7 @@ func (s *GoodsHttpServer) CategoryBrandList_0(c *gin.Context) {
 	var in CategoryBrandFilterRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -384,11 +437,16 @@ func (s *GoodsHttpServer) GetCategoryBrandList_0(c *gin.Context) {
 	var in CategoryInfoRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.GetCategoryBrandList(c, &in)
 	if err != nil {
@@ -420,11 +478,16 @@ func (s *GoodsHttpServer) DeleteCategoryBrand_0(c *gin.Context) {
 	var in CategoryBrandRequest
 
 	if err := c.ShouldBindQuery(&in); err != nil {
-		s.resp.ParamsError(ctx, err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.DeleteCategoryBrand(c, &in)
 	if err != nil {
@@ -443,7 +506,12 @@ func (s *GoodsHttpServer) UpdateCategoryBrand_0(c *gin.Context) {
 		return
 	}
 
-	in.Id = c.Params.ByName("id")
+		atoi, err := strconv.Atoi(c.Params.ByName("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	in.Id = int32(atoi)
 
 	out, err := s.server.UpdateCategoryBrand(c, &in)
 	if err != nil {

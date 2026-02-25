@@ -24,11 +24,14 @@ func NewNacosDataSource(opts *options.NacosOptions) (*nacos.NacosDataSource, err
 			IpAddr:      opts.Host,
 		},
 	}
-
-	//nacos client 相关参数配置,具体配置可参考   github.com/nacos-group/nacos-sdk-go
+	// Nacos 客户端配置（认证信息）  具体配置可参考   github.com/nacos-group/nacos-sdk-go
 	cc := constant.ClientConfig{
-		NamespaceId: opts.Namespace,
-		TimeoutMs:   5000,
+		NamespaceId:         opts.Namespace, // 命名空间（public）
+		TimeoutMs:           5000,           // 超时时间
+		Username:            opts.User,      // 新增：Nacos用户名
+		Password:            opts.Password,  // 新增：Nacos密码
+		NotLoadCacheAtStart: true,           // 启动时不加载本地缓存
+		LogLevel:            "info",         // 日志级别（可选）
 	}
 
 	client, err := clients.CreateConfigClient(map[string]interface{}{

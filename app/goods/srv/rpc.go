@@ -11,6 +11,7 @@ import (
 	"Advanced_Shop/gnova/server/rpcserver"
 	"context"
 	"fmt"
+	"time"
 
 	"Advanced_Shop/pkg/log"
 )
@@ -39,6 +40,7 @@ func NewGoodsRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
 		Canal监听binlog → 解析商品表变更 → 发送RocketMQ消息 → ES消费者消费消息并写入ES
 	*/
 	dataFactory.StartCanalListener(context.Background())
+	time.Sleep(2 * time.Second)
 	err = searchFactory.Listen(context.Background())
 	if err != nil {
 		return nil, err

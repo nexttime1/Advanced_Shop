@@ -5,6 +5,7 @@ import (
 	"Advanced_Shop/gnova/server/restserver/middlewares"
 	"Advanced_Shop/gnova/server/restserver/middlewares/auth"
 	"github.com/gin-gonic/gin"
+	"log"
 
 	ginjwt "github.com/appleboy/gin-jwt/v2"
 )
@@ -22,7 +23,13 @@ func newJWTAuth(opts *options.JwtOptions) middlewares.AuthStrategy {
 		TokenLookup:      "header: Authorization:, query: token, cookie: jwt",
 		TokenHeadName:    "Bearer",
 		// 关闭默认未登录响应 改为自定义函数返回err
-		Unauthorized: func(c *gin.Context, code int, message string) {},
+		Unauthorized: func(c *gin.Context, code int, message string) {
+			log.Printf("JWT未授权：code=%d, message=%s", code, message) // 加日志
+			c.JSON(code, gin.H{
+				"code": code,
+				"msg":  message,
+			})
+		},
 	})
 	if err != nil {
 		panic("JWT中间件初始化失败：" + err.Error())

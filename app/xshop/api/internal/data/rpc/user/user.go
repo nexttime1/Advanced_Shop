@@ -2,9 +2,11 @@ package user
 
 import (
 	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/app/pkg/common"
 	"Advanced_Shop/gnova/server/rpcserver"
 	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
 	"Advanced_Shop/pkg/errors"
+	"Advanced_Shop/pkg/log"
 	"context"
 	"time"
 
@@ -44,6 +46,7 @@ func (u *users) CheckPassWord(ctx context.Context, password, encryptedPwd string
 		EncryptedPassword: encryptedPwd,
 	})
 	if err != nil {
+		log.Errorf("CheckPassWord err:%v", err)
 		return err
 	}
 	if cres.Success {
@@ -60,6 +63,7 @@ func (u *users) Create(ctx context.Context, user *data.User) error {
 	}
 	userRsp, err := u.uc.CreateUser(ctx, protoUser)
 	if err != nil {
+		log.Errorf("CreateUser err:%v", err)
 		return err
 	}
 	user.ID = uint64(userRsp.Id)
@@ -75,6 +79,7 @@ func (u *users) Update(ctx context.Context, user *data.User) error {
 	}
 	_, err := u.uc.UpdateUser(ctx, protoUser)
 	if err != nil {
+		log.Errorf("UpdateUser err:%v", err)
 		return err
 	}
 	return nil
@@ -85,6 +90,7 @@ func (u *users) Get(ctx context.Context, userID uint64) (data.User, error) {
 		Id: int32(userID),
 	})
 	if err != nil {
+		log.Errorf("GetUser err:%v", err)
 		return data.User{}, err
 	}
 
@@ -99,11 +105,41 @@ func (u *users) Get(ctx context.Context, userID uint64) (data.User, error) {
 	}, nil
 }
 
+func (u *users) List(ctx context.Context, pageInfo common.PageInfo) (data.UserList, error) {
+	var response data.UserList
+
+	list, err := u.uc.GetUserList(ctx, &upbv1.PageInfo{
+		Pn:    uint32(pageInfo.Page),
+		PSize: uint32(pageInfo.Limit),
+	})
+	if err != nil {
+		log.Errorf("List err:%v", err)
+		return response, err
+	}
+	response.TotalCount = int64(list.Total)
+
+	var resp []*data.User
+	for _, user := range list.Data {
+		resp = append(resp, &data.User{
+			ID:       uint64(user.Id),
+			Mobile:   user.Mobile,
+			NickName: user.NickName,
+			Birthday: itime.Time{time.Unix(int64(user.BirthDay), 0)},
+			Gender:   user.Gender,
+			Role:     user.Role,
+			PassWord: user.PassWord,
+		})
+	}
+	response.Items = resp
+	return response, nil
+}
+
 func (u *users) GetByMobile(ctx context.Context, mobile string) (data.User, error) {
 	user, err := u.uc.GetUserByMobile(ctx, &upbv1.MobileRequest{
 		Mobile: mobile,
 	})
 	if err != nil {
+		log.Errorf("get user by mobile %s error: %v", mobile, err)
 		return data.User{}, err
 	}
 

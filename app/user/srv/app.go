@@ -17,7 +17,7 @@ import (
 var ProviderSet = wire.NewSet(NewUserApp, NewRegistrar, NewUserRPCServer, NewNacosDataSource)
 
 // NewApp user 服务端的总启动配置  返回所有服务共享的 app结构体 但只输入user服务的
-func NewApp(basename string) *app.App {
+func NewApp() *app.App {
 	//这里这个new 做了很多事情 比如 log的初始化 你的rpc服务的端口，name 注册逻辑的前置参数初始化 等等
 	cfg := config.New()
 	appl := app.NewApp("user",

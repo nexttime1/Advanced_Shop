@@ -27,6 +27,7 @@ type RocketMqFactory struct {
 }
 
 func NewMQFactory(mqOpts *options.RocketMQOptions) (v1.MQFactory, error) {
+	zlog.Debug("NewMQFactory")
 	if mqOpts == nil {
 		return nil, fmt.Errorf("rocketmq配置不能为空")
 	}
@@ -35,8 +36,10 @@ func NewMQFactory(mqOpts *options.RocketMQOptions) (v1.MQFactory, error) {
 
 	// 初始化 RocketMQ 生产者
 	once.Do(func() {
+		addr := fmt.Sprintf("%s:%d", mqOpts.Host, mqOpts.Port)
+		zlog.Infof("rocketmq addr:%s", addr)
 		producerIns, err := rocketmq.NewProducer(
-			producer.WithNameServer([]string{fmt.Sprintf("%s:%d", mqOpts.Host, mqOpts.Port)}),
+			producer.WithNameServer([]string{addr}),
 			producer.WithGroupName(mqOpts.GroupName),
 		)
 		if err != nil {

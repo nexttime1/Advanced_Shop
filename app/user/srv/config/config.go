@@ -7,8 +7,7 @@ import (
 )
 
 type Config struct {
-	Log *log.Options `json:"log" mapstructure:"log"`
-
+	Log          *log.Options              `json:"log" mapstructure:"log"`
 	Nacos        *options.NacosOptions     `json:"nacos" mapstructure:"nacos"`
 	Server       *options.ServerOptions    `json:"server" mapstructure:"server"`
 	Registry     *options.RegistryOptions  `json:"registry" mapstructure:"registry"`

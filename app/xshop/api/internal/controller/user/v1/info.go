@@ -3,6 +3,7 @@ package user
 import (
 	"Advanced_Shop/gnova/server/restserver/middlewares"
 	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,7 @@ type userDetailResponse struct {
 }
 
 func (us *userServer) GetUserDetail(ctx *gin.Context) {
+	log.Info("GetUserDetail")
 	userID, _ := ctx.Get(middlewares.KeyUserID)
 	userDTO, err := us.sf.Users().Get(ctx, uint64(userID.(float64)))
 	if err != nil {

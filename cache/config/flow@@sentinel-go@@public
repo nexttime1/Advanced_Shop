@@ -1,0 +1,10 @@
+[
+    {
+  "resource": "/User/GetUserList",
+  "tokenCalculateStrategy": 0,
+  "controlBehavior": 0,
+  "threshold": 1000,
+  "statIntervalInMs": 1000
+    }
+
+]

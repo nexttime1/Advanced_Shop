@@ -48,6 +48,7 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 		BrandID:       cr.BrandID,
 	})
 	if err != nil {
+		log.Errorf("get goods list error %v", err)
 		core.WriteErrResponse(c, err, nil)
 		return
 	}

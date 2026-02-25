@@ -1,0 +1,207 @@
+2026-02-25 13:56:57.415	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 13:56:57.415	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 16:19:21.489	[34mINFO[0m	user/user.go:72	get user by mobile function called.
+2026-02-25 16:19:22.081	[31mERROR[0m	serverinterceptors/crashinterceptor.go:29	runtime error: index out of range [2] with length 1
+ 
+ goroutine 10249 [running]:
+runtime/debug.Stack()
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/debug/stack.go:26 +0x5e
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor.func1({0x7ff7150b72e0, 0xc00040e2e8})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:29 +0x1d
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.handleCrash(0x7ff715233dc0)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:38 +0x2f
+panic({0x7ff7150b72e0?, 0xc00040e2e8?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End.deferwrap1()
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:478 +0x25
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End(0xc000154000, {0x0, 0x0, 0xc0000036c0?})
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:528 +0xd14
+panic({0x7ff7150b72e0?, 0xc00040e2e8?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+Advanced_Shop/app/user/srv/controller/user.(*userServer).CheckPassWord(0x7ff7160e1190?, {0x7ff7150a6f00?, 0x7ff714cb11e0?}, 0xc00029ab90)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/user/srv/controller/user/user.go:141 +0xdb
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler.func1({0x7ff7154764a8?, 0xc000395380?}, {0x7ff715072b20?, 0xc00029ab90?})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:273 +0xcb
+github.com/alibaba/sentinel-golang/pkg/adapters/grpc.NewUnaryServerInterceptor.func1({0x7ff7154764a8, 0xc000395380}, {0x7ff715072b20, 0xc00029ab90}, 0xc000260560, 0xc0004fe168)
+	C:/Users/20839/.go/pkg/mod/github.com/alibaba/sentinel-golang/pkg/adapters/grpc@v0.0.0-20250702131350-f7a7f9575711/server.go:38 +0x202
+google.golang.org/grpc.getChainUnaryHandler.func1.getChainUnaryHandler.1({0x7ff7154764a8, 0xc000395380}, {0x7ff715072b20, 0xc00029ab90})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0xa8
+Advanced_Shop/gnova/server/rpcserver.NewServer.UnaryServerInterceptor.func1({0x7ff7154764a8, 0xc000394c60}, {0x7ff715072b20, 0xc00029ab90}, 0xc000260560, 0xc00038eec0)
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc@v0.34.0/interceptor.go:325 +0x567
+google.golang.org/grpc.getChainUnaryHandler.func1({0x7ff7154764a8?, 0xc000394c60?}, {0x7ff715072b20?, 0xc00029ab90?})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0x153
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor({0x7ff7154764a8?, 0xc000394c60?}, {0x7ff715072b20?, 0xc00029ab90?}, 0xc000260560?, 0xc0004fe168?)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:32 +0x73
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1({0x7ff7154764a8, 0xc000394c60}, {0x7ff715072b20, 0xc00029ab90}, 0xc000260560, 0x78?)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1232 +0x7c
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler({0x7ff7150a6f00, 0xc000588b80}, {0x7ff7154764a8, 0xc000394c60}, 0xc00028e380, 0xc000316220)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:275 +0x143
+google.golang.org/grpc.(*Server).processUnaryRPC(0xc000144d88, {0x7ff7154764a8, 0xc000394bd0}, 0xc000592680, 0xc000395b00, 0x7ff71610eef8, 0x0)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1428 +0x1192
+google.golang.org/grpc.(*Server).handleStream(0xc000144d88, {0x7ff715476d98, 0xc0005921a0}, 0xc000592680)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1832 +0xdc6
+google.golang.org/grpc.(*Server).serveStreams.func2.1()
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1063 +0x7f
+created by google.golang.org/grpc.(*Server).serveStreams.func2 in goroutine 9999
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1074 +0x11d
+
+2026-02-25 16:21:53.545	[34mINFO[0m	user/user.go:72	get user by mobile function called.
+2026-02-25 16:21:53.572	[31mERROR[0m	serverinterceptors/crashinterceptor.go:29	runtime error: index out of range [2] with length 1
+ 
+ goroutine 10740 [running]:
+runtime/debug.Stack()
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/debug/stack.go:26 +0x5e
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor.func1({0x7ff7150b72e0, 0xc000043038})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:29 +0x1d
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.handleCrash(0x7ff715233dc0)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:38 +0x2f
+panic({0x7ff7150b72e0?, 0xc000043038?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End.deferwrap1()
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:478 +0x25
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End(0xc0004a0000, {0x0, 0x0, 0xc00034efc0?})
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:528 +0xd14
+panic({0x7ff7150b72e0?, 0xc000043038?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+Advanced_Shop/app/user/srv/controller/user.(*userServer).CheckPassWord(0x7ff7160e1190?, {0x7ff7150a6f00?, 0x7ff714cb11e0?}, 0xc00013b630)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/user/srv/controller/user/user.go:141 +0xdb
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler.func1({0x7ff7154764a8?, 0xc00040b380?}, {0x7ff715072b20?, 0xc00013b630?})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:273 +0xcb
+github.com/alibaba/sentinel-golang/pkg/adapters/grpc.NewUnaryServerInterceptor.func1({0x7ff7154764a8, 0xc00040b380}, {0x7ff715072b20, 0xc00013b630}, 0xc0005e6660, 0xc000608288)
+	C:/Users/20839/.go/pkg/mod/github.com/alibaba/sentinel-golang/pkg/adapters/grpc@v0.0.0-20250702131350-f7a7f9575711/server.go:38 +0x202
+google.golang.org/grpc.getChainUnaryHandler.func1.getChainUnaryHandler.1({0x7ff7154764a8, 0xc00040b380}, {0x7ff715072b20, 0xc00013b630})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0xa8
+Advanced_Shop/gnova/server/rpcserver.NewServer.UnaryServerInterceptor.func1({0x7ff7154764a8, 0xc00040b290}, {0x7ff715072b20, 0xc00013b630}, 0xc0005e6660, 0xc0005b2780)
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc@v0.34.0/interceptor.go:325 +0x567
+google.golang.org/grpc.getChainUnaryHandler.func1({0x7ff7154764a8?, 0xc00040b290?}, {0x7ff715072b20?, 0xc00013b630?})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0x153
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor({0x7ff7154764a8?, 0xc00040b290?}, {0x7ff715072b20?, 0xc00013b630?}, 0xc0005e6660?, 0xc000608288?)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:32 +0x73
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1({0x7ff7154764a8, 0xc00040b290}, {0x7ff715072b20, 0xc00013b630}, 0xc0005e6660, 0x78?)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1232 +0x7c
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler({0x7ff7150a6f00, 0xc000588b80}, {0x7ff7154764a8, 0xc00040b290}, 0xc000412580, 0xc000316220)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:275 +0x143
+google.golang.org/grpc.(*Server).processUnaryRPC(0xc000144d88, {0x7ff7154764a8, 0xc00040b200}, 0xc0001309c0, 0xc000395b00, 0x7ff71610eef8, 0x0)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1428 +0x1192
+google.golang.org/grpc.(*Server).handleStream(0xc000144d88, {0x7ff715476d98, 0xc000130820}, 0xc0001309c0)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1832 +0xdc6
+google.golang.org/grpc.(*Server).serveStreams.func2.1()
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1063 +0x7f
+created by google.golang.org/grpc.(*Server).serveStreams.func2 in goroutine 10738
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1074 +0x11d
+
+2026-02-25 16:23:45.957	[34mINFO[0m	user/user.go:72	get user by mobile function called.
+2026-02-25 16:23:45.980	[31mERROR[0m	serverinterceptors/crashinterceptor.go:29	runtime error: index out of range [2] with length 1
+ 
+ goroutine 10877 [running]:
+runtime/debug.Stack()
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/debug/stack.go:26 +0x5e
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor.func1({0x7ff7150b72e0, 0xc0002c0150})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:29 +0x1d
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.handleCrash(0x7ff715233dc0)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:38 +0x2f
+panic({0x7ff7150b72e0?, 0xc0002c0150?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End.deferwrap1()
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:478 +0x25
+go.opentelemetry.io/otel/sdk/trace.(*recordingSpan).End(0xc0007fc000, {0x0, 0x0, 0xc000328e00?})
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/otel/sdk@v1.39.0/trace/span.go:528 +0xd14
+panic({0x7ff7150b72e0?, 0xc0002c0150?})
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/panic.go:783 +0x132
+Advanced_Shop/app/user/srv/controller/user.(*userServer).CheckPassWord(0x7ff7160e1190?, {0x7ff7150a6f00?, 0x7ff714cb11e0?}, 0xc0000f6b90)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/user/srv/controller/user/user.go:141 +0xdb
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler.func1({0x7ff7154764a8?, 0xc000395740?}, {0x7ff715072b20?, 0xc0000f6b90?})
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:273 +0xcb
+github.com/alibaba/sentinel-golang/pkg/adapters/grpc.NewUnaryServerInterceptor.func1({0x7ff7154764a8, 0xc000395740}, {0x7ff715072b20, 0xc0000f6b90}, 0xc000316620, 0xc0004fe9a8)
+	C:/Users/20839/.go/pkg/mod/github.com/alibaba/sentinel-golang/pkg/adapters/grpc@v0.0.0-20250702131350-f7a7f9575711/server.go:38 +0x202
+google.golang.org/grpc.getChainUnaryHandler.func1.getChainUnaryHandler.1({0x7ff7154764a8, 0xc000395740}, {0x7ff715072b20, 0xc0000f6b90})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0xa8
+Advanced_Shop/gnova/server/rpcserver.NewServer.UnaryServerInterceptor.func1({0x7ff7154764a8, 0xc000395350}, {0x7ff715072b20, 0xc0000f6b90}, 0xc000316620, 0xc00038ee00)
+	C:/Users/20839/.go/pkg/mod/go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc@v0.34.0/interceptor.go:325 +0x567
+google.golang.org/grpc.getChainUnaryHandler.func1({0x7ff7154764a8?, 0xc000395350?}, {0x7ff715072b20?, 0xc0000f6b90?})
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1241 +0x153
+Advanced_Shop/gnova/server/rpcserver/serverinterceptors.UnaryCrashInterceptor({0x7ff7154764a8?, 0xc000395350?}, {0x7ff715072b20?, 0xc0000f6b90?}, 0xc000316620?, 0xc0004fe9a8?)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/gnova/server/rpcserver/serverinterceptors/crashinterceptor.go:32 +0x73
+google.golang.org/grpc.NewServer.chainUnaryServerInterceptors.chainUnaryInterceptors.func1({0x7ff7154764a8, 0xc000395350}, {0x7ff715072b20, 0xc0000f6b90}, 0xc000316620, 0x78?)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1232 +0x7c
+Advanced_Shop/api/user/v1._User_CheckPassWord_Handler({0x7ff7150a6f00, 0xc000588b80}, {0x7ff7154764a8, 0xc000395350}, 0xc00028e200, 0xc000316220)
+	D:/5524/go_project/xtm_shop/Advanced_Shop/api/user/v1/user_grpc.pb.go:275 +0x143
+google.golang.org/grpc.(*Server).processUnaryRPC(0xc000144d88, {0x7ff7154764a8, 0xc0003951d0}, 0xc000130680, 0xc000395b00, 0x7ff71610eef8, 0x0)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1428 +0x1192
+google.golang.org/grpc.(*Server).handleStream(0xc000144d88, {0x7ff715476d98, 0xc000130820}, 0xc000130680)
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1832 +0xdc6
+google.golang.org/grpc.(*Server).serveStreams.func2.1()
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1063 +0x7f
+created by google.golang.org/grpc.(*Server).serveStreams.func2 in goroutine 10738
+	C:/Users/20839/.go/pkg/mod/google.golang.org/grpc@v1.77.0/server.go:1074 +0x11d
+
+2026-02-25 16:30:38.174	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-25 16:30:38.185	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-25 16:30:46.978	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 16:30:46.980	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 16:31:18.412	[34mINFO[0m	user/user.go:71	get user by mobile function called.
+2026-02-25 16:33:41.473	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-25 16:33:41.477	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-25 16:33:43.952	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 16:33:43.952	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 16:50:00.817	[34mINFO[0m	user/user.go:83	get user by id function called.
+2026-02-25 20:09:11.082	[34mINFO[0m	user/user.go:52	GetUserList is called
+2026-02-25 20:58:14.355	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-25 20:58:14.368	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-25 20:58:20.677	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 20:58:20.678	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 21:08:52.067	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-25 21:08:52.072	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-25 21:08:54.883	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 21:08:54.883	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 21:08:54.883	[31mERROR[0m	app/app.go:117	register service error: Put "grpc://192.168.163.132:8500/v1/agent/service/register": unsupported protocol scheme "grpc"
+2026-02-25 21:08:54.883	[31mERROR[0m	srv/app.go:67	run user app error: Put "grpc://192.168.163.132:8500/v1/agent/service/register": unsupported protocol scheme "grpc"
+2026-02-25 21:27:00.402	[34mINFO[0m	app/app.go:104	start server
+2026-02-25 21:27:00.402	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-25 21:46:04.391	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 21:50:46.937	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 21:50:46.938	[31mERROR[0m	canal/canal.go:54	Canal工厂初始化失败: dial tcp 127.0.0.1:11111: connectex: No connection could be made because the target machine actively refused it.
+2026-02-25 22:16:46.422	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:16:46.434	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:20:22.830	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:20:22.840	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:21:51.574	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:21:51.605	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:21:53.586	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:22:19.818	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:22:19.829	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:22:39.828	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:24:37.431	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:24:37.439	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:24:39.440	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:31:34.221	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:31:34.231	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:31:36.231	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:32:42.415	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:32:42.427	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:32:44.430	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:33:30.197	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:34:04.029	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:35:27.854	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:35:42.239	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:35:46.042	[34mINFO[0m	mq/rocketmq.go:39	rocketmq addr:192.168.163.132:9876
+2026-02-25 22:43:04.395	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:43:06.673	[34mINFO[0m	mq/rocketmq.go:39	rocketmq addr:192.168.163.132:9876
+2026-02-25 22:45:57.297	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:45:57.297	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-25 22:45:57.297	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-25 22:45:57.297	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-25 22:45:57.413	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:45:59.298	[31mERROR[0m	es/es.go:84	创建商品MQ消费者失败: GetOrNewRocketMQClient faild
+2026-02-25 22:49:19.984	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:49:23.835	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-25 22:49:23.835	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-25 22:49:23.836	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-25 22:49:23.851	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:49:27.913	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:50:36.530	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-25 22:50:36.530	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-25 22:50:36.530	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-25 22:50:36.532	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-25 22:50:36.673	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-25 22:50:50.532	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist

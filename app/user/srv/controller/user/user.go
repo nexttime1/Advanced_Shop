@@ -2,18 +2,17 @@ package user
 
 import (
 	v1 "Advanced_Shop/api/user/v1"
+	"Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/gorm"
 	DOv1 "Advanced_Shop/app/user/srv/data/v1"
 	DTOv1 "Advanced_Shop/app/user/srv/service/v1"
 	srv1 "Advanced_Shop/app/user/srv/service/v1"
 	metav1 "Advanced_Shop/pkg/common/meta/v1"
+	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"context"
-	"crypto/sha512"
-	"github.com/anaskhan96/go-password-encoder"
 	"github.com/google/wire"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"strings"
 	"time"
 )
 
@@ -135,12 +134,20 @@ func (u *userServer) UpdateUser(ctx context.Context, info *v1.UpdateUserInfo) (*
 }
 
 func (u *userServer) CheckPassWord(ctx context.Context, info *v1.PasswordCheckInfo) (*v1.CheckResponse, error) {
-	//校验密码
-	options := &password.Options{16, 100, 32, sha512.New}
-	passwordInfo := strings.Split(info.EncryptedPassword, "$")
-	check := password.Verify(info.Password, passwordInfo[2], passwordInfo[3], options)
-	return &v1.CheckResponse{Success: check}, nil
+	if info.EncryptedPassword == info.Password {
+		return &v1.CheckResponse{Success: true}, nil
+	}
+	return &v1.CheckResponse{Success: false}, errors.WithCode(code.ErrUserPasswordIncorrect, "password err", nil)
 }
+
+// TODO
+//func (u *userServer) CheckPassWord(ctx context.Context, info *v1.PasswordCheckInfo) (*v1.CheckResponse, error) {
+//	//校验密码
+//	options := &password.Options{16, 100, 32, sha512.New}
+//	passwordInfo := strings.Split(info.EncryptedPassword, "$")
+//	check := password.Verify(info.Password, passwordInfo[2], passwordInfo[3], options)
+//	return &v1.CheckResponse{Success: check}, nil
+//}
 
 func (u *userServer) mustEmbedUnimplementedUserServer() {
 	//TODO implement me

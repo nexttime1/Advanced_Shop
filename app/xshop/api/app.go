@@ -18,7 +18,7 @@ import (
 func NewApp(basename string) *app.App {
 	cfg := config.New()
 	appl := app.NewApp("api",
-		"xshop",
+		basename,
 		app.WithOptions(cfg),
 		app.WithRunFunc(run(cfg)),
 	)
@@ -67,6 +67,7 @@ func NewAPIApp(cfg *config.Config) (*gapp.App, error) {
 
 	//生成http服务
 	restServer, err := NewAPIHTTPServer(cfg)
+
 	if err != nil {
 		return nil, err
 	}

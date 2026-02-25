@@ -55,12 +55,15 @@ func (store *DataStore) NewMQ() v1.MQFactory {
 func (store *DataStore) StartCanalListener(ctx context.Context) {
 	go func() {
 		zlog.Info("Canal监听器启动成功，开始监听商品表binlog")
+		//  构建MQ消息并发送
+		mqData := store.NewMQ()
 		for {
 			select {
 			case <-ctx.Done():
 				zlog.Info("Canal监听器停止")
 				return
 			default:
+
 				entries, err := store.NewCanal().ParseCanalMessage()
 				if err != nil {
 					zlog.Errorf("Canal获取消息失败, err=%v", err)
@@ -97,8 +100,6 @@ func (store *DataStore) StartCanalListener(ctx context.Context) {
 						continue
 					}
 
-					//  构建MQ消息并发送
-					mqData := store.NewMQ()
 					for _, rowData := range rowChange.GetRowDatas() {
 						mqMsg, err := mqData.BuildGoodsMQMessage(eventType, rowData, header)
 						if err != nil {

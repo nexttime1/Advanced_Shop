@@ -1,6 +1,7 @@
 package data
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	"context"
 
 	"Advanced_Shop/pkg/common/time"
@@ -25,6 +26,7 @@ type UserData interface {
 	Create(ctx context.Context, user *User) error
 	Update(ctx context.Context, user *User) error
 	Get(ctx context.Context, userID uint64) (User, error)
+	List(ctx context.Context, pageInfo common.PageInfo) (UserList, error)
 	GetByMobile(ctx context.Context, mobile string) (User, error)
 	CheckPassWord(ctx context.Context, password, encryptedPwd string) error
 }

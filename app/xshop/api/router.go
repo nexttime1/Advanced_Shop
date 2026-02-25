@@ -4,7 +4,7 @@ import (
 	"Advanced_Shop/app/xshop/api/config"
 	v2 "Advanced_Shop/app/xshop/api/internal/controller/action/v1"
 	"Advanced_Shop/app/xshop/api/internal/controller/goods/v1"
-	v13 "Advanced_Shop/app/xshop/api/internal/controller/order/v1
+	v3 "Advanced_Shop/app/xshop/api/internal/controller/order/v1"
 	v12 "Advanced_Shop/app/xshop/api/internal/controller/sms/v1"
 	"Advanced_Shop/app/xshop/api/internal/controller/user/v1"
 	"Advanced_Shop/app/xshop/api/internal/data/rpc"
@@ -29,10 +29,11 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	serviceFactory := service.NewService(data, cfg.Sms, cfg.Jwt)
 	uController := user.NewUserController(g.Translator(), serviceFactory)
 	{
-		ugroup.POST("pwd_login", uController.Login)
+		ugroup.POST("login", uController.Login)
 		ugroup.POST("register", uController.Register)
 
 		ugroup.GET("detail", jwtAuth.AuthFunc(), uController.GetUserDetail)
+		ugroup.GET("list", jwtAuth.AuthFunc(), uController.UserListView)
 		ugroup.PATCH("update", jwtAuth.AuthFunc(), uController.GetUserDetail)
 	}
 
@@ -49,16 +50,16 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	goodGroup := g.Group("/g")
 	// 版本
 	v1 = goodGroup.Group("/v1")
-	goodsRouter := v1.Group("goods")
+	goodsRouter := v1.Group("good")
 	{
 		goodsController := goods.NewGoodsController(serviceFactory, g.Translator())
 		// 商品相关
-		goodsRouter.GET("good/list", goodsController.GetGoodListView) // 限流
-		goodsRouter.POST("good", goodsController.CreateGoodView)
-		goodsRouter.GET("good/:id", goodsController.GoodDetailView)
-		goodsRouter.PUT("good/:id", goodsController.GoodUpdateView)
-		goodsRouter.PATCH("good/:id", goodsController.GoodPatchUpdateView)
-		goodsRouter.DELETE("good/:id", goodsController.GoodDeleteView)
+		goodsRouter.GET("/list", goodsController.GetGoodListView) // 限流
+		goodsRouter.POST("/", goodsController.CreateGoodView)
+		goodsRouter.GET("/:id", goodsController.GoodDetailView)
+		goodsRouter.PUT("/:id", goodsController.GoodUpdateView)
+		goodsRouter.PATCH("/:id", goodsController.GoodPatchUpdateView)
+		goodsRouter.DELETE("/:id", goodsController.GoodDeleteView)
 
 		// 图片相关
 		goodsRouter.GET("banners", goodsController.GetBannerListView)
@@ -94,7 +95,7 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	v1 = orderGroup.Group("/v1")
 	orderRouter := v1.Group("orders")
 	{
-		orderController := v13.NewOrderController(serviceFactory, g.Translator(), cfg.Aliyun)
+		orderController := v3.NewOrderController(serviceFactory, g.Translator(), cfg.Aliyun)
 
 		{
 			// order 相关

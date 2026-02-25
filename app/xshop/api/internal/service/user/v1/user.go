@@ -2,6 +2,7 @@ package v1
 
 import (
 	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/app/pkg/common"
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"Advanced_Shop/pkg/storage"
@@ -27,6 +28,7 @@ type UserSrv interface {
 	MobileLogin(ctx context.Context, mobile, password string) (*UserDTO, error)
 	Register(ctx context.Context, mobile, password, code string) (*UserDTO, error)
 	Update(ctx context.Context, userDTO *UserDTO) error
+	GetList(ctx context.Context, pageInfo common.PageInfo) (data.UserList, error)
 	Get(ctx context.Context, userID uint64) (*UserDTO, error)
 	GetByMobile(ctx context.Context, mobile string) (*UserDTO, error)
 	CheckPassWord(ctx context.Context, password, EncryptedPassword string) (bool, error)
@@ -145,6 +147,15 @@ func (us *userService) Get(ctx context.Context, userID uint64) (*UserDTO, error)
 		return nil, err
 	}
 	return &UserDTO{User: userDO}, nil
+}
+
+func (us *userService) GetList(ctx context.Context, pageInfo common.PageInfo) (data.UserList, error) {
+	list, err := us.data.Users().List(ctx, pageInfo)
+	if err != nil {
+		return data.UserList{}, err
+	}
+
+	return list, nil
 }
 
 func (u *userService) GetByMobile(ctx context.Context, mobile string) (*UserDTO, error) {

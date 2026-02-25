@@ -29,20 +29,17 @@ type ErrResponse struct {
 // It use errors.ParseCoder to parse any error into errors.Coder
 // errors.Coder contains error code, user-safe error message and http status code.
 func WriteErrResponse(c *gin.Context, err error, data interface{}) {
-	if err != nil {
-		errStr := fmt.Sprintf("%#+v", err)
-		coder := errors.ParseCoder(err)
-		c.JSON(coder.HTTPStatus(), ErrResponse{
-			Code:      coder.Code(),
-			Message:   coder.String(),
-			Detail:    errStr,
-			Reference: coder.Reference(),
-		})
+	errStr := fmt.Sprintf("%#+v", err)
+	coder := errors.ParseCoder(err)
+	c.JSON(coder.HTTPStatus(), ErrResponse{
+		Code:      coder.Code(),
+		Message:   coder.String(),
+		Detail:    errStr,
+		Reference: coder.Reference(),
+	})
 
-		return
-	}
+	return
 
-	c.JSON(http.StatusOK, data)
 }
 
 type SuccessBaseResponse struct {

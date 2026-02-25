@@ -1,11 +1,14 @@
 package options
 
-import "github.com/spf13/pflag"
+import (
+	"fmt"
+	"github.com/spf13/pflag"
+)
 
 // RocketMQOptions RocketMQ 配置
 type RocketMQOptions struct {
 	Host              string `mapstructure:"host" yaml:"host"`
-	Port              uint64 `mapstructure:"port" yaml:"port"`
+	Port              int    `mapstructure:"port" yaml:"port"`
 	GroupName         string `mapstructure:"group_name" yaml:"group_name"`
 	Topic             string `mapstructure:"topic" yaml:"topic"`
 	ConsumerGroupName string `mapstructure:"consumer_group_name" yaml:"consumer_group_name"`
@@ -30,7 +33,7 @@ func NewRocketMQOptions() *RocketMQOptions {
 }
 
 func (o *RocketMQOptions) Addr() string {
-	return o.Host + ":" + string(o.Port)
+	return fmt.Sprintf("%s:%d", o.Host, o.Port)
 }
 
 func (o *RocketMQOptions) Validate() []error {
@@ -41,7 +44,7 @@ func (o *RocketMQOptions) Validate() []error {
 
 func (o *RocketMQOptions) AddFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&o.Host, "rocketmq.host", o.Host, "RocketMQ host")
-	fs.Uint64Var(&o.Port, "rocketmq.port", o.Port, "RocketMQ port")
+	fs.IntVar(&o.Port, "rocketmq.port", o.Port, "RocketMQ port")
 	fs.StringVar(&o.GroupName, "rocketmq.group_name", o.GroupName, "RocketMQ producer group name")
 	fs.StringVar(&o.Topic, "rocketmq.topic", o.Topic, "RocketMQ producer topic")
 	fs.StringVar(&o.ConsumerGroupName, "rocketmq.consumer_group_name", o.ConsumerGroupName, "RocketMQ consumer group name")

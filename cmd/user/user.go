@@ -13,5 +13,5 @@ func main() {
 	if len(os.Getenv("GOMAXPROCS")) == 0 {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
-	srv.NewApp("user-server").Run()
+	srv.NewApp().Run()
 }

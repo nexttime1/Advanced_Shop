@@ -12,4 +12,13 @@ const (
 
 	// ErrCodeInCorrect - 404: Code Not Correct.
 	ErrCodeInCorrect
+
+	// ErrUserAlreadyExists - 400: User Already Exists
+	ErrUserAlreadyExists
+
+	// ErrSmsSend - 404: Err Sms Send
+	ErrSmsSend
+
+	// ErrForbidden - 403: User Privilege Err
+	ErrForbidden
 )
