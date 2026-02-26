@@ -121,7 +121,7 @@ func (gc *goodsController) CreateGoodView(c *gin.Context) {
 }
 
 func (gc *goodsController) GoodDetailView(c *gin.Context) {
-
+	log.Info("goods detail function called ...")
 	var cr good.GoodDetailRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {

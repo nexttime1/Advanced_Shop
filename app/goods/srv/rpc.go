@@ -28,7 +28,7 @@ func NewGoodsRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
 	//有点繁琐，wire， ioc-golang
 	dataFactory := data.NewDataStore(cfg.MySQLOptions, cfg.MqOpts, cfg.CanalOpts)
 	//构建，繁琐 - 工厂模式
-	searchFactory, err := es.GetSearchFactoryOr(cfg.EsOptions, cfg.MqOpts)
+	searchFactory, err := es.GetSearchFactoryOr(cfg.EsOptions, cfg.MqOpts, cfg.CanalOpts)
 	if err != nil {
 		log.Fatal(err.Error())
 		return nil, err

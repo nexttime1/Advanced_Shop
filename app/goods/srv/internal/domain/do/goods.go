@@ -26,7 +26,7 @@ type GoodsSearchDO struct {
 }
 
 func (GoodsSearchDO) GetIndexName() string {
-	return "goods"
+	return "goods_index"
 }
 
 type GoodsSearchDOList struct {

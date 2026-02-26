@@ -29,6 +29,7 @@ type dataSearch struct {
 	esClient  *elastic.Client
 	consumer  rocketmq.PushConsumer
 	mqOpts    *options.RocketMQOptions
+	canalOpts *options.CanalOptions
 	isRunning bool // 标记消费者是否运行中
 	runLock   sync.RWMutex
 }
@@ -37,7 +38,7 @@ func (ds *dataSearch) Goods() v1.GoodsStore {
 	return newGoods(ds)
 }
 
-func GetSearchFactoryOr(opts *options.EsOptions, mqOpts *options.RocketMQOptions) (v1.SearchFactory, error) {
+func GetSearchFactoryOr(opts *options.EsOptions, mqOpts *options.RocketMQOptions, canalOpts *options.CanalOptions) (v1.SearchFactory, error) {
 	if opts == nil && searchFactory == nil {
 		return nil, errors.New("failed to get es client")
 	}
@@ -52,7 +53,7 @@ func GetSearchFactoryOr(opts *options.EsOptions, mqOpts *options.RocketMQOptions
 			return
 		}
 
-		searchFactory = &dataSearch{esClient: esClient, mqOpts: mqOpts}
+		searchFactory = &dataSearch{esClient: esClient, mqOpts: mqOpts, canalOpts: canalOpts}
 	})
 	if searchFactory == nil {
 		return nil, errors.New("failed to get es client")
@@ -70,7 +71,7 @@ func (c *dataSearch) Listen(ctx context.Context) error {
 	c.isRunning = true
 	c.runLock.Unlock()
 
-	// 创建PushConsumer
+	// 创建 PushConsumer
 	consumerIns, err := rocketmq.NewPushConsumer(
 		consumer.WithNameServer([]string{c.mqOpts.Addr()}),
 		consumer.WithGroupName(c.mqOpts.ConsumerGroupName),
@@ -98,7 +99,7 @@ func (c *dataSearch) Listen(ctx context.Context) error {
 		return errors.WithCode(code.ErrConnectMQ, errMsg)
 	}
 
-	// 3. 启动消费者
+	//  启动消费者
 	if err = consumerIns.Start(); err != nil {
 		errMsg := fmt.Sprintf("启动商品MQ消费者失败: %v", err)
 		zlog.Error(errMsg)
@@ -186,7 +187,7 @@ func (c *dataSearch) SyncGoodsToES(ctx context.Context, msgs ...*primitive.Messa
 		}
 
 		// 过滤非商品表消息（防御性校验）
-		if msgBody.Table != "goods" {
+		if msgBody.Table != c.canalOpts.TableName {
 			zlog.Warnf("非商品表消息，忽略 table: %v", msgBody.Table)
 			continue
 		}

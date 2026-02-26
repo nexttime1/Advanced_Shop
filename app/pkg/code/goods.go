@@ -21,4 +21,7 @@ const (
 
 	// ErrGoodsImageNotFound - 404: GoodImage not found.
 	ErrGoodsImageNotFound
+
+	// ErrJsonUnmarshal - 500: Json unmarshal error.
+	ErrJsonUnmarshal
 )

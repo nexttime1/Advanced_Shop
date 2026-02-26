@@ -15,7 +15,7 @@ import (
 func NewApp(basename string) *app.App {
 	cfg := config.New()
 	appl := app.NewApp("goods",
-		"xshop",
+		basename,
 		app.WithOptions(cfg),
 		app.WithRunFunc(run(cfg)),
 		//app.WithNoConfig(), //设置不读取配置文件

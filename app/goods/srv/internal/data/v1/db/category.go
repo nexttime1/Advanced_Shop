@@ -4,7 +4,9 @@ import (
 	"Advanced_Shop/app/pkg/code"
 	code2 "Advanced_Shop/gnova/code"
 	"Advanced_Shop/pkg/errors"
+	zlog "Advanced_Shop/pkg/log"
 	"context"
+	"encoding/json"
 
 	v1 "Advanced_Shop/app/goods/srv/internal/data/v1"
 	"Advanced_Shop/app/goods/srv/internal/domain/do"
@@ -44,6 +46,13 @@ func (c *categorys) ListAll(ctx context.Context, orderby []string) (*do.Category
 	}
 
 	d := query.Where("level = 1").Preload("SubCategory.SubCategory").Find(&ret.Items)
+	ret.TotalCount = d.RowsAffected
+	bytesData, err := json.Marshal(ret.Items)
+	if err != nil {
+		zlog.Errorf("json.Marshal(%+v) error(%v)", ret, err)
+		return nil, errors.WithCode(code.ErrJsonUnmarshal, err.Error())
+	}
+	ret.JsonData = string(bytesData)
 	return ret, d.Error
 }
 

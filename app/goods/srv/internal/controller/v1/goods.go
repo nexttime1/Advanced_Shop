@@ -129,7 +129,7 @@ func (gs *goodsServer) CreateGoods(ctx context.Context, info *proto.CreateGoodsI
 	}
 
 	// 调用service层创建方法
-	err := gs.srv.Goods().CreateInTxn(ctx, &request)
+	err := gs.srv.Goods().Create(ctx, &request)
 	if err != nil {
 		log.Errorf("create goods error: %v", err.Error())
 		return nil, err
@@ -184,7 +184,7 @@ func (gs *goodsServer) UpdateGoods(ctx context.Context, info *proto.CreateGoodsI
 	}
 
 	// 调用service层更新方法
-	err := gs.srv.Goods().UpdateInTxn(ctx, &request)
+	err := gs.srv.Goods().Update(ctx, &request)
 	if err != nil {
 		log.Errorf("update goods error, id: %d, err: %v", info.Id, err.Error())
 		return nil, err
@@ -196,12 +196,14 @@ func (gs *goodsServer) UpdateGoods(ctx context.Context, info *proto.CreateGoodsI
 // GetGoodsDetail 获取商品详情
 func (gs *goodsServer) GetGoodsDetail(ctx context.Context, request *proto.GoodInfoRequest) (*proto.GoodsInfoResponse, error) {
 	// 调用service层获取商品详情
+	log.Info("Get goods detail Call")
 	goodsDTO, err := gs.srv.Goods().Get(ctx, uint64(request.Id))
 	if err != nil {
 		log.Errorf("get goods detail error, id: %d, err: %v", request.Id, err.Error())
 		return nil, err
 	}
 
+	log.Infof("get goods detail success, id: %d", request.Id)
 	return GoodInfoFunction(goodsDTO), nil
 }
 

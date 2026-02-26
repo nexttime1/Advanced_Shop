@@ -7,11 +7,12 @@ import (
 
 // CanalOptions Canal 客户端配置（全参数配置化，无硬编码）
 type CanalOptions struct {
-	Addr                string `mapstructure:"addr" json:"addr,omitempty"`                                   // Canal服务IP
-	Port                int    `mapstructure:"port" json:"port,omitempty"`                                   // Canal服务端口
-	Username            string `mapstructure:"username" json:"username,omitempty"`                           // Canal用户名（无则空）
-	Password            string `mapstructure:"password" json:"password,omitempty"`                           // Canal密码（无则空）
-	Destination         string `mapstructure:"destination" json:"destination,omitempty"`                     // Canal实例名（如example）
+	Addr                string `mapstructure:"addr" json:"addr,omitempty"`               // Canal服务IP
+	Port                int    `mapstructure:"port" json:"port,omitempty"`               // Canal服务端口
+	Username            string `mapstructure:"username" json:"username,omitempty"`       // Canal用户名（无则空）
+	Password            string `mapstructure:"password" json:"password,omitempty"`       // Canal密码（无则空）
+	Destination         string `mapstructure:"destination" json:"destination,omitempty"` // Canal实例名（如example）
+	TableName           string `mapstructure:"table_name" json:"table_name,omitempty"`
 	SubscribeRegex      string `mapstructure:"subscribe_regex" json:"subscribe_regex,omitempty"`             // binlog订阅正则（默认.*\\..*）
 	BatchSize           int32  `mapstructure:"batch_size" json:"batch_size,omitempty"`                       // 批量获取消息大小（默认100）
 	TimeoutMs           int32  `mapstructure:"timeout_ms" json:"timeout_ms,omitempty"`                       // 连接超时时间（毫秒，默认60000）

@@ -71,7 +71,11 @@ func (gs *goodsService) UpdateGoods(ctx context.Context, in *gpb.CreateGoodsInfo
 
 // GetGoodsDetail 获取商品详情
 func (gs *goodsService) GetGoodsDetail(ctx context.Context, in *gpb.GoodInfoRequest, opts ...grpc.CallOption) (*gpb.GoodsInfoResponse, error) {
-	return gs.data.Goods().GetGoodsDetail(ctx, in)
+	detail, err := gs.data.Goods().GetGoodsDetail(ctx, in)
+	if err != nil {
+		return nil, err
+	}
+	return detail, nil
 }
 
 // -------------------------- 商品分类相关方法 --------------------------

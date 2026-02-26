@@ -205,3 +205,250 @@ created by google.golang.org/grpc.(*Server).serveStreams.func2 in goroutine 1073
 2026-02-25 22:50:36.532	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
 2026-02-25 22:50:36.673	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
 2026-02-25 22:50:50.532	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-25 22:54:32.881	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-25 22:59:21.298	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 09:41:38.794	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 09:41:38.794	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 09:41:38.795	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 09:41:38.795	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 09:41:39.012	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 09:41:40.809	[31mERROR[0m	es/es.go:104	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-26 10:13:15.638	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:13:15.638	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:13:15.638	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:13:15.639	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:13:15.877	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:13:17.718	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:13:17.733	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:13:17.733	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: 127.0.0.1:8021
+2026-02-26 10:14:52.340	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:14:52.340	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-26 10:20:33.142	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:33.448	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:33.748	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:33.752	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:b6e8c650-12b8-11f1-bb23-84a9388aedfb": read tcp 192.168.163.1:53836->192.168.163.132:8500: wsarecv: An existing connection was forcibly closed by the remote host.
+2026-02-26 10:20:34.049	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:34.350	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:34.650	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:34.951	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:35.252	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:35.552	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:35.794	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:b6e8c650-12b8-11f1-bb23-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 10:20:35.852	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:36.153	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:36.454	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:36.754	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:37.055	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:37.355	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:37.467	[31mERROR[0m	app/app.go:117	register service error: Put "http://192.168.163.132:8500/v1/agent/service/register": read tcp 192.168.163.1:50984->192.168.163.132:8500: wsarecv: An existing connection was forcibly closed by the remote host.
+2026-02-26 10:20:37.469	[31mERROR[0m	srv/app.go:67	run user app error: Put "http://192.168.163.132:8500/v1/agent/service/register": read tcp 192.168.163.1:50984->192.168.163.132:8500: wsarecv: An existing connection was forcibly closed by the remote host.
+2026-02-26 10:20:37.655	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:37.956	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:38.256	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:38.556	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:38.856	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:39.157	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:39.457	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:39.758	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:40.058	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:40.358	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:40.658	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:40.959	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:41.260	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:41.560	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:41.860	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:42.161	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:42.426	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:b6e8c650-12b8-11f1-bb23-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 10:20:42.462	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:42.762	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:43.062	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:43.362	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:43.664	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:43.965	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:44.265	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:44.566	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:44.816	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 10:20:44.867	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:45.167	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:45.468	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:45.768	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:46.069	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:46.369	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:46.670	[31mERROR[0m	realize/data.go:69	Canal获取消息失败, err=An internal server error occurred
+2026-02-26 10:20:46.848	[31mERROR[0m	app/app.go:156	deregister service error: Put "http://192.168.163.132:8500/v1/agent/service/deregister/b6e8c650-12b8-11f1-bb23-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 10:20:46.853	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 10:20:46.854	[31mERROR[0m	srv/app.go:68	run user app error: Put "http://192.168.163.132:8500/v1/agent/service/deregister/b6e8c650-12b8-11f1-bb23-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 10:22:43.733	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:22:43.734	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-26 10:24:30.032	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:24:30.032	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:24:30.032	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:24:30.033	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:24:30.188	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:24:32.074	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:24:32.094	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:24:32.094	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: 127.0.0.1:8021
+2026-02-26 10:32:28.650	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 10:32:28.667	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 10:32:37.109	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:32:37.109	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:32:37.109	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:32:37.110	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:32:37.145	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:32:39.133	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:32:39.213	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:32:39.214	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 10:32:57.529	[34mINFO[0m	user/user.go:52	GetUserList is called
+2026-02-26 10:33:23.668	[31mERROR[0m	v1/goods.go:78	categorydata.NewMysql().Get err: An internal server error occurred
+2026-02-26 10:33:23.668	[31mERROR[0m	v1/goods.go:80	get goods list error: An internal server error occurred
+2026-02-26 10:37:54.587	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 10:37:54.595	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 10:38:01.121	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:38:01.122	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:38:01.122	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:38:01.122	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:38:01.134	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:38:03.141	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:38:03.217	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:38:03.217	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 10:39:22.630	[35mDEBUG[0m	v1/goods.go:95	Search es data: &{7 [0xc000b01810 0xc000b01860 0xc000b018b0 0xc000b01900 0xc000b01950]}
+2026-02-26 10:40:20.909	[35mDEBUG[0m	v1/goods.go:95	Search es data: &{7 [0xc0007e0b90 0xc0007e0be0 0xc0007e0c30 0xc0007e0c80 0xc0007e0cd0]}
+2026-02-26 10:49:05.617	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 10:49:05.624	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 10:49:12.989	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:49:12.989	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:49:12.989	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:49:12.989	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:49:13.103	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:49:15.014	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:49:15.113	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:49:15.114	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 10:49:24.375	[34mINFO[0m	v1/goods.go:199	Get goods detail Call
+2026-02-26 10:49:24.401	[34mINFO[0m	v1/goods.go:206	get goods detail success, id: 1
+2026-02-26 10:53:09.380	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 10:53:09.388	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 10:53:22.420	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 10:53:22.420	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 10:53:22.420	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 10:53:22.421	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 10:53:22.471	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 10:53:24.437	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 10:53:24.531	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 10:53:24.531	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 10:55:42.984	[34mINFO[0m	v1/goods.go:199	Get goods detail Call
+2026-02-26 10:55:48.921	[34mINFO[0m	v1/goods.go:206	get goods detail success, id: 1
+2026-02-26 11:02:35.238	[34mINFO[0m	v1/goods.go:199	Get goods detail Call
+2026-02-26 11:02:35.262	[34mINFO[0m	v1/goods.go:206	get goods detail success, id: 1
+2026-02-26 11:02:35.272	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 11:02:43.134	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 11:02:43.134	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 11:02:43.134	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 11:02:43.134	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 11:02:43.149	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 11:02:45.148	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 11:02:45.222	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 11:02:45.222	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 11:08:37.740	[34mINFO[0m	v1/goods.go:199	Get goods detail Call
+2026-02-26 11:08:37.815	[34mINFO[0m	v1/goods.go:206	get goods detail success, id: 1
+2026-02-26 11:13:27.714	[34mINFO[0m	v1/goods.go:199	Get goods detail Call
+2026-02-26 11:13:27.820	[34mINFO[0m	v1/goods.go:206	get goods detail success, id: 1
+2026-02-26 11:38:13.284	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 11:38:13.330	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 11:38:21.235	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 11:38:21.235	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 11:38:21.235	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 11:38:21.236	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 11:38:21.334	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 11:38:23.249	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 11:38:23.342	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 11:38:23.343	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 11:38:27.736	[34mINFO[0m	v1/category.go:27	GetAllCategory Call
+2026-02-26 11:38:27.875	[34mINFO[0m	v1/category.go:49	categoryDOList: &{0 [0xc000247360 0xc0002475e0 0xc000247720 0xc000247860 0xc0002479a0]}
+2026-02-26 11:55:40.122	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 11:55:40.145	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 11:55:49.617	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 11:55:49.617	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 11:55:49.617	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 11:55:49.617	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 11:55:49.739	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 11:55:51.640	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 11:55:51.740	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 11:55:51.740	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 11:56:02.122	[34mINFO[0m	v1/category.go:27	GetAllCategory Call
+2026-02-26 12:37:14.447	[31mERROR[0m	db/banner.go:46	mysql query error: Error 1054 (42S22): Unknown column 'sort' in 'order clause'
+2026-02-26 12:37:14.448	[31mERROR[0m	v1/banner.go:18	get banner list error: An internal server error occurred
+2026-02-26 12:41:07.077	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 12:41:07.131	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 12:41:12.734	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 12:41:12.735	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 12:41:12.735	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 12:41:12.735	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 12:41:12.823	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 12:41:14.752	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 12:41:14.825	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 12:41:14.826	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 12:58:26.028	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 12:58:26.075	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 12:58:36.585	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 12:58:36.585	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 12:58:36.585	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 12:58:36.586	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 12:58:36.800	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 12:58:38.764	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 12:58:38.876	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 12:58:38.876	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 13:01:16.515	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 13:01:16.608	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 13:01:22.184	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 13:01:22.184	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 13:01:22.184	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 13:01:22.184	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 13:01:22.201	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 13:01:24.207	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 13:01:24.293	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 13:01:24.293	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 13:09:53.303	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 13:09:53.327	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 13:09:58.984	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 13:09:58.984	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 13:09:58.984	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 13:09:58.984	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 13:09:58.999	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 13:10:01.104	[34mINFO[0m	es/es.go:110	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 13:10:01.215	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 13:10:01.216	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 13:10:08.978	[34mINFO[0m	mq/rocketmq.go:112	mq 开始发送关于es的消息
+2026-02-26 13:10:09.452	[34mINFO[0m	realize/data.go:116	发送商品MQ消息成功, goodsID=[sqlType:4 name:"id" isKey:true isNull:false value:"30" mysqlType:"int" index:1 sqlType:93 name:"add_time" isNull:false value:"2025-12-01 17:51:50.000" mysqlType:"datetime(3)" index:2 sqlType:93 name:"update_time" updated:true isNull:false value:"2026-02-26 13:10:08.795" mysqlType:"datetime(3)" index:3 sqlType:93 name:"deleted_at" isNull:true mysqlType:"datetime(3)" index:4 sqlType:4 name:"category_id" isNull:false value:"10" mysqlType:"int" index:5 sqlType:4 name:"brands_id" isNull:false value:"9" mysqlType:"int" index:6 sqlType:-6 name:"on_sale" isNull:false value:"1" mysqlType:"tinyint(1)" index:7 sqlType:-6 name:"ship_free" isNull:false value:"0" mysqlType:"tinyint(1)" index:8 sqlType:-6 name:"is_new" isNull:false value:"0" mysqlType:"tinyint(1)" index:9 sqlType:-6 name:"is_hot" isNull:false value:"0" mysqlType:"tinyint(1)" index:10 sqlType:12 name:"name" updated:true isNull:false value:"test1232猛" mysqlType:"varchar(50)" index:11 sqlType:12 name:"goods_sn" isNull:false value:"SN000030" mysqlType:"varchar(50)" index:12 sqlType:4 name:"click_num" isNull:false value:"685" mysqlType:"int" index:13 sqlType:4 name:"sold_num" isNull:false value:"420" mysqlType:"int" index:14 sqlType:4 name:"fav_num" isNull:false value:"370" mysqlType:"int" index:15 sqlType:7 name:"market_price" isNull:false value:"3499.0" mysqlType:"float" index:16 sqlType:7 name:"shop_price" isNull:false value:"3199.0" mysqlType:"float" index:17 sqlType:12 name:"goods_brief" isNull:false value:"1.5K屏，5500mAh电池" mysqlType:"varchar(100)"], msgID=C0A82F018F580000000083925f800001
+2026-02-26 13:10:19.376	[34mINFO[0m	es/es.go:168	收到商品MQ消息，开始同步到ES
+2026-02-26 13:10:19.376	[35mDEBUG[0m	es/es.go:172	解析商品MQ消息, msgID: C0A82F018F580000000083925f800001, body: [123 34 101 118 101 110 116 95 116 121 112 101 34 58 34 85 80 68 65 84 69 34 44 34 103 111 111 100 115 34 58 123 34 97 100 100 95 116 105 109 101 34 58 34 50 48 50 53 45 49 50 45 48 49 32 49 55 58 53 49 58 53 48 46 48 48 48 34 44 34 98 114 97 110 100 115 95 105 100 34 58 34 57 34 44 34 99 97 116 101 103 111 114 121 95 105 100 34 58 34 49 48 34 44 34 99 108 105 99 107 95 110 117 109 34 58 34 54 56 53 34 44 34 100 101 108 101 116 101 100 95 97 116 34 58 34 34 44 34 102 97 118 95 110 117 109 34 58 34 51 55 48 34 44 34 103 111 111 100 115 95 98 114 105 101 102 34 58 34 49 46 53 75 229 177 143 239 188 140 53 53 48 48 109 65 104 231 148 181 230 177 160 34 44 34 103 111 111 100 115 95 115 110 34 58 34 83 78 48 48 48 48 51 48 34 44 34 105 100 34 58 34 51 48 34 44 34 105 115 95 104 111 116 34 58 34 48 34 44 34 105 115 95 110 101 119 34 58 34 48 34 44 34 109 97 114 107 101 116 95 112 114 105 99 101 34 58 34 51 52 57 57 46 48 34 44 34 110 97 109 101 34 58 34 116 101 115 116 49 50 51 50 231 140 155 34 44 34 111 110 95 115 97 108 101 34 58 34 49 34 44 34 115 104 105 112 95 102 114 101 101 34 58 34 48 34 44 34 115 104 111 112 95 112 114 105 99 101 34 58 34 51 49 57 57 46 48 34 44 34 115 111 108 100 95 110 117 109 34 58 34 52 50 48 34 44 34 117 112 100 97 116 101 95 116 105 109 101 34 58 34 50 48 50 54 45 48 50 45 50 54 32 49 51 58 49 48 58 48 56 46 55 57 53 34 125 44 34 115 99 104 101 109 97 34 58 34 103 111 111 100 45 115 114 118 34 44 34 116 97 98 108 101 34 58 34 103 111 111 100 95 109 111 100 101 108 115 34 44 34 116 105 109 101 115 116 97 109 112 34 58 49 55 55 50 48 56 50 54 48 57 48 48 48 125]
+2026-02-26 13:10:19.376	[33mWARN[0m	es/es.go:190	非商品表消息，忽略 table: good_models
+2026-02-26 13:23:11.764	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 13:23:11.866	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 13:23:20.239	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 13:23:20.239	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 13:23:20.240	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 13:23:20.241	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 13:23:20.264	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 13:23:22.268	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 13:23:22.357	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 13:23:22.357	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 13:23:32.356	[34mINFO[0m	mq/rocketmq.go:112	mq 开始发送关于es的消息
+2026-02-26 13:23:32.394	[34mINFO[0m	realize/data.go:116	发送商品MQ消息成功, goodsID=[sqlType:4 name:"id" isKey:true isNull:false value:"30" mysqlType:"int" index:1 sqlType:93 name:"add_time" isNull:false value:"2025-12-01 17:51:50.000" mysqlType:"datetime(3)" index:2 sqlType:93 name:"update_time" updated:true isNull:false value:"2026-02-26 13:23:31.931" mysqlType:"datetime(3)" index:3 sqlType:93 name:"deleted_at" isNull:true mysqlType:"datetime(3)" index:4 sqlType:4 name:"category_id" isNull:false value:"10" mysqlType:"int" index:5 sqlType:4 name:"brands_id" isNull:false value:"9" mysqlType:"int" index:6 sqlType:-6 name:"on_sale" isNull:false value:"1" mysqlType:"tinyint(1)" index:7 sqlType:-6 name:"ship_free" isNull:false value:"0" mysqlType:"tinyint(1)" index:8 sqlType:-6 name:"is_new" isNull:false value:"0" mysqlType:"tinyint(1)" index:9 sqlType:-6 name:"is_hot" isNull:false value:"0" mysqlType:"tinyint(1)" index:10 sqlType:12 name:"name" updated:true isNull:false value:"战神薛提猛" mysqlType:"varchar(50)" index:11 sqlType:12 name:"goods_sn" isNull:false value:"SN000030" mysqlType:"varchar(50)" index:12 sqlType:4 name:"click_num" isNull:false value:"685" mysqlType:"int" index:13 sqlType:4 name:"sold_num" isNull:false value:"420" mysqlType:"int" index:14 sqlType:4 name:"fav_num" isNull:false value:"370" mysqlType:"int" index:15 sqlType:7 name:"market_price" isNull:false value:"3499.0" mysqlType:"float" index:16 sqlType:7 name:"shop_price" isNull:false value:"3199.0" mysqlType:"float" index:17 sqlType:12 name:"goods_brief" isNull:false value:"1.5K屏，5500mAh电池" mysqlType:"varchar(100)"], msgID=C0A82F0163A000000000839ea4200001
+2026-02-26 13:23:42.410	[34mINFO[0m	es/es.go:169	收到商品MQ消息，开始同步到ES
+2026-02-26 13:23:42.410	[35mDEBUG[0m	es/es.go:173	解析商品MQ消息, msgID: C0A82F0163A000000000839ea4200001, body: [123 34 101 118 101 110 116 95 116 121 112 101 34 58 34 85 80 68 65 84 69 34 44 34 103 111 111 100 115 34 58 123 34 97 100 100 95 116 105 109 101 34 58 34 50 48 50 53 45 49 50 45 48 49 32 49 55 58 53 49 58 53 48 46 48 48 48 34 44 34 98 114 97 110 100 115 95 105 100 34 58 34 57 34 44 34 99 97 116 101 103 111 114 121 95 105 100 34 58 34 49 48 34 44 34 99 108 105 99 107 95 110 117 109 34 58 34 54 56 53 34 44 34 100 101 108 101 116 101 100 95 97 116 34 58 34 34 44 34 102 97 118 95 110 117 109 34 58 34 51 55 48 34 44 34 103 111 111 100 115 95 98 114 105 101 102 34 58 34 49 46 53 75 229 177 143 239 188 140 53 53 48 48 109 65 104 231 148 181 230 177 160 34 44 34 103 111 111 100 115 95 115 110 34 58 34 83 78 48 48 48 48 51 48 34 44 34 105 100 34 58 34 51 48 34 44 34 105 115 95 104 111 116 34 58 34 48 34 44 34 105 115 95 110 101 119 34 58 34 48 34 44 34 109 97 114 107 101 116 95 112 114 105 99 101 34 58 34 51 52 57 57 46 48 34 44 34 110 97 109 101 34 58 34 230 136 152 231 165 158 232 150 155 230 143 144 231 140 155 34 44 34 111 110 95 115 97 108 101 34 58 34 49 34 44 34 115 104 105 112 95 102 114 101 101 34 58 34 48 34 44 34 115 104 111 112 95 112 114 105 99 101 34 58 34 51 49 57 57 46 48 34 44 34 115 111 108 100 95 110 117 109 34 58 34 52 50 48 34 44 34 117 112 100 97 116 101 95 116 105 109 101 34 58 34 50 48 50 54 45 48 50 45 50 54 32 49 51 58 50 51 58 51 49 46 57 51 49 34 125 44 34 115 99 104 101 109 97 34 58 34 103 111 111 100 45 115 114 118 34 44 34 116 97 98 108 101 34 58 34 103 111 111 100 95 109 111 100 101 108 115 34 44 34 116 105 109 101 115 116 97 109 112 34 58 49 55 55 50 48 56 51 52 49 50 48 48 48 125]
+2026-02-26 13:23:42.826	[34mINFO[0m	es/es.go:214	商品数据同步到ES成功 goodsID: 30
+2026-02-26 13:32:11.621	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 13:32:11.665	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 13:32:20.524	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-26 13:32:20.524	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-26 13:32:20.524	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-26 13:32:20.525	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-26 13:32:20.567	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-26 13:32:22.548	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-26 13:32:22.626	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 13:32:22.626	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-26 13:32:24.494	[34mINFO[0m	mq/rocketmq.go:112	mq 开始发送关于es的消息
+2026-02-26 13:32:24.501	[34mINFO[0m	realize/data.go:120	发送商品MQ消息成功, goods内容 =map[add_time:2025-12-01 17:51:50.000 brands_id:9 category_id:10 click_num:685 deleted_at: fav_num:370 goods_brief:1.5K屏，5500mAh电池 goods_sn:SN000030 id:30 is_hot:0 is_new:0 market_price:3499.0 name:test on_sale:1 ship_free:0 shop_price:3199.0 sold_num:420 update_time:2026-02-26 13:32:24.293], msgID=C0A82F016C180000000083a6c2400001
+2026-02-26 13:32:34.510	[34mINFO[0m	es/es.go:169	收到商品MQ消息，开始同步到ES
+2026-02-26 13:32:34.510	[35mDEBUG[0m	es/es.go:173	解析商品MQ消息, msgID: C0A82F016C180000000083a6c2400001, body: [123 34 101 118 101 110 116 95 116 121 112 101 34 58 34 85 80 68 65 84 69 34 44 34 103 111 111 100 115 34 58 123 34 97 100 100 95 116 105 109 101 34 58 34 50 48 50 53 45 49 50 45 48 49 32 49 55 58 53 49 58 53 48 46 48 48 48 34 44 34 98 114 97 110 100 115 95 105 100 34 58 34 57 34 44 34 99 97 116 101 103 111 114 121 95 105 100 34 58 34 49 48 34 44 34 99 108 105 99 107 95 110 117 109 34 58 34 54 56 53 34 44 34 100 101 108 101 116 101 100 95 97 116 34 58 34 34 44 34 102 97 118 95 110 117 109 34 58 34 51 55 48 34 44 34 103 111 111 100 115 95 98 114 105 101 102 34 58 34 49 46 53 75 229 177 143 239 188 140 53 53 48 48 109 65 104 231 148 181 230 177 160 34 44 34 103 111 111 100 115 95 115 110 34 58 34 83 78 48 48 48 48 51 48 34 44 34 105 100 34 58 34 51 48 34 44 34 105 115 95 104 111 116 34 58 34 48 34 44 34 105 115 95 110 101 119 34 58 34 48 34 44 34 109 97 114 107 101 116 95 112 114 105 99 101 34 58 34 51 52 57 57 46 48 34 44 34 110 97 109 101 34 58 34 116 101 115 116 34 44 34 111 110 95 115 97 108 101 34 58 34 49 34 44 34 115 104 105 112 95 102 114 101 101 34 58 34 48 34 44 34 115 104 111 112 95 112 114 105 99 101 34 58 34 51 49 57 57 46 48 34 44 34 115 111 108 100 95 110 117 109 34 58 34 52 50 48 34 44 34 117 112 100 97 116 101 95 116 105 109 101 34 58 34 50 48 50 54 45 48 50 45 50 54 32 49 51 58 51 50 58 50 52 46 50 57 51 34 125 44 34 115 99 104 101 109 97 34 58 34 103 111 111 100 45 115 114 118 34 44 34 116 97 98 108 101 34 58 34 103 111 111 100 95 109 111 100 101 108 115 34 44 34 116 105 109 101 115 116 97 109 112 34 58 49 55 55 50 48 56 51 57 52 53 48 48 48 125]
+2026-02-26 13:32:34.661	[34mINFO[0m	es/es.go:214	商品数据同步到ES成功 goodsID: 30

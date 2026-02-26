@@ -15,10 +15,11 @@ type CategoryDO struct {
 }
 
 func (CategoryDO) TableName() string {
-	return "category"
+	return "category_models"
 }
 
 type CategoryDOList struct {
-	TotalCount int64         `json:"totalCount,omitempty"`
+	TotalCount int64 `json:"totalCount,omitempty"`
+	JsonData   string
 	Items      []*CategoryDO `json:"items"`
 }

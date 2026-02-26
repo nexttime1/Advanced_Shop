@@ -24,6 +24,7 @@ func convertCategoryDOToInfo(do *do.CategoryDO) *proto.CategoryInfoResponse {
 
 // GetAllCategorysList 获取所有分类列表
 func (gs *goodsServer) GetAllCategorysList(ctx context.Context, empty *emptypb.Empty) (*proto.CategoryListResponse, error) {
+	log.Info("GetAllCategory Call")
 	// 1. 调用service层获取所有分类（ 默认按ID升序）
 	categoryList, err := gs.srv.Category().ListAll(ctx, []string{"id asc"})
 	if err != nil {
@@ -31,15 +32,9 @@ func (gs *goodsServer) GetAllCategorysList(ctx context.Context, empty *emptypb.E
 		return nil, err
 	}
 
-	var ret proto.CategoryListResponse
-	for _, category := range categoryList.Items {
-		ret.Data = append(ret.Data, &proto.CategoryInfoResponse{
-			Id:               category.ID,
-			Name:             category.Name,
-			ParentCategoryID: category.ParentCategoryID,
-			Level:            category.Level,
-			IsTab:            category.IsTab,
-		})
+	ret := proto.CategoryListResponse{
+		JsonData: categoryList.JsonData,
+		Total:    int32(categoryList.TotalCount),
 	}
 
 	return &ret, nil

@@ -63,7 +63,6 @@ func (store *DataStore) StartCanalListener(ctx context.Context) {
 				zlog.Info("Canal监听器停止")
 				return
 			default:
-
 				entries, err := store.NewCanal().ParseCanalMessage()
 				if err != nil {
 					zlog.Errorf("Canal获取消息失败, err=%v", err)
@@ -82,7 +81,7 @@ func (store *DataStore) StartCanalListener(ctx context.Context) {
 						continue
 					}
 					header := entry.GetHeader()
-					if header.GetTableName() != "goods" { // 只处理商品表
+					if header.GetTableName() != store.canalOpts.TableName { // 只处理商品表
 						continue
 					}
 
@@ -106,15 +105,19 @@ func (store *DataStore) StartCanalListener(ctx context.Context) {
 							zlog.Errorf("构建MQ消息失败, goodsID=%v, err=%v", rowData.GetAfterColumns(), err)
 							continue
 						}
+						goodsMap := make(map[string]interface{})
+						for _, col := range rowData.GetAfterColumns() {
+							goodsMap[col.GetName()] = col.GetValue()
+						}
 
 						// 发送MQ消息
 						result, err := mqData.Send(ctx, mqMsg)
 						if err != nil {
-							zlog.Errorf("发送MQ消息失败, goodsID=%v, err=%v", rowData.GetAfterColumns(), err)
+							zlog.Errorf("发送MQ消息失败, goods内容= %v, err=%v", goodsMap, err)
 							continue
 						}
 
-						zlog.Infof("发送商品MQ消息成功, goodsID=%v, msgID=%s", rowData.GetAfterColumns(), result.MsgID)
+						zlog.Infof("发送商品MQ消息成功, goods内容 =%v, msgID=%s", goodsMap, result.MsgID)
 					}
 				}
 			}

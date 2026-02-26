@@ -5,6 +5,7 @@ import (
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/pkg/log"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/protobuf/ptypes/empty"
@@ -12,7 +13,7 @@ import (
 )
 
 func (gc *goodsController) GetAllCategoryView(c *gin.Context) {
-
+	log.Info("GetAllCategory Call")
 	list, err := gc.srv.Goods().GetAllCategorysList(c, &empty.Empty{})
 	if err != nil {
 		gin2.HandleValidatorError(c, err, gc.trans)

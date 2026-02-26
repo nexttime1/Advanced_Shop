@@ -62,30 +62,30 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 		goodsRouter.DELETE("/:id", goodsController.GoodDeleteView)
 
 		// 图片相关
-		goodsRouter.GET("banners", goodsController.GetBannerListView)
-		goodsRouter.POST("banners", goodsController.CreateBannerView)
-		goodsRouter.PUT("banners/:id", goodsController.UpdateBannerView)
-		goodsRouter.DELETE("banners/:id", goodsController.DeleteBannerView)
+		v1.GET("banners", goodsController.GetBannerListView)
+		v1.POST("banners", goodsController.CreateBannerView)
+		v1.PUT("banners/:id", goodsController.UpdateBannerView)
+		v1.DELETE("banners/:id", goodsController.DeleteBannerView)
 
 		// 分类相关
-		goodsRouter.GET("categorys", goodsController.GetAllCategoryView)
-		goodsRouter.GET("categorys/:id", goodsController.GetSubCategoryView)
-		goodsRouter.POST("categorys", goodsController.CreateCategoryView)
-		goodsRouter.PUT("categorys/:id", goodsController.UpdateCategoryView)
-		goodsRouter.DELETE("categorys/:id", goodsController.DeleteCategoryView)
+		v1.GET("categorys", goodsController.GetAllCategoryView)
+		v1.GET("categorys/:id", goodsController.GetSubCategoryView)
+		v1.POST("categorys", goodsController.CreateCategoryView)
+		v1.PUT("categorys/:id", goodsController.UpdateCategoryView)
+		v1.DELETE("categorys/:id", goodsController.DeleteCategoryView)
 
 		// 品牌相关
-		goodsRouter.GET("brands", goodsController.BrandListView)
-		goodsRouter.POST("brands", goodsController.CreateBrandView)
-		goodsRouter.PUT("brands/:id", goodsController.UpdateBrandView)
-		goodsRouter.DELETE("brands/:id", goodsController.DeleteBrandView)
+		v1.GET("brands", goodsController.BrandListView)
+		v1.POST("brands", goodsController.CreateBrandView)
+		v1.PUT("brands/:id", goodsController.UpdateBrandView)
+		v1.DELETE("brands/:id", goodsController.DeleteBrandView)
 
 		// 第三张表
-		goodsRouter.GET("categorybrands", goodsController.CategoryBrandListView)    //所有的 第三张表
-		goodsRouter.GET("categorybrands/:id", goodsController.CategoryAllBrandView) //某个分类下的所有品牌
-		goodsRouter.POST("categorybrands", goodsController.CreateCategoryBrandView)
-		goodsRouter.PUT("categorybrands/:id", goodsController.UpdateCategoryBrandView)
-		goodsRouter.DELETE("categorybrands/:id", goodsController.DeleteCategoryBrandView)
+		v1.GET("categorybrands", goodsController.CategoryBrandListView)    //所有的 第三张表
+		v1.GET("categorybrands/:id", goodsController.CategoryAllBrandView) //某个分类下的所有品牌
+		v1.POST("categorybrands", goodsController.CreateCategoryBrandView)
+		v1.PUT("categorybrands/:id", goodsController.UpdateCategoryBrandView)
+		v1.DELETE("categorybrands/:id", goodsController.DeleteCategoryBrandView)
 	}
 
 	// 订单路由

@@ -109,7 +109,7 @@ func (mf *RocketMqFactory) BuildGoodsMQMessage(
 }
 
 func (mf *RocketMqFactory) Send(ctx context.Context, mqMsg *primitive.Message) (*primitive.SendResult, error) {
-
+	zlog.Info("mq 开始发送关于es的消息")
 	result, err := mf.producer.SendSync(ctx, mqMsg)
 	if err != nil {
 		return nil, err

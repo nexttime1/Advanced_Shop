@@ -215,31 +215,6 @@ func (gs *goodsService) Update(ctx context.Context, goods *v1.GoodsInfo) error {
 	if err != nil {
 		return err
 	}
-	// search 层   (es)
-	model := goods.GoodsDO
-	searchDO := do.GoodsSearchDO{
-		ID:          model.ID,
-		CategoryID:  model.CategoryID,
-		BrandsID:    model.BrandsID,
-		Name:        model.Name,
-		ClickNum:    model.ClickNum,
-		FavNum:      model.FavNum,
-		MarketPrice: model.MarketPrice,
-		GoodsBrief:  model.GoodsBrief,
-		ShopPrice:   model.ShopPrice,
-	}
-	if model.OnSale != nil {
-		searchDO.OnSale = *model.OnSale
-	}
-	if model.ShipFree != nil {
-		searchDO.ShipFree = *model.ShipFree
-	}
-	if model.IsNew != nil {
-		searchDO.IsNew = *model.IsNew
-	}
-	if model.IsHot != nil {
-		searchDO.IsHot = *model.IsHot
-	}
 
 	return txn.Commit().Error
 }

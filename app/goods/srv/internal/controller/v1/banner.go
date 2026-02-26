@@ -13,7 +13,7 @@ import (
 // BannerList 轮播图列表
 func (gs *goodsServer) BannerList(ctx context.Context, empty *emptypb.Empty) (*proto.BannerListResponse, error) {
 	listMeta := v12.ListMeta{}
-	bannerList, err := gs.srv.Banner().List(ctx, listMeta, []string{"sort asc"})
+	bannerList, err := gs.srv.Banner().List(ctx, listMeta, []string{""})
 	if err != nil {
 		log.Errorf("get banner list error: %v", err.Error())
 		return nil, err
