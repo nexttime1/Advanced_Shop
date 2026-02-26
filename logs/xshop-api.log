@@ -797,3 +797,29 @@
 2026-02-26 11:55:49.653	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
 2026-02-26 11:56:01.330	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"0afb5efd-12c7-11f1-882c-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
 2026-02-26 11:56:02.120	[34mINFO[0m	v1/category.go:16	GetAllCategory Call
+2026-02-26 12:35:02.644	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"0afb5efd-12c7-11f1-882c-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 12:41:15.909	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"62119bc2-12cd-11f1-bbde-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 12:58:47.443	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"d05e9ac6-12cf-11f1-b5d4-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 13:01:33.939	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"32f782f8-12d0-11f1-8a1d-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 13:10:03.068	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"6713cb0f-12d1-11f1-b5e2-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 13:23:26.203	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"4497b58d-12d3-11f1-a2dc-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 13:32:23.861	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"869f05d0-12d4-11f1-aace-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 14:15:43.112	[34mINFO[0m	v1/goods.go:124	goods detail function called ...
+2026-02-26 14:15:43.150	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"869f05d0-12d4-11f1-aace-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 14:15:43.369	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7f017b4b-12da-11f1-a851-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8022"]}]
+2026-02-26 14:16:45.320	[34mINFO[0m	v1/goods.go:124	goods detail function called ...
+2026-02-26 14:27:22.977	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7f017b4b-12da-11f1-a851-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8022"]}]
+2026-02-26 14:30:45.399	[34mINFO[0m	v1/goods.go:124	goods detail function called ...
+2026-02-26 14:31:01.958	[34mINFO[0m	v1/order.go:41	order list function called ...
+2026-02-26 14:31:01.969	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"868fa02f-12dc-11f1-8e70-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8023"]}]
+2026-02-26 14:50:40.388	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"744b2dc6-12df-11f1-aa52-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8023"]}]
+2026-02-26 14:51:23.673	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-26 14:56:24.491	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-26 14:56:31.090	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"435a3109-12e0-11f1-8fe0-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8023"]}]
+2026-02-26 15:00:02.777	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"c3c17663-12e0-11f1-8af5-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8023"]}]
+2026-02-26 15:00:11.316	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-26 22:45:16.298	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-26 22:45:16.333	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"b867391d-1321-11f1-87d8-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8023"]}]
+2026-02-26 22:49:07.729	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 22:49:07.776	[34mINFO[0m	restserver/server.go:159	rest server is stopping
+2026-02-26 22:49:07.778	[34mINFO[0m	restserver/server.go:165	rest server stopped

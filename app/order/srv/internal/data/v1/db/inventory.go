@@ -11,7 +11,7 @@ import (
 	"Advanced_Shop/gnova/registry"
 )
 
-const ginvserviceName = "discovery:///Advanced_Shop-inventory-srv"
+const ginvserviceName = "discovery:///xshop-inventory-srv"
 
 func GetInventoryClient(opts *options.RegistryOptions) proto.InventoryClient {
 	discovery := NewDiscovery(opts)

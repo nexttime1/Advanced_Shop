@@ -22,6 +22,7 @@ func NewOrderServer(srv service.ServiceFactory) *orderServer {
 
 // CreateOrder 这个是给分布式事务saga调用的，没为api提供的需求
 func (os *orderServer) CreateOrder(ctx context.Context, request *pb.CreateRequest) (*emptypb.Empty, error) {
+	log.Info("saga 调用")
 	orderGoods := make([]*do.OrderGoodsModel, len(request.OrderItems))
 	for i, item := range request.OrderItems {
 		orderGoods[i] = &do.OrderGoodsModel{
@@ -73,8 +74,6 @@ func (os *orderServer) SubmitOrder(ctx context.Context, request *pb.OrderRequest
 		log.Errorf("新建订单失败: %v", err)
 		return nil, err
 	}
-
-	//另外一款解决ioc的库，wire
 
 	return &pb.SubmitResponse{PriceSum: total}, nil
 }

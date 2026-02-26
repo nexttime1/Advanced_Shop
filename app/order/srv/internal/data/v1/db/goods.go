@@ -12,7 +12,7 @@ import (
 	"Advanced_Shop/gnova/registry"
 )
 
-const goodsserviceName = "discovery:///Advanced_Shop-goods-srv"
+const goodsserviceName = "discovery:///xshop-goods-srv"
 
 func NewDiscovery(opts *options.RegistryOptions) registry.Discovery {
 	c := cosulAPI.DefaultConfig()

@@ -1,0 +1,34 @@
+2026-02-26 14:29:38.503	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:29:38.503	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-26 14:50:24.879	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 14:50:24.939	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 14:50:36.345	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:50:36.345	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-26 14:51:25.681	[31mERROR[0m	v1/order.go:125	批量获取商品信息失败，goodids: [9 8 7], err:rpc error: code = Canceled desc = context canceled
+2026-02-26 14:51:25.681	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Canceled desc = context canceled
+2026-02-26 14:56:10.129	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 14:56:10.214	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 14:56:23.127	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"869f05d0-12d4-11f1-aace-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 14:56:23.603	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7f017b4b-12da-11f1-a851-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8022"]}]
+2026-02-26 14:56:23.738	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:56:23.738	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-26 14:56:25.181	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Aborted desc = wait result not return success: FAILURE
+2026-02-26 14:59:47.013	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 14:59:47.430	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 14:59:59.055	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"869f05d0-12d4-11f1-aace-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 14:59:59.062	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7f017b4b-12da-11f1-a851-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8022"]}]
+2026-02-26 14:59:59.156	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:59:59.156	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-26 15:00:11.489	[34mINFO[0m	v1/order.go:179	开启saga......
+2026-02-26 15:00:11.512	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Aborted desc = wait result not return success: FAILURE
+2026-02-26 22:43:49.785	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 22:43:49.848	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-26 22:44:57.187	[34mINFO[0m	srv/app.go:57	激活DTM驱动成功
+2026-02-26 22:44:57.307	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"869f05d0-12d4-11f1-aace-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8021"]}]
+2026-02-26 22:44:57.311	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7f017b4b-12da-11f1-a851-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.67.93:8022"]}]
+2026-02-26 22:44:57.396	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 22:44:57.396	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-26 22:45:16.586	[34mINFO[0m	v1/order.go:179	开启saga......
+2026-02-26 22:45:16.627	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Aborted desc = wait result not return success: FAILURE
+2026-02-26 22:49:07.745	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 22:49:07.814	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

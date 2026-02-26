@@ -1,0 +1,33 @@
+2026-02-26 14:02:44.967	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:02:44.967	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:02:44.967	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:02:44.997	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:02:44.997	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:02:44.997	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:02:45.227	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:02:45.227	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-02-26 14:02:45.229	[31mERROR[0m	app/app.go:117	register service error: Put "http://127.0.0.1:8500/v1/agent/service/register": dial tcp 127.0.0.1:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 14:02:45.229	[31mERROR[0m	srv/app.go:90	run user app error: Put "http://127.0.0.1:8500/v1/agent/service/register": dial tcp 127.0.0.1:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 14:11:23.967	[34mINFO[0m	srv/app.go:33	127.0.0.1:8500
+2026-02-26 14:11:23.967	[35mDEBUG[0m	srv/app.go:34	http
+2026-02-26 14:11:23.967	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:11:23.967	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:11:23.967	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:11:23.995	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:11:23.995	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:11:23.995	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:11:24.119	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:11:24.119	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-02-26 14:11:24.120	[31mERROR[0m	app/app.go:117	register service error: Put "http://127.0.0.1:8500/v1/agent/service/register": dial tcp 127.0.0.1:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 14:11:24.120	[31mERROR[0m	srv/app.go:92	run user app error: Put "http://127.0.0.1:8500/v1/agent/service/register": dial tcp 127.0.0.1:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-26 14:15:06.702	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:15:06.702	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:15:06.702	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:15:06.729	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-26 14:15:06.729	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-26 14:15:06.729	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-26 14:15:06.830	[34mINFO[0m	app/app.go:104	start server
+2026-02-26 14:15:06.830	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-02-26 14:15:43.601	[31mERROR[0m	db/inventory.go:98	get inv err: record not found
+2026-02-26 22:49:07.741	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-26 22:49:07.823	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

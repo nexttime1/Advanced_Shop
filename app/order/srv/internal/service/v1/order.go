@@ -176,8 +176,9 @@ func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) (float3
 		GoodsId:    response.GoodsId, // 用于删除 购物车的
 	}
 
-	qsBusi := "discovery:///Shop-inventory-srv"
-	gBusi := "discovery:///Shop-order-srv"
+	log.Info("开启saga......")
+	qsBusi := "discovery:///xshop-inventory-srv"
+	gBusi := "discovery:///xshop-order-srv"
 	saga := dtmgrpc.NewSagaGrpc(os.dtmOpts.GrpcServer, order.OrderSn).
 		Add(qsBusi+"/Inventory/Sell", qsBusi+"/Inventory/Reback", req).
 		Add(gBusi+"/Order/CreateOrder", gBusi+"/Order/CreateOrderCom", oReq)
