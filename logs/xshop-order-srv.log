@@ -32,3 +32,29 @@
 2026-02-26 22:45:16.627	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Aborted desc = wait result not return success: FAILURE
 2026-02-26 22:49:07.745	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-26 22:49:07.814	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-27 09:19:28.983	[34mINFO[0m	srv/app.go:57	激活DTM驱动成功
+2026-02-27 09:19:50.030	[31mFATAL[0m	srv/rpc.go:27	An internal server error occurred
+Advanced_Shop/app/order/srv.NewOrderRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/order/srv/rpc.go:27
+Advanced_Shop/app/order/srv.NeworderApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/order/srv/app.go:59
+Advanced_Shop/app/order/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/order/srv/app.go:73
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/order/order.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 09:38:35.628	[34mINFO[0m	srv/app.go:57	激活DTM驱动成功
+2026-02-27 09:38:35.895	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 09:38:35.895	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-27 09:38:48.914	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"0d50d724-137d-11f1-8c85-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]

@@ -6,10 +6,8 @@ import (
 	gapp "Advanced_Shop/gnova/app"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
-	gdtm "Advanced_Shop/gnova/registry/dtm"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
-	"github.com/dtm-labs/dtmdriver"
 	"github.com/hashicorp/consul/api"
 )
 
@@ -45,16 +43,6 @@ func NeworderApp(cfg *config.Config) (*gapp.App, error) {
 	//服务注册
 	register := NewRegistrar(cfg.Registry)
 
-	// dtm 服务注册
-	dtmDriver := gdtm.NewXtmDriver(cfg.Registry.Address, cfg.Registry.Scheme)
-	dtmdriver.Register(dtmDriver)
-	// 调用的Use方法激活驱动
-	err := dtmdriver.Use(gdtm.DriverName)
-	if err != nil {
-		log.Errorf("激活DTM驱动失败: %v", err)
-		return nil, err
-	}
-	log.Infof("激活DTM驱动成功")
 	//生成rpc服务
 	rpcServer, err := NewOrderRPCServer(cfg)
 	if err != nil {

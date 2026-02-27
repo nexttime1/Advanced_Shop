@@ -20,10 +20,10 @@ import (
 
 // 常量定义：驱动名和协议名
 const (
-	DriverName    = "dtm-driver-xtm" // 自定义驱动的名称（唯一标识）
-	DefaultScheme = "discovery"      // Kratos默认的服务发现协议
-	EtcdScheme    = "etcd"           // Etcd协议
-	ConsulScheme  = "consul"         // Consul协议
+	DriverName    = "dtm-driver-kratos" // 自定义驱动的名称（唯一标识）
+	DefaultScheme = "discovery"         // Kratos默认的服务发现协议
+	EtcdScheme    = "etcd"              // Etcd协议
+	ConsulScheme  = "consul"            // Consul协议
 )
 
 // kratosDriver：实现DTM Driver接口的结构体
@@ -147,7 +147,7 @@ func (k *xtmDriver) ParseServerMethod(uri string) (server string, method string,
 	// 情况2：URI含"//"（比如"discovery:///xshop-inventory-srv/Inventory/Sell"）
 	u, err := url.Parse(uri)
 	if err != nil {
-		return "", "", fmt.Errorf("parse uri %s failed: %v", uri, err)
+		return "", "", nil // 解析失败返回空（DTM会处理错误）
 	}
 	// 找Path中第一个"/"的位置（比如Path="/Inventory/Sell"，index=0）
 	index := strings.IndexByte(u.Path[1:], '/') + 1

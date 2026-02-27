@@ -1,4 +1,4 @@
-module Advanced_Shop
+module github.com/nexttime1/Advanced_Shop
 
 go 1.25.6
 

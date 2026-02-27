@@ -31,3 +31,39 @@
 2026-02-26 14:15:43.601	[31mERROR[0m	db/inventory.go:98	get inv err: record not found
 2026-02-26 22:49:07.741	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-26 22:49:07.823	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-27 09:19:28.332	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 09:19:28.333	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 09:19:28.333	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 09:19:33.334	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 09:19:38.335	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 09:19:43.336	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 09:19:48.336	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 09:19:49.395	[31mFATAL[0m	srv/rpc.go:29	An internal server error occurred
+Advanced_Shop/app/inventory/srv.NewInventoryRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/rpc.go:29
+Advanced_Shop/app/inventory/srv.NewInventoryApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:69
+Advanced_Shop/app/inventory/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:83
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/inventory/inventory.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 09:38:43.951	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 09:38:43.951	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 09:38:43.951	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 09:38:43.969	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 09:38:43.969	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 09:38:43.969	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 09:38:44.061	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 09:38:44.061	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022

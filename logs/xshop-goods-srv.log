@@ -1,0 +1,48 @@
+2026-02-27 09:19:34.058	[31mFATAL[0m	srv/rpc.go:33	failed to get es client
+Advanced_Shop/app/goods/srv.NewGoodsRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/rpc.go:33
+Advanced_Shop/app/goods/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:47
+Advanced_Shop/app/goods/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:61
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 09:38:39.526	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 09:38:39.527	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 09:38:39.528	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 09:38:39.531	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 09:38:40.225	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 09:38:41.614	[31mERROR[0m	es/es.go:105	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-27 10:36:15.226	[31mFATAL[0m	srv/rpc.go:33	failed to get es client
+Advanced_Shop/app/goods/srv.NewGoodsRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/rpc.go:33
+Advanced_Shop/app/goods/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:47
+Advanced_Shop/app/goods/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:61
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
