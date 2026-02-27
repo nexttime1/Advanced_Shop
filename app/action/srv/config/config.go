@@ -7,8 +7,7 @@ import (
 )
 
 type Config struct {
-	Log       *log.Options       `json:"log" mapstructure:"log"`
-	EsOptions *options.EsOptions `json:"es" mapstructure:"es"`
+	Log *log.Options `json:"log" mapstructure:"log"`
 
 	Server       *options.ServerOptions    `json:"server" mapstructure:"server"`
 	Registry     *options.RegistryOptions  `json:"registry" mapstructure:"registry"`
@@ -23,7 +22,6 @@ func (c *Config) Validate() []error {
 	errors = append(errors, c.Registry.Validate()...)
 	errors = append(errors, c.Telemetry.Validate()...)
 	errors = append(errors, c.MySQLOptions.Validate()...)
-	errors = append(errors, c.EsOptions.Validate()...)
 	return errors
 }
 
@@ -33,7 +31,6 @@ func (c *Config) Flags() (fss cliflag.NamedFlagSets) {
 	c.Registry.AddFlags(fss.FlagSet("registry"))
 	c.Telemetry.AddFlags(fss.FlagSet("telemetry"))
 	c.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
-	c.EsOptions.AddFlags(fss.FlagSet("es"))
 	return fss
 }
 
@@ -45,6 +42,5 @@ func New() *Config {
 		Registry:     options.NewRegistryOptions(),
 		Telemetry:    options.NewTelemetryOptions(),
 		MySQLOptions: options.NewMySQLOptions(),
-		EsOptions:    options.NewEsOptions(),
 	}
 }

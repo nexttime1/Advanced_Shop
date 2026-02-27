@@ -857,3 +857,759 @@
 2026-02-27 09:38:41.450	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
 2026-02-27 09:38:41.450	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
 2026-02-27 09:38:48.907	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"0d50d724-137d-11f1-8c85-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 10:00:20.264	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"086ab937-137d-11f1-b513-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 10:00:20.264	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"08456abf-137d-11f1-9873-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 10:00:20.264	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"0d50d724-137d-11f1-8c85-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 10:49:00.114	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:49:45.780	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:49:52.810	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:49:59.120	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:06.057	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:10.087	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:15.556	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:17.664	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:22.543	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:50:32.595	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:50:49.556	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:50:54.583	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:50:59.601	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:04.613	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:09.629	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:21.527	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 10:51:26.547	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:31.567	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:36.583	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:41.602	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:46.625	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:51.653	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:51:56.666	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:01.693	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:06.716	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:11.741	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:16.757	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:21.770	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:26.785	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:31.803	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:36.820	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:41.846	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:46.866	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:51.887	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:52:56.905	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:01.924	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:06.942	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:11.962	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:16.987	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:22.003	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:27.030	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:35.012	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:53:45.052	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:50.065	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:53:55.077	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:00.097	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:05.119	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:10.140	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:15.155	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:23.390	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:54:27.862	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:54:40.975	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:46.002	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:54:53.595	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:55:12.311	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:17.338	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:22.352	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:27.377	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:44.525	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 10:55:49.550	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:54.566	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:55:59.586	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:04.608	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:19.319	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:24.331	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:29.343	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:34.356	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:39.382	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:44.396	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:49.418	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:54.440	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:56:59.459	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:04.482	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:09.499	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:21.085	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:57:32.326	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:41.471	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:46.504	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:51.523	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:57:56.546	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:01.561	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:06.579	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:11.603	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:16.616	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:31.312	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:36.338	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:58:55.290	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:58:59.647	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:59:14.866	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:59:20.930	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:59:23.322	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 10:59:34.335	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:59:39.360	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:59:44.373	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 10:59:58.333	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:03.356	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:08.377	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:22.660	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:34.330	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:39.358	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:44.379	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:49.394	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:00:54.410	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:06.208	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 11:01:11.225	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:16.252	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:21.279	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:26.302	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:39.620	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:44.646	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:49.667	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:54.694	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:01:59.714	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:02:12.302	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:17.304	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:22.305	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:27.306	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:32.306	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:37.307	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:02:42.323	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:02:47.339	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:02:52.356	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:02:57.367	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:03:02.388	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:03:07.413	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:03:12.438	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 11:03:39.309	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:03:44.309	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:03:49.310	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:03:54.312	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:03:59.313	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:04.314	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:09.315	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:14.315	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:19.315	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:24.316	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:28.059	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:0bc18959-137d-11f1-a8e7-84a9388aedfb": read tcp 192.168.163.1:50856->192.168.163.132:8500: wsarecv: An existing connection was forcibly closed by the remote host.
+2026-02-27 11:04:29.317	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 11:04:30.107	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:0bc18959-137d-11f1-a8e7-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-27 11:04:34.258	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:04:34.425	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:04:34.575	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:04:35.448	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:04:36.439	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:04:37.391	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: LOADING Redis is loading the dataset in memory
+2026-02-27 11:10:33.189	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 11:10:33.225	[34mINFO[0m	restserver/server.go:159	rest server is stopping
+2026-02-27 11:10:33.226	[34mINFO[0m	restserver/server.go:165	rest server stopped
+2026-02-27 11:29:54.263	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 11:29:54.264	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 11:29:54.264	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 11:29:54.263	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-02-27 11:29:54.264	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-02-27 11:29:54.264	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-02-27 11:29:54.280	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"8f5b402b-138c-11f1-832b-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 11:29:54.299	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 11:29:54.299	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 11:29:54.299	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 11:29:54.314	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 11:29:54.314	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/ --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func1(7 handlers)
+2026-02-27 11:29:54.314	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/cmdline --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func2(7 handlers)
+2026-02-27 11:29:54.314	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/profile --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func3(7 handlers)
+2026-02-27 11:29:54.314	[34mINFO[0m	restserver/server.go:115	POST   /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func4(7 handlers)
+2026-02-27 11:29:54.314	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func5(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/trace --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func6(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/allocs --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func7(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/block --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func8(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/goroutine --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func9(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/heap --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func10(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/mutex --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func11(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/threadcreate --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func12(7 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
+2026-02-27 11:29:54.315	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
+2026-02-27 11:30:04.343	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"9875b2a8-138c-11f1-94d5-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 11:30:10.007	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"98800af8-138c-11f1-b1c0-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 13:30:46.626	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:40:49.795	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:40:53.287	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:40:59.450	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:41:57.558	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:42:18.762	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:42:30.764	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:42:34.629	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:42:50.488	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:42:53.942	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:02.309	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:08.706	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:18.646	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:28.929	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:44.020	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:43:47.879	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:44:03.964	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:44:16.190	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 13:44:21.207	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:44:26.219	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:44:43.303	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:44:48.314	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:44:53.333	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:44:58.352	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:13.297	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:18.319	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:23.346	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:28.358	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:41.310	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:45:46.335	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:46:03.945	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:46:27.754	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:46:41.584	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:46:50.956	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:47:02.304	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:47:07.321	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:47:12.343	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:47:17.360	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:47:25.548	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:47:33.848	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:47:58.077	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 13:48:03.101	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:08.116	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:13.143	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:18.160	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:23.188	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:28.201	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:33.214	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:38.234	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:43.256	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:48.278	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:53.295	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:48:58.311	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:03.338	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:08.358	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:13.373	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:18.401	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:23.417	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:28.433	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:33.452	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:38.479	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:43.493	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:48.518	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:53.532	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:49:58.560	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:03.584	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:08.602	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:13.622	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:18.644	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:23.660	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:28.678	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:37.087	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:50:50.284	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:50:55.298	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:00.324	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:10.691	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:51:34.731	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 13:51:39.750	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:44.773	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:49.790	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:54.816	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:51:59.833	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:04.849	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:20.295	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:25.323	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:30.343	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:35.366	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:52:49.540	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 13:53:02.178	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:53:08.381	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:53:11.481	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 13:53:33.642	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:53:45.315	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:53:50.339	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:53:55.353	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:00.377	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:05.402	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:10.426	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:15.445	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:20.470	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:25.497	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:30.522	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:35.545	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:40.571	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:45.594	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:50.611	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:54:55.629	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:00.642	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:05.659	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:10.675	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:15.703	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:20.730	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:25.752	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:30.772	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:35.797	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:40.821	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:45.842	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:50.869	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:55:55.889	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:00.905	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:05.919	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:10.936	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:15.954	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:20.965	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:25.987	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:31.011	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:36.037	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:41.064	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 13:56:55.341	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:05.338	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:15.336	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:25.366	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:37.103	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:45.557	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:55.825	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:05.553	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:15.465	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:31.221	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:35.498	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:45.525	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:57.659	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:06.212	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:19.739	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:32.391	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:35.713	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:00.231	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:10.784	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:14.388	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:15.590	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:26.468	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:46.437	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:53.128	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:01:07.764	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:01:49.514	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:03:02.737	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:05:35.801	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:08:47.061	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:09:03.561	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:09:25.656	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:09:36.404	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:09:49.325	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:09:54.575	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:10:17.419	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:10:22.560	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:10:27.802	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:11:03.188	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:11:13.240	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:11:21.608	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:11:34.754	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:11:40.619	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:11:48.763	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:12:15.873	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 14:12:20.895	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:12:33.613	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:12:41.267	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:12:52.300	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:12:57.324	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:02.350	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:07.373	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:12.397	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:17.415	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:22.442	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:27.462	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:32.478	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:37.491	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:42.519	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:47.539	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:52.560	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:13:57.588	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:14.303	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:19.322	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:24.352	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:29.379	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:34.394	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:39.425	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:45.575	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:50.589	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:14:55.614	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:00.629	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:05.653	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:10.673	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:15.700	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:27.682	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 14:15:32.706	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:37.726	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:42.749	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:47.762	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:52.776	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:15:57.793	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:16:02.807	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:16:32.507	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:16:38.442	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:16:49.300	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:17:12.293	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:17:17.316	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:17:32.310	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:17:43.146	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:17:55.307	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:18:00.335	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:18:05.359	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:18:17.541	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:18:23.696	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:18:35.708	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 14:19:08.300	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:19:34.289	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:19:49.413	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:20:13.974	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:20:18.419	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:20:40.210	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:20:45.756	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:21:07.296	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:21:15.328	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:22:03.302	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:22:14.305	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:22:22.644	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:22:26.181	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:22:37.293	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:03.306	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:08.331	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:13.359	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:18.374	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:23.399	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:23:48.974	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:24:01.297	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:06.322	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:11.339	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:16.353	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:21.367	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:26.387	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:31.412	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:36.439	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:41.453	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:46.481	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:51.502	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:24:56.528	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:01.548	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:06.561	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:11.583	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:16.606	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:21.624	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:26.645	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:31.662	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:36.687	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:25:57.301	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:02.323	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:07.343	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:12.362	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:17.378	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:22.404	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:27.425	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:38.399	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 14:26:43.417	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:48.442	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:53.459	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:26:58.480	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:03.504	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:08.531	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:13.554	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:19.321	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:24.337	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:29.357	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:34.376	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:39.396	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:44.416	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:49.430	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:54.452	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:27:59.464	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:04.481	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:09.507	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:14.530	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:19.555	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:24.576	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:29.601	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:34.618	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:39.632	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:44.648	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:49.669	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:54.695	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:28:59.713	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:04.728	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:09.743	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:14.755	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:19.775	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:24.792	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:29.808	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:34.825	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:39.846	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:44.873	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:49.894	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:29:54.908	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:03.976	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:30:14.299	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:19.323	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:32.512	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:37.537	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:42.549	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:47.567	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:52.584	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:30:57.611	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:02.634	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:07.655	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:12.675	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:17.689	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:22.704	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:27.718	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:32.733	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:37.768	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:42.788	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:47.808	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:52.824	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:31:57.837	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:02.853	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:07.878	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:12.897	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:17.914	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:31.299	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:36.312	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:41.340	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:46.358	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:51.379	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:32:56.405	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:01.418	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:06.436	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:11.447	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:16.461	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:21.485	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:26.514	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:35.386	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:33:48.557	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: i/o timeout
+2026-02-27 14:33:53.576	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:33:58.597	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:03.614	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:08.635	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:14.115	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:34:23.501	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:34:33.534	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:38.547	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:43.568	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:48.595	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:53.618	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:34:58.640	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:03.666	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:08.688	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:13.706	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:18.730	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:23.753	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:28.780	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:33.806	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:38.831	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:43.849	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:48.865	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:35:56.737	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:01.257	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:05.338	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:15.335	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:25.352	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:35.334	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:47.981	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:55.761	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:10.272	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:15.875	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:26.212	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:35.932	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:45.487	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:57.232	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:05.511	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:21.697	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:26.335	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:40.565	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:54.772	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:00.079	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:07.857	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:17.172	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:39.704	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:43.859	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:50.742	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:56.797	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:22.094	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:27.186	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:28.382	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:59.448	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:95177992-138c-11f1-b8d4-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:42:47.522	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:43:04.508	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:43:08.408	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:43:15.157	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:43:17.840	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 14:43:27.712	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:44:30.689	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:45:56.982	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:14.793	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:16.656	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:21.464	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:24.448	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:27.063	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:31.347	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:35.105	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:37.685	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:52.085	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:46:55.319	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:47:06.630	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:47:10.828	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:47:17.644	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:47:33.508	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:47:43.547	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:47:46.979	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:47:55.264	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 14:48:06.298	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:11.311	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:16.338	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:21.358	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:26.373	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:31.386	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:36.410	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 14:48:41.425	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: i/o timeout
+2026-02-27 15:09:26.549	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-02-27 15:09:26.549	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-02-27 15:09:26.549	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-02-27 15:09:26.549	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 15:09:26.549	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 15:09:26.549	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 15:09:26.571	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"7fa1cd8c-13aa-11f1-8778-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 15:09:26.571	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 15:09:26.571	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 15:09:26.571	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 15:09:26.591	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 15:09:26.591	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/ --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func1(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/cmdline --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func2(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/profile --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func3(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	POST   /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func4(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func5(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/trace --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func6(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/allocs --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func7(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/block --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func8(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/goroutine --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func9(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/heap --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func10(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/mutex --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func11(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/threadcreate --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func12(7 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
+2026-02-27 15:09:26.592	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
+2026-02-27 15:09:31.304	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3ecc5dd2-13ab-11f1-b00e-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 15:09:32.644	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3ea1c948-13ab-11f1-8387-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-27 15:09:41.208	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"433d9e78-13ab-11f1-924a-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 15:10:59.259	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 15:27:58.953	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 15:31:48.373	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 15:34:10.233	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 15:52:01.129	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3ecc5dd2-13ab-11f1-b00e-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 15:55:54.205	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:56:01.573	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:56:28.378	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:56:38.483	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:56:48.659	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:57:01.031	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 15:57:16.941	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3ecc5dd2-13ab-11f1-b00e-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 15:57:17.202	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": read tcp 192.168.163.1:63000->192.168.163.132:8500: wsarecv: An existing connection was forcibly closed by the remote host.
+2026-02-27 15:57:19.641	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-27 15:57:20.575	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:25.575	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:30.575	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:35.578	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:35.664	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:57:40.578	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:45.579	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:50.580	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:55.581	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:57:58.635	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:58:00.581	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:05.582	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:10.583	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:15.583	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:19.666	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:58:20.584	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:25.584	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:30.585	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:35.586	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:40.586	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:40.712	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:40624503-13ab-11f1-8104-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:58:45.586	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:50.587	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 15:58:51.555	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 15:58:55.587	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-02-27 16:06:00.642	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-02-27 16:06:00.643	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-02-27 16:06:00.643	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-02-27 16:06:00.642	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 16:06:00.644	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 16:06:00.644	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 16:06:00.667	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 16:06:00.667	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 16:06:00.667	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 16:06:00.700	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/ --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func1(7 handlers)
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/cmdline --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func2(7 handlers)
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/profile --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func3(7 handlers)
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	POST   /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func4(7 handlers)
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func5(7 handlers)
+2026-02-27 16:06:00.701	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/trace --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func6(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/allocs --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func7(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/block --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func8(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/goroutine --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func9(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/heap --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func10(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/mutex --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func11(7 handlers)
+2026-02-27 16:06:00.702	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/threadcreate --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func12(7 handlers)
+2026-02-27 16:06:00.703	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
+2026-02-27 16:06:00.703	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
+2026-02-27 16:06:02.625	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"269b406b-13b3-11f1-9ae6-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 16:06:07.366	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"25828244-13b3-11f1-9f3e-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 16:06:09.276	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"28006fa1-13b3-11f1-bb72-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 16:06:09.300	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"28006fa1-13b3-11f1-bb72-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 16:06:38.513	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3cea86f1-13b3-11f1-a968-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-27 16:06:46.098	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3cea86f1-13b3-11f1-a968-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-27 16:09:37.113	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"28006fa1-13b3-11f1-bb72-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 16:09:37.121	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"25828244-13b3-11f1-9f3e-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 16:09:37.125	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3cea86f1-13b3-11f1-a968-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-27 16:09:37.126	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"269b406b-13b3-11f1-9ae6-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 16:25:12.479	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 16:50:22.816	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 16:55:35.453	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 17:09:34.949	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: redis: nil
+2026-02-27 17:20:54.497	[34mINFO[0m	v1/order.go:96	order create function called ...
+2026-02-27 17:41:45.673	[34mINFO[0m	v1/address.go:15	address list function called ...
+2026-02-27 17:43:13.109	[34mINFO[0m	v1/address.go:15	address list function called ...
+2026-02-27 17:44:48.251	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 17:44:48.260	[34mINFO[0m	restserver/server.go:159	rest server is stopping
+2026-02-27 17:44:48.266	[34mINFO[0m	restserver/server.go:165	rest server stopped
+2026-02-27 17:44:55.301	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 17:44:55.302	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 17:44:55.302	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-02-27 17:44:55.302	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 17:44:55.302	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-02-27 17:44:55.302	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-02-27 17:44:55.312	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"28006fa1-13b3-11f1-bb72-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8020"]}]
+2026-02-27 17:44:55.314	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"3cea86f1-13b3-11f1-a968-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-27 17:44:55.318	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"269b406b-13b3-11f1-9ae6-84a9388aedfb","name":"xshop-order-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8023"]}]
+2026-02-27 17:44:55.321	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"b8c17858-13c0-11f1-9683-84a9388aedfb","name":"xshop-action-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8024"]}]
+2026-02-27 17:44:55.324	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"ddeddb7b-13b9-11f1-885a-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-27 17:44:55.331	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-27 17:44:55.331	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-27 17:44:55.331	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-27 17:44:55.348	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/ --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func1(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/cmdline --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func2(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/profile --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func3(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	POST   /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func4(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func5(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/trace --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func6(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/allocs --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func7(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/block --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func8(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/goroutine --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func9(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/heap --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func10(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/mutex --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func11(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/threadcreate --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func12(7 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
+2026-02-27 17:44:55.349	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
+2026-02-27 17:45:00.076	[34mINFO[0m	v1/address.go:15	address list function called ...
+2026-02-27 17:45:11.543	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 17:45:11.548	[34mINFO[0m	restserver/server.go:159	rest server is stopping
+2026-02-27 17:45:11.549	[34mINFO[0m	restserver/server.go:165	rest server stopped

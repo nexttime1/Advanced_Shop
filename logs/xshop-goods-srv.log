@@ -46,3 +46,484 @@ main.main
 	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
 runtime.main
 	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 11:48:39.270	[31mFATAL[0m	srv/rpc.go:33	failed to get es client
+Advanced_Shop/app/goods/srv.NewGoodsRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/rpc.go:33
+Advanced_Shop/app/goods/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:47
+Advanced_Shop/app/goods/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:61
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 11:54:33.485	[31mFATAL[0m	srv/rpc.go:33	failed to get es client
+Advanced_Shop/app/goods/srv.NewGoodsRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/rpc.go:33
+Advanced_Shop/app/goods/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:47
+Advanced_Shop/app/goods/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:61
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 11:58:33.860	[31mFATAL[0m	srv/rpc.go:33	failed to get es client
+Advanced_Shop/app/goods/srv.NewGoodsRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/rpc.go:33
+Advanced_Shop/app/goods/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:47
+Advanced_Shop/app/goods/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/goods/srv/app.go:61
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:297
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:250
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/goods/goods.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.6.windows-amd64/src/runtime/proc.go:285
+2026-02-27 12:55:36.689	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 12:55:36.690	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 12:55:36.691	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 12:55:36.695	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 12:55:39.450	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 12:55:42.734	[31mERROR[0m	es/es.go:105	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-27 13:00:22.485	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 13:00:22.487	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 13:00:22.487	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 13:00:22.488	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 13:00:22.525	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 13:00:24.558	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-27 13:00:24.634	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 13:00:24.634	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-27 13:56:55.723	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:05.719	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:15.719	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:25.719	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:37.297	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:45.754	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:57:55.826	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:05.893	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:15.910	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:31.201	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:36.389	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:45.754	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:58:57.618	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:06.308	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:19.778	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:32.386	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 13:59:35.758	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:02.217	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:10.845	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:14.375	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:15.889	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:41.761	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:46.471	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:00:53.173	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:01:09.381	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:01:55.435	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:05:13.765	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:23:05.438	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:01.835	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:02.141	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:05.723	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:15.719	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:25.720	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:35.720	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:47.981	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:36:55.799	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:10.272	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:15.937	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:26.238	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:35.961	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:45.730	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:37:57.263	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:07.153	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:20.885	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:26.325	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:40.565	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:38:54.835	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:00.071	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:07.808	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:17.095	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:39.697	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:43.804	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:50.679	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:39:56.762	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:21.883	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:26.822	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:40:27.506	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:42:26.623	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Unexpected response code: 404 (Unknown check ID "service:39d273d5-1399-11f1-8221-84a9388aedfb". Ensure that the check ID is passed, not the check name.)
+2026-02-27 14:43:17.822	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 15:09:21.428	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 15:09:21.428	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 15:09:21.428	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 15:09:21.430	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 15:09:22.265	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 15:09:23.562	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-27 15:09:23.647	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 15:09:23.647	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-27 15:57:20.734	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:21.042	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:21.342	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:21.643	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:21.944	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:22.244	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:22.545	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:22.845	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:23.146	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:23.446	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:23.746	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:24.047	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:24.348	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:24.649	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:24.949	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:25.250	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:25.551	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:25.853	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:26.153	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:26.454	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:26.709	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:3ea1c948-13ab-11f1-8387-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: No connection could be made because the target machine actively refused it.
+2026-02-27 15:57:26.755	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:27.055	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:27.355	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:27.656	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:27.956	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:28.257	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:28.557	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:28.858	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:29.158	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:29.459	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:29.759	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:30.059	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:30.360	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:30.660	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:30.961	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:31.261	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:31.562	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:31.862	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:32.163	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:32.464	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:32.764	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:33.065	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:33.366	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:33.666	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:33.967	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:34.268	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:34.568	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:34.869	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:35.169	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:35.470	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:35.770	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:36.071	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:36.371	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:36.672	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:36.972	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:37.273	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:37.573	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:37.874	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:38.174	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:38.475	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:38.776	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:39.077	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:39.377	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:39.677	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:39.978	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:40.278	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:40.578	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:40.879	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:41.180	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:41.481	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:41.781	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:42.082	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:42.383	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:42.683	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:42.984	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:43.285	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:43.586	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:43.886	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:44.186	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:44.487	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:44.788	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:45.088	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:45.388	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:45.689	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:45.990	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:46.290	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:46.591	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:46.892	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:47.192	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:47.492	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:47.793	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:48.094	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:48.394	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:48.695	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:48.996	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:49.296	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:49.597	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:49.897	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:50.198	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:50.499	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:50.799	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:51.100	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:51.400	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:51.700	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:52.001	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:52.302	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:52.602	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:52.902	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:53.203	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:53.503	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:53.804	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:54.105	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:54.405	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:54.706	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:55.006	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:55.307	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:55.608	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:55.722	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:3ea1c948-13ab-11f1-8387-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:57:55.908	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:56.208	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:56.508	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:56.809	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:57.110	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:57.410	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:57.711	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:58.014	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:58.316	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:58.616	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:58.916	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:59.217	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:59.518	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:57:59.818	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:00.119	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:00.419	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:00.720	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:01.021	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:01.321	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:01.622	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:01.923	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:02.223	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:02.524	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:02.824	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:03.126	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:03.427	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:03.727	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:04.028	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:04.328	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:04.628	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:04.929	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:05.230	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:05.531	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:05.831	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:06.131	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:06.432	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:06.733	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:07.033	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:07.334	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:07.635	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:07.935	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:08.236	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:08.537	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:08.838	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:09.138	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:09.439	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:09.740	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:10.040	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:10.340	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:10.641	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:10.942	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:11.242	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:11.542	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:11.843	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:12.143	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:12.443	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:12.744	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:13.044	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:13.345	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:13.645	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:13.946	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:14.247	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:14.547	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:14.847	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:15.148	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:15.449	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:15.749	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:16.050	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:16.350	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:16.650	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:16.769	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:3ea1c948-13ab-11f1-8387-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:58:16.951	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:17.252	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:17.552	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:17.852	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:18.153	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:18.453	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:18.754	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:19.055	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:19.355	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:19.656	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:19.956	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:20.257	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:20.557	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:20.859	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:21.159	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:21.460	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:21.761	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:22.061	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:22.362	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:22.662	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:22.963	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:23.264	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:23.564	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:23.864	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:24.165	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:24.465	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:24.766	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:25.066	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:25.367	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:25.667	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:25.968	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:26.268	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:26.569	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:26.870	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:27.170	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:27.471	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:27.771	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:28.072	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:28.372	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:28.673	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:28.973	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:29.274	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:29.574	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:29.875	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:30.175	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:30.476	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:30.777	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:31.077	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:31.378	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:31.679	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:31.979	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:32.280	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:32.580	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:32.881	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:33.181	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:33.481	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:33.782	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:34.082	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:34.383	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:34.684	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:34.984	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:35.284	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:35.585	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:35.886	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:36.186	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:36.486	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:36.787	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:37.087	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:37.388	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:37.689	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:37.813	[31mERROR[0m	consul/client.go:194	[Consul]update ttl heartbeat to consul failed!err:=Put "http://192.168.163.132:8500/v1/agent/check/update/service:3ea1c948-13ab-11f1-8387-84a9388aedfb": dial tcp 192.168.163.132:8500: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2026-02-27 15:58:37.989	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:38.290	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:38.590	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:38.891	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:39.191	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:39.492	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:39.792	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:40.093	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:40.393	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:40.694	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:40.994	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:41.295	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:41.595	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:41.896	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:42.197	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:42.498	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:42.798	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:43.099	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:43.399	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:43.700	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:44.000	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:44.301	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:44.601	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:44.902	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:45.202	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:45.503	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:45.803	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:46.104	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:46.404	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:46.705	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:47.006	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:47.306	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:47.606	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:47.907	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:48.207	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:48.507	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:48.808	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:49.108	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:49.409	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:49.709	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:50.009	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:50.310	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:50.611	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:50.911	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:51.212	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:51.512	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:51.576	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 15:58:51.813	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:52.113	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:52.414	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:52.714	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:53.014	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:53.315	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:53.615	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:53.916	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:54.216	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:54.517	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:54.818	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:55.118	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 15:58:55.419	[31mERROR[0m	realize/data.go:68	Canal获取消息失败, err=An internal server error occurred
+2026-02-27 16:06:00.040	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 16:06:00.041	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 16:06:00.041	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 16:06:00.043	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 16:06:00.166	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 16:06:06.137	[31mERROR[0m	es/es.go:105	启动商品MQ消费者失败: the topic=goods_topic route info not found, it may not exist
+2026-02-27 16:06:34.388	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-27 16:06:34.389	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-27 16:06:34.389	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-27 16:06:34.391	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-27 16:06:34.405	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-27 16:06:36.621	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-27 16:06:36.750	[34mINFO[0m	app/app.go:104	start server
+2026-02-27 16:06:36.750	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-27 17:45:11.561	[34mINFO[0m	app/app.go:151	start deregister service
+2026-02-27 17:45:11.585	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

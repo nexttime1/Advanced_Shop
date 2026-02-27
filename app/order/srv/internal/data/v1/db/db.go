@@ -45,14 +45,14 @@ func (df *dataFactory) Begin() *gorm.DB {
 	return df.db.Begin()
 }
 
-var _ v1.DataFactory = &dataFactory{}
+var _ v1.DBFactory = &dataFactory{}
 
 var (
-	data v1.DataFactory
+	data v1.DBFactory
 	once sync.Once
 )
 
-func GetDataFactoryOr(mysqlOpts *options.MySQLOptions, registry *options.RegistryOptions) (v1.DataFactory, error) {
+func NewDBFactoryOr(mysqlOpts *options.MySQLOptions, registry *options.RegistryOptions) (v1.DBFactory, error) {
 	if (mysqlOpts == nil && registry == nil) && data == nil {
 		return nil, errors.New("failed to get data store factory")
 	}

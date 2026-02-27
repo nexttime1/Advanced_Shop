@@ -2,6 +2,7 @@ package srv
 
 import (
 	"context"
+	"time"
 
 	"Advanced_Shop/app/inventory/srv/config"
 	"Advanced_Shop/app/pkg/options"
@@ -63,7 +64,23 @@ func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
 		SSLInsecureSkipVerify: cfg.RedisOptions.SSLInsecureSkipVerify,
 		EnableTracing:         cfg.RedisOptions.EnableTracing,
 	}
-	go storage.ConnectToRedis(context.Background(), redisConfig)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	storage.ConnectToRedis(ctx, redisConfig)
+
+	// 等待Redis连接就绪
+	for i := 0; i < 10; i++ {
+		if storage.Connected() {
+			log.Info("Redis连接成功")
+			break
+		}
+		log.Warn("等待Redis连接就绪...")
+		time.Sleep(500 * time.Millisecond)
+	}
+
+	if !storage.Connected() {
+		log.Fatal("Redis连接失败，服务启动失败")
+	}
 
 	//生成rpc服务
 	rpcServer, err := NewInventoryRPCServer(cfg)

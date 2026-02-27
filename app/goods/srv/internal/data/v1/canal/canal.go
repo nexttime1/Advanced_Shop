@@ -57,7 +57,7 @@ func NewCanalFactory(canalOpts *options.CanalOptions) (v1.CanalFactory, error) {
 		}
 
 		// 订阅binlog
-		// 建议只订阅商品库表，避免全量订阅：如 "advanced_shop\\.goods"（库名.表名）  // good-srv.good_models
+		// 建议只订阅商品库表，避免全量订阅：如 "Advanced_Shop\\.goods"（库名.表名）  // good-srv.good_models
 		if err := canalConn.Subscribe(canalOpts.SubscribeRegex); err != nil {
 			zlog.Errorf("Canal工厂初始化失败: %v", err)
 			initErr = errors2.WithCode(code2.ErrCanalSubscribe, fmt.Sprintf("canal binlog订阅失败: %v", err))

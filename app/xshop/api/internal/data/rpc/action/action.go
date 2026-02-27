@@ -8,7 +8,7 @@ import (
 	"context"
 )
 
-const optionserviceName = "discovery:///xshop-option-srv"
+const optionserviceName = "discovery:///xshop-action-srv"
 
 type Action struct {
 	gc apbv1.AddressClient

@@ -157,4 +157,25 @@ func (o *orders) UpdateStatus(ctx context.Context, orderSn string, status string
 	return result.RowsAffected, result.Error
 }
 
+func (o *orders) TimeoutHandler(ctx context.Context, txn *gorm.DB, OrderSns string) int {
+	var orderModel do.OrderInfoDO
+	err := txn.Where(do.OrderInfoDO{OrderSn: OrderSns}).Take(&orderModel).Error
+	if err != nil {
+		// 没找到 说明没有 这样就不需要管了 因为都没创建订单 所以不需要归还库存
+		return 0
+	}
+	// 找到了  查一下 看看是不是已经支付了
+	if orderModel.Status != "TRADE_SUCCESS" {
+		// 说明没支付  我们要关闭， 然后发送消息给mq 让库存服务归还
+		orderModel.Status = "CLOSED"
+		err := txn.Save(&orderModel).Error
+		if err != nil {
+			log.Errorf("数据库操作失败 %v", err)
+			return 1 // 返回1是有错
+		}
+
+	}
+	return 2 // 返回2 是继续向下走 说明要发消息 进行回收
+}
+
 var _ v1.OrderStore = &orders{}

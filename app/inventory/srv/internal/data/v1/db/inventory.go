@@ -52,7 +52,7 @@ func (i *inventorys) Reduce(ctx context.Context, txn *gorm.DB, goodsID uint64, n
 	if txn != nil {
 		db = txn
 	}
-	return db.Model(&do.InventoryDO{}).Where("goods=?", goodsID).Where("stocks >= ?", num).UpdateColumn("stocks", gorm.Expr("stocks - ?", num)).Error
+	return db.Model(&do.InventoryDO{}).Where("goods=?", goodsID).Where("stock >= ?", num).UpdateColumn("stock", gorm.Expr("stock - ?", num)).Error
 }
 
 func (i *inventorys) Increase(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) (int64, error) {

@@ -9,6 +9,7 @@ import (
 	"github.com/go-redsync/redsync/v4"
 	redsyncredis "github.com/go-redsync/redsync/v4/redis"
 	"sort"
+	"strconv"
 	"time"
 
 	"Advanced_Shop/app/inventory/srv/internal/domain/do"
@@ -91,9 +92,9 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 	for _, goodsInfo := range detail {
 
 		// 拿锁  一定是 先排序在拿锁
-		mutex := rs.NewMutex(inventoryLockPrefix + ordersn)
+		mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.Goods), 10))
 		if err := mutex.Lock(); err != nil {
-			log.Errorf("订单%s获取锁失败", ordersn)
+			log.Errorf("商品%d获取锁失败, 错误为：%v", goodsInfo.Goods, err)
 			txn.Rollback()
 			return err
 		}

@@ -11,6 +11,7 @@ type RocketMQOptions struct {
 	Port              int    `mapstructure:"port" yaml:"port"`
 	GroupName         string `mapstructure:"group_name" yaml:"group_name"`
 	Topic             string `mapstructure:"topic" yaml:"topic"`
+	CrossTopic        string `mapstructure:"cross_topic" yaml:"cross_topic"`
 	ConsumerGroupName string `mapstructure:"consumer_group_name" yaml:"consumer_group_name"`
 	ConsumerSubscribe string `mapstructure:"consumer_subscribe" yaml:"consumer_subscribe"`
 	ConsumerTopic     string `mapstructure:"consumer_topic" yaml:"consumer_topic"`

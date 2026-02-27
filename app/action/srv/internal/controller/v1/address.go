@@ -17,7 +17,7 @@ type actionServer struct {
 	srv v1.ServiceFactory
 }
 
-func NewGoodsServer(srv v1.ServiceFactory) *actionServer {
+func NewActionServer(srv v1.ServiceFactory) *actionServer {
 	return &actionServer{srv: srv}
 }
 

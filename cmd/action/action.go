@@ -1,6 +1,7 @@
 package main
 
 import (
+	"Advanced_Shop/app/action/srv"
 	"math/rand"
 	"os"
 	"runtime"
@@ -12,5 +13,5 @@ func main() {
 	if len(os.Getenv("GOMAXPROCS")) == 0 {
 		runtime.GOMAXPROCS(runtime.NumCPU())
 	}
-	admin.NewApp("admin-server").Run()
+	srv.NewApp("action-server").Run()
 }

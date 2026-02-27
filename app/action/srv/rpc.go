@@ -1,12 +1,12 @@
 package srv
 
 import (
-	gpb "Advanced_Shop/api/goods/v1"
-	"Advanced_Shop/app/goods/srv/config"
-	v12 "Advanced_Shop/app/goods/srv/internal/controller/v1"
-	db2 "Advanced_Shop/app/goods/srv/internal/data/v1/db"
-	"Advanced_Shop/app/goods/srv/internal/data_search/v1/es"
-	v1 "Advanced_Shop/app/goods/srv/internal/service/v1"
+	apb "Advanced_Shop/api/action/v1"
+	"Advanced_Shop/app/action/srv/config"
+	v12 "Advanced_Shop/app/action/srv/internal/controller/v1"
+	db2 "Advanced_Shop/app/action/srv/internal/data/v1/db"
+	v1 "Advanced_Shop/app/action/srv/internal/service/v1"
+
 	"Advanced_Shop/gnova/core/trace"
 	"Advanced_Shop/gnova/server/rpcserver"
 	"fmt"
@@ -23,23 +23,19 @@ func NewActionRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
 		cfg.Telemetry.Batcher,
 	})
 
-	dataFactory, err := db2.GetDBFactoryOr(cfg.MySQLOptions)
+	dataFactory, err := db2.GetDBFactoryOr(cfg.MySQLOptions, cfg.Registry)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	//构建，繁琐 - 工厂模式
-	searchFactory, err := es.GetSearchFactoryOr(cfg.EsOptions)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	srvFactory := v1.NewService(dataFactory, searchFactory)
-	goodsServer := v12.NewGoodsServer(srvFactory)
+	srvFactory := v1.NewService(dataFactory)
+	actionServer := v12.NewActionServer(srvFactory)
 	rpcAddr := fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port)
 	grpcServer := rpcserver.NewServer(rpcserver.WithAddress(rpcAddr))
 
-	gpb.RegisterGoodsServer(grpcServer.Server, goodsServer)
+	apb.RegisterUserFavServer(grpcServer.Server, actionServer)
+	apb.RegisterMessageServer(grpcServer.Server, actionServer)
+	apb.RegisterAddressServer(grpcServer.Server, actionServer)
 
 	return grpcServer, nil
 }

@@ -1,7 +1,7 @@
 package srv
 
 import (
-	"Advanced_Shop/app/goods/srv/config"
+	"Advanced_Shop/app/action/srv/config"
 	"Advanced_Shop/app/pkg/options"
 	gapp "Advanced_Shop/gnova/app"
 	"Advanced_Shop/pkg/app"
@@ -15,7 +15,7 @@ import (
 func NewApp(basename string) *app.App {
 	cfg := config.New()
 	appl := app.NewApp("option",
-		"xshop",
+		basename,
 		app.WithOptions(cfg),
 		app.WithRunFunc(run(cfg)),
 		//app.WithNoConfig(), //设置不读取配置文件

@@ -18,4 +18,6 @@ type OrderStore interface {
 	UpdateStatus(ctx context.Context, orderSn string, status string) (int64, error)
 
 	GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error)
+
+	TimeoutHandler(ctx context.Context, txn *gorm.DB, OrderSns string) int
 }
