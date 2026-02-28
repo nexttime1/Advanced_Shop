@@ -23,11 +23,15 @@ type dataFactory struct {
 }
 
 func NewDataFactory(mysqlOpts *options.MySQLOptions, registry *options.RegistryOptions, mqOpts *options.RocketMQOptions) v1.DataFactory {
-	return &dataFactory{
+	d := &dataFactory{
 		mqOpts:    mqOpts,
 		mysqlOpts: mysqlOpts,
 		registry:  registry,
 	}
+	// 初始化一下
+	d.NewDB()
+	d.NewMQ()
+	return d
 }
 
 func (d *dataFactory) NewDB() v1.DBFactory {
@@ -47,7 +51,6 @@ func (d *dataFactory) NewMQ() v1.MQFactory {
 }
 
 func (d *dataFactory) Listen(ctx context.Context) {
-
 	messgaes, err := rocketmq.NewPushConsumer(consumer.WithNameServer([]string{d.mqOpts.Addr()}),
 		consumer.WithGroupName(d.mqOpts.ConsumerGroupName),
 		// 最大重试次数
@@ -61,7 +64,30 @@ func (d *dataFactory) Listen(ctx context.Context) {
 	// 监听普通消息 订单时间超时   Topic 订阅这个
 	messgaes.Subscribe(d.mqOpts.Topic, consumer.MessageSelector{}, d.Timeout)
 	messgaes.Start()
-	select {}
+
+	go func() {
+		<-ctx.Done()
+		// 用超时机制包装Shutdown，避免无限阻塞
+		shutdownDone := make(chan error, 1)
+		go func() {
+			shutdownDone <- messgaes.Shutdown()
+		}()
+
+		// 设置10秒超时，避免Shutdown卡住
+		select {
+		case err := <-shutdownDone:
+			if err != nil {
+				// 替换为你的日志组件
+				zlog.Errorf("RocketMQ消费者关闭失败: %v\n", err)
+			} else {
+				zlog.Info("RocketMQ消费者已优雅关闭")
+			}
+		case <-time.After(10 * time.Second):
+			zlog.Error("RocketMQ消费者关闭超时（10秒），强制退出")
+		}
+	}()
+
+	zlog.Info("RocketMQ消费者启动成功，开始监听消息")
 
 }
 
@@ -70,7 +96,7 @@ func (d *dataFactory) Timeout(ctx context.Context, msg ...*primitive.MessageExt)
 	// 只要一个需要重试就得重试
 	needRetry := false
 	for i := range msg {
-		var orderInfo do.OrderTransitionRequest
+		var orderInfo do.OrderMQMessageRequest
 		err := json.Unmarshal(msg[i].Body, &orderInfo)
 		// 需要查看 订单存不存在
 		if err != nil {
@@ -92,10 +118,10 @@ func (d *dataFactory) Timeout(ctx context.Context, msg ...*primitive.MessageExt)
 		// 0 代表没找到 说明没有 这样就不需要管了 因为都没创建订单 所以不需要归还库存
 		// 返回1是有错需要重试保存状态失败
 		//返回2 是继续向下走 说明要发消息 进行回收
-		if number == 0 {
+		if number == do.DirectPass {
 			zlog.Warn("未进行创建 直接跳过")
 			continue
-		} else if number == 1 {
+		} else if number == do.OptionFail {
 			needRetry = true
 			continue
 		}

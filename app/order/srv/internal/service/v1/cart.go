@@ -52,7 +52,7 @@ func (cs *cartService) DeleteByGoodsIDs(ctx context.Context, txn *gorm.DB, userI
 		return errors.WithCode(code.ErrInvalidParameter, "用户ID或商品ID列表不能为空")
 	}
 
-	err := cs.data.ShopCarts().DeleteByGoodsIDs(ctx, txn, userID, goodsIDs)
+	err := cs.data.NewDB().ShopCarts().DeleteByGoodsIDs(ctx, txn, userID, goodsIDs)
 	if err != nil {
 		log.Errorf("CartSrv DeleteByGoodsIDs failed: userID=%d, goodsIDs=%v, err=%v", userID, goodsIDs, err)
 		return err
@@ -67,7 +67,7 @@ func (cs *cartService) List(ctx context.Context, userID uint64, checked bool, me
 	}
 
 	// 调用数据层查询DO列表
-	doList, err := cs.data.ShopCarts().List(ctx, userID, checked, meta, orderby)
+	doList, err := cs.data.NewDB().ShopCarts().List(ctx, userID, checked, meta, orderby)
 	if err != nil {
 		log.Errorf("CartSrv List failed: userID=%d, checked=%v, err=%v", userID, checked, err)
 		return nil, err
@@ -82,13 +82,13 @@ func (cs *cartService) Create(ctx context.Context, cartItem *do.ShoppingCartDO) 
 		return 0, errors.WithCode(code.ErrInvalidParameter, "购物车数据不能为空，用户ID和商品ID必须指定")
 	}
 
-	_, err := cs.data.Goods().GetGoodsDetail(ctx, &proto.GoodInfoRequest{Id: cartItem.Goods})
+	_, err := cs.data.NewDB().Goods().GetGoodsDetail(ctx, &proto.GoodInfoRequest{Id: cartItem.Goods})
 	if err != nil {
 		return 0, err
 	}
 
 	// 检查库存
-	detail, err := cs.data.Inventorys().InvDetail(ctx, &proto1.GoodsInvInfo{
+	detail, err := cs.data.NewDB().Inventorys().InvDetail(ctx, &proto1.GoodsInvInfo{
 		GoodsId: cartItem.Goods,
 	})
 	if err != nil {
@@ -98,7 +98,7 @@ func (cs *cartService) Create(ctx context.Context, cartItem *do.ShoppingCartDO) 
 		return 0, errors.WithCode(code.ErrInvNotEnough, "库存不足")
 	}
 
-	id, err := cs.data.ShopCarts().Create(ctx, cartItem)
+	id, err := cs.data.NewDB().ShopCarts().Create(ctx, cartItem)
 	if err != nil {
 		log.Errorf("CartSrv Create failed: userID=%d, goodsID=%d, err=%v", cartItem.User, cartItem.Goods, err)
 		return 0, err
@@ -112,7 +112,7 @@ func (cs *cartService) Get(ctx context.Context, userID, goodsID uint64) (*do.Sho
 		return nil, errors.WithCode(code.ErrInvalidParameter, "用户ID和商品ID不能为空")
 	}
 
-	doItem, err := cs.data.ShopCarts().Get(ctx, userID, goodsID)
+	doItem, err := cs.data.NewDB().ShopCarts().Get(ctx, userID, goodsID)
 	if err != nil {
 		log.Errorf("CartSrv Get failed: userID=%d, goodsID=%d, err=%v", userID, goodsID, err)
 		return nil, err
@@ -126,7 +126,7 @@ func (cs *cartService) UpdateNum(ctx context.Context, cartItem *do.ShoppingCartD
 		return errors.WithCode(code.ErrInvalidParameter, "购物车数据不能为空，用户ID和商品ID必须指定")
 	}
 
-	err := cs.data.ShopCarts().UpdateNum(ctx, cartItem)
+	err := cs.data.NewDB().ShopCarts().UpdateNum(ctx, cartItem)
 	if err != nil {
 		log.Errorf("CartSrv UpdateNum failed: userID=%d, goodsID=%d, err=%v", cartItem.User, cartItem.Goods, err)
 		return err
@@ -140,7 +140,7 @@ func (cs *cartService) Delete(ctx context.Context, userID uint64, goodID uint64)
 		return errors.WithCode(code.ErrInvalidParameter, "usrID不能为空")
 	}
 
-	err := cs.data.ShopCarts().Delete(ctx, userID, goodID)
+	err := cs.data.NewDB().ShopCarts().Delete(ctx, userID, goodID)
 	if err != nil {
 		log.Errorf("CartSrv Delete failed: , err=%v", err)
 		return err
@@ -154,7 +154,7 @@ func (cs *cartService) GetBatchByUser(ctx context.Context, userID int32) (*do.Ge
 		return nil, errors.WithCode(code.ErrInvalidParameter, "用户ID不能为空")
 	}
 
-	doResp, err := cs.data.ShopCarts().GetBatchByUser(ctx, userID)
+	doResp, err := cs.data.NewDB().ShopCarts().GetBatchByUser(ctx, userID)
 	if err != nil {
 		log.Errorf("CartSrv GetBatchByUser failed: userID=%d, err=%v", userID, err)
 		return nil, err
@@ -169,7 +169,7 @@ func (cs *cartService) ClearCheck(ctx context.Context, userID uint64) error {
 		return errors.WithCode(code.ErrInvalidParameter, "用户ID不能为空")
 	}
 
-	err := cs.data.ShopCarts().ClearCheck(ctx, userID)
+	err := cs.data.NewDB().ShopCarts().ClearCheck(ctx, userID)
 	if err != nil {
 		log.Errorf("CartSrv ClearCheck failed: userID=%d, err=%v", userID, err)
 		return err

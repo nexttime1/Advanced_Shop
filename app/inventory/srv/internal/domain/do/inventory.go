@@ -7,15 +7,14 @@ import (
 	"encoding/json"
 )
 
+type GoodsDetailList []GoodsDetail
 type GoodsDetail struct {
-	Goods int32
-	Num   int32
+	GoodId int32
+	Num    int32
 }
 
-type GoodsDetailList []GoodsDetail
-
 func (a GoodsDetailList) Len() int           { return len(a) }
-func (a GoodsDetailList) Less(i, j int) bool { return a[i].Goods < a[j].Goods }
+func (a GoodsDetailList) Less(i, j int) bool { return a[i].GoodId < a[j].GoodId }
 func (a GoodsDetailList) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 
 func (g GoodsDetailList) Value() (driver.Value, error) {
@@ -51,4 +50,24 @@ type InventoryDO struct {
 
 func (id *InventoryDO) TableName() string {
 	return "inventory_models"
+}
+
+type OrderMQMessageRequest struct {
+	Id       int32  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`          // 订单ID（查询详情时必填，创建时不传）
+	UserId   int32  `protobuf:"varint,2,opt,name=userId,proto3" json:"userId,omitempty"`  // 用户ID
+	Address  string `protobuf:"bytes,3,opt,name=address,proto3" json:"address,omitempty"` // 收货地址
+	Name     string `protobuf:"bytes,4,opt,name=name,proto3" json:"name,omitempty"`       // 签收人姓名
+	Mobile   string `protobuf:"bytes,5,opt,name=mobile,proto3" json:"mobile,omitempty"`   // 签收人手机号
+	Post     string `protobuf:"bytes,6,opt,name=post,proto3" json:"post,omitempty"`       // 物流单号（创建时可选，发货后填充）
+	OrderSns string
+}
+
+type GoodsInvInfo struct {
+	GoodsId int32 `json:"goods_id"`
+	Num     int32 `json:"num"`
+}
+
+type RebackInfo struct {
+	GoodsInfo []*GoodsInvInfo `json:"goods_info"`
+	OrderSn   string          `json:"order_sn"`
 }

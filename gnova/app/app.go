@@ -46,7 +46,7 @@ func New(opts ...Option) *App {
 }
 
 // Run 启动整个服务
-func (a *App) Run() error {
+func (a *App) Run(rootCtx context.Context) error {
 	//注册的信息
 	instance, err := a.buildInstance()
 	if err != nil {
@@ -80,11 +80,11 @@ func (a *App) Run() error {
 	if a.opts.rpcServer != nil {
 		servers = append(servers, a.opts.rpcServer)
 	}
-	// 主 context
-	ctx, cancel := context.WithCancel(context.Background())
-	a.ctx = ctx
+
+	gctx, cancel := context.WithCancel(rootCtx)
+	a.ctx = gctx
 	a.cancel = cancel
-	eg, ctx := errgroup.WithContext(ctx)
+	eg, ctx := errgroup.WithContext(gctx)
 	wg := sync.WaitGroup{}
 	for _, srv := range servers {
 		//启动server
@@ -125,6 +125,10 @@ func (a *App) Run() error {
 	eg.Go(func() error {
 		select {
 		case <-ctx.Done():
+			err := a.Stop()
+			if err != nil {
+				return err
+			}
 			return ctx.Err()
 		case <-c:
 			return a.Stop()
@@ -135,12 +139,6 @@ func (a *App) Run() error {
 	}
 	return nil
 }
-
-/*
-http basic 认证
-cache： 1. redis 2. memcache 3. local cache
-jwt
-*/
 
 // Stop 停止服务
 func (a *App) Stop() error {

@@ -19,5 +19,5 @@ type OrderStore interface {
 
 	GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error)
 
-	TimeoutHandler(ctx context.Context, txn *gorm.DB, OrderSns string) int
+	TimeoutHandler(ctx context.Context, txn *gorm.DB, OrderSns string) do.MQMessageType
 }

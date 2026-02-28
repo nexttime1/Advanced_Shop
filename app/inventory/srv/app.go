@@ -39,7 +39,7 @@ func NewRegistrar(registry *options.RegistryOptions) registry.Registrar {
 	return r
 }
 
-func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
+func NewInventoryApp(cfg *config.Config, ctx context.Context) (*gapp.App, error) {
 	//初始化log
 	log.Init(cfg.Log)
 	defer log.Flush()
@@ -64,9 +64,9 @@ func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
 		SSLInsecureSkipVerify: cfg.RedisOptions.SSLInsecureSkipVerify,
 		EnableTracing:         cfg.RedisOptions.EnableTracing,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	redisCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	storage.ConnectToRedis(ctx, redisConfig)
+	storage.ConnectToRedis(redisCtx, redisConfig)
 
 	// 等待Redis连接就绪
 	for i := 0; i < 10; i++ {
@@ -75,7 +75,7 @@ func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
 			break
 		}
 		log.Warn("等待Redis连接就绪...")
-		time.Sleep(500 * time.Millisecond)
+		time.Sleep(1000 * time.Millisecond)
 	}
 
 	if !storage.Connected() {
@@ -83,7 +83,7 @@ func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
 	}
 
 	//生成rpc服务
-	rpcServer, err := NewInventoryRPCServer(cfg)
+	rpcServer, err := NewInventoryRPCServer(cfg, ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -96,14 +96,14 @@ func NewInventoryApp(cfg *config.Config) (*gapp.App, error) {
 }
 
 func run(cfg *config.Config) app.RunFunc {
-	return func(baseName string) error {
-		InventoryApp, err := NewInventoryApp(cfg)
+	return func(baseName string, ctx context.Context) error {
+		InventoryApp, err := NewInventoryApp(cfg, ctx)
 		if err != nil {
 			return err
 		}
 
 		//启动
-		if err := InventoryApp.Run(); err != nil {
+		if err := InventoryApp.Run(ctx); err != nil {
 			log.Errorf("run user app error: %s", err)
 			return err
 		}

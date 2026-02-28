@@ -872,3 +872,118 @@ runtime.main
 2026-02-27 17:38:30.898	[34mINFO[0m	v1/inventory.go:66	订单20262271655458406200195扣减库存
 2026-02-27 17:45:11.572	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-27 17:45:11.594	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 16:06:42.671	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:06:42.671	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:06:42.671	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:06:42.687	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:06:42.687	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:06:42.687	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:06:52.672	[34mINFO[0m	srv/app.go:74	Redis连接成功
+2026-02-28 16:16:17.953	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:16:17.953	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:16:17.953	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:16:17.971	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:16:17.971	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:16:17.971	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:16:27.954	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: context deadline exceeded
+2026-02-28 16:16:27.954	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:28.454	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:28.955	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:29.455	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:29.956	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:30.456	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:30.956	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:31.457	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:31.957	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:32.457	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:32.957	[31mFATAL[0m	srv/app.go:82	Redis连接失败，服务启动失败
+Advanced_Shop/app/inventory/srv.NewInventoryApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:82
+Advanced_Shop/app/inventory/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:100
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:302
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:255
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/inventory/inventory.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.windows-amd64/src/runtime/proc.go:285
+2026-02-28 16:16:37.627	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:16:37.627	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:16:37.627	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:16:37.640	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:16:37.640	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:16:37.640	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:16:47.629	[33mWARN[0m	storage/redis_cluster.go:127	Error trying to get test key: context deadline exceeded
+2026-02-28 16:16:47.629	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:48.129	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:48.630	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:49.130	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:49.631	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:50.131	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:50.632	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:51.132	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:51.633	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:52.134	[33mWARN[0m	srv/app.go:77	等待Redis连接就绪...
+2026-02-28 16:16:52.634	[31mFATAL[0m	srv/app.go:82	Redis连接失败，服务启动失败
+Advanced_Shop/app/inventory/srv.NewInventoryApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:82
+Advanced_Shop/app/inventory/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/inventory/srv/app.go:100
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:302
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:255
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/inventory/inventory.go:16
+runtime.main
+	C:/Users/20839/.go/pkg/mod/golang.org/toolchain@v0.0.1-go1.25.7.windows-amd64/src/runtime/proc.go:285
+2026-02-28 16:20:18.951	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:20:18.955	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:20:18.955	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:20:18.971	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:20:18.971	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:20:18.971	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:20:28.951	[34mINFO[0m	srv/app.go:74	Redis连接成功
+2026-02-28 16:20:29.010	[34mINFO[0m	db/mysql.go:152	库存服务MQ消费者启动成功，监听Topic： timeout_inventory
+2026-02-28 16:20:29.010	[34mINFO[0m	db/mysql.go:146	RocketMQ消费者已优雅关闭
+2026-02-28 16:20:29.018	[34mINFO[0m	v1/service.go:46	✅ Redis客户端复用成功，认证通过
+2026-02-28 16:20:29.100	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 16:20:29.100	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-02-28 16:50:27.007	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 16:50:27.048	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 16:50:36.364	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:50:36.364	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:50:36.364	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:50:36.388	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-02-28 16:50:36.388	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-02-28 16:50:36.388	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-02-28 16:50:46.365	[34mINFO[0m	srv/app.go:74	Redis连接成功
+2026-02-28 16:50:46.462	[34mINFO[0m	db/mysql.go:152	库存服务MQ消费者启动成功，监听Topic： timeout_inventory
+2026-02-28 16:50:46.463	[34mINFO[0m	v1/service.go:46	✅ Redis客户端复用成功，认证通过
+2026-02-28 16:50:46.547	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 16:50:46.547	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-02-28 17:16:40.564	[34mINFO[0m	v1/inventory.go:66	订单20262271510265378800124扣减库存
+2026-02-28 17:16:40.935	[34mINFO[0m	v1/inventory.go:66	订单20262271531373559600143扣减库存
+2026-02-28 17:16:41.028	[34mINFO[0m	v1/inventory.go:66	订单20262271625493049600135扣减库存
+2026-02-28 17:16:41.311	[34mINFO[0m	v1/inventory.go:66	订单20262271534243514200145扣减库存
+2026-02-28 17:16:41.499	[34mINFO[0m	v1/inventory.go:66	订单20262271527961116400135扣减库存
+2026-02-28 17:21:33.212	[34mINFO[0m	v1/inventory.go:66	订单2026228172193027400163扣减库存
+2026-02-28 18:03:42.949	[34mINFO[0m	v1/inventory.go:66	订单2026228183251277500112扣减库存
+2026-02-28 18:06:42.762	[34mINFO[0m	db/mysql.go:157	开始处理库存归还消息，本次处理消息数： 1
+2026-02-28 18:06:42.812	[34mINFO[0m	db/mysql.go:192	库存归还处理成功
+2026-02-28 18:07:32.278	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 18:07:32.298	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

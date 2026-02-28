@@ -6,6 +6,7 @@ import (
 	code2 "Advanced_Shop/gnova/code"
 	"Advanced_Shop/pkg/errors"
 	"context"
+	"time"
 
 	"Advanced_Shop/app/inventory/srv/internal/data/v1"
 	"Advanced_Shop/pkg/log"
@@ -108,6 +109,84 @@ func (i *inventorys) Get(ctx context.Context, goodsID uint64) (*do.InventoryDO, 
 
 func newInventorys(data *mysqlStore) *inventorys {
 	return &inventorys{db: data.db}
+}
+
+func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, OrderSns string) do.MQMessageType {
+	var history do.StockSellDetailDO
+	err := txn.Where(do.StockSellDetailDO{OrderSn: OrderSns, Status: 1}).Take(&history).Error
+	if err != nil {
+		// 没找到 说明没有  或者 防止重复消费  这个消息直接跳过 所以
+		return do.DirectPass
+	}
+	// 找到了  进行归还库存 并且 改历史记录 状态 变成2
+	// 构造 Reback 函数需要的参数
+	var info do.RebackInfo
+	var list []*do.GoodsInvInfo
+	for _, inv := range history.Detail {
+		list = append(list, &do.GoodsInvInfo{
+			GoodsId: inv.GoodId,
+			Num:     inv.Num,
+		})
+	}
+	info.GoodsInfo = list
+	info.OrderSn = OrderSns
+	number := Reback(txn, &info)
+	if number == do.OptionFail {
+		return do.OptionFail
+	}
+	// 下面一定是 继续了
+
+	// 改历史记录 状态 变成2  并且要必须是 我们拿到的版本 如果不是 正常有个for循环 咱这个环境下 我们就没必要for了 因为一会就延迟再来一次
+	err = txn.Model(&history).
+		Where("id = ? and version = ?", history.ID, history.Version). // 基于 ID 和 version 做乐观锁
+		Updates(map[string]interface{}{
+			"status":  2,
+			"version": history.Version + 1,
+		}).Error
+	if err != nil {
+		return do.OptionFail
+	}
+	return do.Continuing
+}
+
+func Reback(tx *gorm.DB, info *do.RebackInfo) do.MQMessageType {
+
+	// 传递事务，保证操作原子性
+	for _, invInfo := range info.GoodsInfo {
+		// 乐观锁保证 高并发情况下 不会发生错误  比如两个请求同一个商品进行归还  读取的值都是100 都加50  防止最后是150
+		retryCount := 0
+		maxOptimisticRetry := 10
+		for retryCount < maxOptimisticRetry {
+			var model do.InventoryDO
+			err := tx.Where("goods = ?", invInfo.GoodsId).Take(&model).Error
+			if err != nil {
+				log.Errorf("商品库存不存在 err: %v", err)
+				break
+			}
+			// 库存 +
+			model.Stock += invInfo.Num
+
+			err = tx.Model(do.InventoryDO{}).Where("goods = ? and version = ?", model.Goods, model.Version).Select("stock", "version").Updates(map[string]interface{}{"stock": model.Stock, "version": model.Version + 1}).Error
+			if err != nil {
+				retryCount++
+				log.Warnf("商品%d乐观锁重试，当前次数: %d", invInfo.GoodsId, retryCount)
+				time.Sleep(100 * time.Millisecond)
+				continue
+			} else {
+				break
+			}
+		}
+		// 重试次数耗尽仍未成功
+		if retryCount >= maxOptimisticRetry {
+			log.Errorf("商品%d乐观锁重试次数耗尽，更新失败", invInfo.GoodsId)
+			// 这里错了直接return  因为这个订单中的一个商品归还失败 肯定要回滚所以后面没必要归还
+			return do.OptionFail
+		}
+
+	}
+	// 归还成功 继续操作
+	return do.Continuing
+
 }
 
 var _ v1.InventoryStore = &inventorys{}

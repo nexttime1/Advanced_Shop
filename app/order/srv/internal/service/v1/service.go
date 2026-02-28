@@ -13,6 +13,7 @@ type ServiceFactory interface {
 type service struct {
 	data    v1.DataFactory
 	dtmopts *options.DtmOptions
+	MqOpts  *options.RocketMQOptions
 }
 
 func (s *service) Cart() CartSrv {
@@ -25,6 +26,6 @@ func (s *service) Orders() OrderSrv {
 
 var _ ServiceFactory = &service{}
 
-func NewService(data v1.DataFactory, dtmopts *options.DtmOptions) ServiceFactory {
-	return &service{data: data, dtmopts: dtmopts}
+func NewService(data v1.DataFactory, dtmopts *options.DtmOptions, mqOpts *options.RocketMQOptions) ServiceFactory {
+	return &service{data: data, dtmopts: dtmopts, MqOpts: mqOpts}
 }

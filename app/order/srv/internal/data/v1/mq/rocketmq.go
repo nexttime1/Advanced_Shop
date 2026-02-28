@@ -126,7 +126,8 @@ func (mf *RocketMqFactory) SendDelayMsgWithRetry(ctx context.Context, msg *primi
 		// 发送延时消息 就用 Topic  跨服务给 库存服务 就用 CrossTopic
 		delayMsg = primitive.NewMessage(mf.mqOpts.Topic, msg.Body)
 	)
-	delayMsg.WithDelayTimeLevel(16) // 30分钟延时
+	// 1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
+	delayMsg.WithDelayTimeLevel(7) // 30分钟延时
 
 	var retryIdx int
 	// 执行重试逻辑

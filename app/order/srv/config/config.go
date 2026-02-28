@@ -10,6 +10,7 @@ import (
 
 type Config struct {
 	MySQLOptions *options.MySQLOptions     `json:"mysql"     mapstructure:"mysql"`
+	MQOptions    *options.RocketMQOptions  `json:"mq" mapstructure:"mq"`
 	Log          *log.Options              `json:"log"     mapstructure:"log"`
 	Server       *options.ServerOptions    `json:"server"     mapstructure:"server"`
 	Telemetry    *options.TelemetryOptions `json:"telemetry" mapstructure:"telemetry"`
@@ -25,6 +26,8 @@ func New() *Config {
 		Server:       options.NewServerOptions(),
 		Telemetry:    options.NewTelemetryOptions(),
 		Registry:     options.NewRegistryOptions(),
+		Dtm:          options.NewDtmOptions(),
+		MQOptions:    options.NewRocketMQOptions(),
 	}
 }
 
@@ -35,6 +38,7 @@ func (o *Config) Flags() (fss cliflag.NamedFlagSets) {
 	o.Telemetry.AddFlags(fss.FlagSet("telemetry"))
 	o.Registry.AddFlags(fss.FlagSet("registry"))
 	o.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
+	o.MQOptions.AddFlags(fss.FlagSet("mq"))
 	return fss
 }
 
@@ -46,7 +50,7 @@ func (o *Config) String() string {
 
 func (o *Config) Validate() []error {
 	var errs []error
-
+	errs = append(errs, o.MQOptions.Validate()...)
 	errs = append(errs, o.MySQLOptions.Validate()...)
 	errs = append(errs, o.Log.Validate()...)
 	errs = append(errs, o.Server.Validate()...)

@@ -92,14 +92,14 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 	for _, goodsInfo := range detail {
 
 		// 拿锁  一定是 先排序在拿锁
-		mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.Goods), 10))
+		mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
 		if err := mutex.Lock(); err != nil {
-			log.Errorf("商品%d获取锁失败, 错误为：%v", goodsInfo.Goods, err)
+			log.Errorf("商品%d获取锁失败, 错误为：%v", goodsInfo.GoodId, err)
 			txn.Rollback()
 			return err
 		}
 
-		inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.Goods))
+		inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
 		if err != nil {
 			log.Errorf("订单%s获取库存失败", ordersn)
 			txn.Rollback()
@@ -109,12 +109,12 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 		// 判断库存是否充足
 		if inv.Stock < goodsInfo.Num {
 			txn.Rollback() //回滚
-			log.Errorf("商品%d库存%d不足, 现有库存: %d", goodsInfo.Goods, goodsInfo.Num, inv.Stock)
+			log.Errorf("商品%d库存%d不足, 现有库存: %d", goodsInfo.GoodId, goodsInfo.Num, inv.Stock)
 			return errors.WithCode(code.ErrInvNotEnough, "库存不足")
 		}
 		inv.Stock -= goodsInfo.Num
 
-		err = is.data.Inventorys().Reduce(ctx, txn, uint64(goodsInfo.Goods), int(goodsInfo.Num))
+		err = is.data.Inventorys().Reduce(ctx, txn, uint64(goodsInfo.GoodId), int(goodsInfo.Num))
 		if err != nil {
 			txn.Rollback() //回滚
 			log.Errorf("订单%s扣减库存失败", ordersn)
@@ -183,7 +183,7 @@ func (is *inventoryService) Reback(ctx context.Context, ordersn string, details 
 
 		// 乐观锁重试逻辑
 		for retryCount < maxOptimisticRetry {
-			inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.Goods))
+			inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
 			if err != nil {
 				txn.Rollback() //回滚
 				log.Errorf("订单%s获取库存失败", ordersn)
@@ -210,7 +210,7 @@ func (is *inventoryService) Reback(ctx context.Context, ordersn string, details 
 		}
 		if !updateSuccess {
 			_ = txn.Rollback()
-			errMsg := "订单" + ordersn + "商品" + string(goodsInfo.Goods) + "乐观锁重试次数耗尽，库存归还失败"
+			errMsg := "订单" + ordersn + "商品" + string(goodsInfo.GoodId) + "乐观锁重试次数耗尽，库存归还失败"
 			log.Errorf(errMsg)
 			return errors.WithCode(code.ErrOptimisticRetry, errMsg)
 		}

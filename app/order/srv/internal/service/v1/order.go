@@ -14,6 +14,8 @@ import (
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"context"
+	"encoding/json"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/dtm-labs/client/dtmgrpc"
 )
 
@@ -30,6 +32,7 @@ type OrderSrv interface {
 type orderService struct {
 	data    v12.DataFactory
 	dtmOpts *options.DtmOptions
+	MqOpts  *options.RocketMQOptions
 }
 
 func (os *orderService) CreateCom(ctx context.Context, order *dto.OrderDTO) error {
@@ -49,7 +52,7 @@ func (os *orderService) Create(ctx context.Context, order *dto.OrderInfoResponse
 		2. 生成ordergoods表
 		3. 根据order找到对应的购物车条目，删除购物车条目
 	*/
-	txn := os.data.Begin()
+	txn := os.data.NewDB().Begin()
 	defer func() {
 		if err := recover(); err != nil {
 			_ = txn.Rollback()
@@ -58,14 +61,14 @@ func (os *orderService) Create(ctx context.Context, order *dto.OrderInfoResponse
 		}
 	}()
 	// 所有的创建在这里
-	err := os.data.Orders().Create(ctx, txn, order)
+	err := os.data.NewDB().Orders().Create(ctx, txn, order)
 	if err != nil {
 		txn.Rollback()
 		log.Errorf("创建订单失败，err:%v", err)
 		return err // 这个不是abort 也就是说会不停的重试
 	}
 
-	err = os.data.ShopCarts().DeleteByGoodsIDs(ctx, txn, uint64(order.User), order.GoodIds)
+	err = os.data.NewDB().ShopCarts().DeleteByGoodsIDs(ctx, txn, uint64(order.User), order.GoodIds)
 	if err != nil {
 		txn.Rollback()
 		log.Errorf("删除购物车失败，goodids:%v, err:%v", order.GoodIds, err)
@@ -78,7 +81,7 @@ func (os *orderService) Create(ctx context.Context, order *dto.OrderInfoResponse
 }
 
 func (os *orderService) Get(ctx context.Context, detail dto.OrderDetailRequest) (*dto.OrderInfoResponse, error) {
-	orderInfo, err := os.data.Orders().Get(ctx, detail)
+	orderInfo, err := os.data.NewDB().Orders().Get(ctx, detail)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +89,7 @@ func (os *orderService) Get(ctx context.Context, detail dto.OrderDetailRequest) 
 	return orderInfo, nil
 }
 func (os *orderService) GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderInfoResponse, error) {
-	orderInfo, err := os.data.Orders().GetByOrderSn(ctx, orderSn)
+	orderInfo, err := os.data.NewDB().Orders().GetByOrderSn(ctx, orderSn)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +98,7 @@ func (os *orderService) GetByOrderSn(ctx context.Context, orderSn string) (*dto.
 }
 
 func (os *orderService) List(ctx context.Context, userID uint64, meta v1.ListMeta, orderby []string) (*dto.OrderDTOList, error) {
-	orders, err := os.data.Orders().List(ctx, userID, meta, orderby)
+	orders, err := os.data.NewDB().Orders().List(ctx, userID, meta, orderby)
 	if err != nil {
 		return nil, err
 	}
@@ -112,17 +115,36 @@ func (os *orderService) List(ctx context.Context, userID uint64, meta v1.ListMet
 func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) (float32, error) {
 
 	//先拿到 选中的 good ID
-	response, err := os.data.ShopCarts().GetBatchByUser(ctx, order.User)
+	response, err := os.data.NewDB().ShopCarts().GetBatchByUser(ctx, order.User)
 	if err != nil {
 		log.Errorf("购物车中没有商品，无法下单")
 		return 0, err
 	}
 
-	goods, err := os.data.Goods().BatchGetGoods(ctx, &proto3.BatchGoodsIdInfo{
+	goods, err := os.data.NewDB().Goods().BatchGetGoods(ctx, &proto3.BatchGoodsIdInfo{
 		Id: response.GoodsId,
 	})
 	if err != nil {
 		log.Errorf("批量获取商品信息失败，goodids: %v, err:%v", response.GoodsId, err)
+		return 0, err
+	}
+
+	// 构建延时消息
+	model := do.OrderMQMessageRequest{
+		Id:       order.ID,
+		UserId:   order.User,
+		Address:  order.Address,
+		Name:     order.SignerName,
+		Mobile:   order.SignerMobile,
+		Post:     order.Post,
+		OrderSns: order.OrderSn,
+	}
+	data, _ := json.Marshal(model)
+	// 延时消息
+	msg := primitive.NewMessage(os.MqOpts.Topic, data)
+	_, err = os.data.NewMQ().SendDelayMsgWithRetry(ctx, msg)
+
+	if err != nil {
 		return 0, err
 	}
 
@@ -185,11 +207,12 @@ func (os *orderService) Submit(ctx context.Context, order *dto.OrderDTO) (float3
 	saga.WaitResult = true
 	err = saga.Submit()
 	//通过OrderSn查询一下， 当前的状态如何状态一直值Submitted那么就你一直不要给前端返回， 如果是failed那么你提示给前端说下单失败，重新下单
+
 	return PriceSum, err
 }
 
 func (os *orderService) UpdateStatus(ctx context.Context, orderSn string, status string) error {
-	row, err := os.data.Orders().UpdateStatus(ctx, orderSn, status)
+	row, err := os.data.NewDB().Orders().UpdateStatus(ctx, orderSn, status)
 	if err != nil {
 		return errors.WithCode(code.ErrDatabase, err.Error())
 	}
@@ -204,6 +227,7 @@ func newOrderService(sv *service) *orderService {
 	return &orderService{
 		data:    sv.data,
 		dtmOpts: sv.dtmopts,
+		MqOpts:  sv.MqOpts,
 	}
 }
 

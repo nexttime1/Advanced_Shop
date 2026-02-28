@@ -7,6 +7,7 @@ import (
 	"Advanced_Shop/gnova/server/rpcserver"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
+	"context"
 	"github.com/google/wire"
 	"github.com/hashicorp/consul/api"
 
@@ -56,14 +57,14 @@ func NewUserApp(logOpts *log.Options, registry registry.Registrar,
 }
 
 func run(cfg *config.Config) app.RunFunc {
-	return func(baseName string) error {
+	return func(baseName string, ctx context.Context) error {
 		userApp, err := initApp(cfg.Nacos, cfg.Log, cfg.Server, cfg.Registry, cfg.Telemetry, cfg.MySQLOptions)
 		if err != nil {
 			return err
 		}
 
 		//启动
-		if err := userApp.Run(); err != nil {
+		if err := userApp.Run(ctx); err != nil {
 			log.Errorf("run user app error: %s", err)
 			return err
 		}

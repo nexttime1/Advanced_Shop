@@ -6,6 +6,7 @@ import (
 	gapp "Advanced_Shop/gnova/app"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
+	"context"
 	"github.com/hashicorp/consul/api"
 
 	"Advanced_Shop/gnova/registry"
@@ -57,14 +58,14 @@ func NewGoodsApp(cfg *config.Config) (*gapp.App, error) {
 }
 
 func run(cfg *config.Config) app.RunFunc {
-	return func(baseName string) error {
+	return func(baseName string, ctx context.Context) error {
 		goodsApp, err := NewGoodsApp(cfg)
 		if err != nil {
 			return err
 		}
 
 		//启动
-		if err := goodsApp.Run(); err != nil {
+		if err := goodsApp.Run(ctx); err != nil {
 			log.Errorf("run user app error: %s", err)
 			return err
 		}

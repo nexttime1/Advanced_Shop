@@ -8,12 +8,13 @@ import (
 	v13 "Advanced_Shop/app/inventory/srv/internal/service/v1"
 	"Advanced_Shop/gnova/core/trace"
 	"Advanced_Shop/gnova/server/rpcserver"
+	"context"
 	"fmt"
 
 	"Advanced_Shop/pkg/log"
 )
 
-func NewInventoryRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
+func NewInventoryRPCServer(cfg *config.Config, ctx context.Context) (*rpcserver.Server, error) {
 	//初始化open-telemetry的exporter
 	trace.InitAgent(trace.Options{
 		cfg.Telemetry.Name,
@@ -23,8 +24,8 @@ func NewInventoryRPCServer(cfg *config.Config) (*rpcserver.Server, error) {
 	})
 
 	//有点繁琐，wire， ioc-golang
-	dataFactory, err := db2.GetDBFactoryOr(cfg.MySQLOptions)
-
+	dataFactory, err := db2.GetDBFactoryOr(cfg.MySQLOptions, cfg.Mq)
+	dataFactory.Listen(ctx)
 	if err != nil {
 		log.Fatal(err.Error())
 	}

@@ -167,3 +167,74 @@ runtime.main
 2026-02-27 17:38:30.985	[34mINFO[0m	v1/order.go:25	saga 调用
 2026-02-27 17:45:11.542	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-27 17:45:11.575	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 16:06:34.671	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 16:06:34.675	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 16:06:34.675	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 16:06:34.789	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 16:06:34.890	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 16:06:34.891	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 16:17:41.223	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 16:17:41.244	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 16:20:15.433	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 16:20:15.434	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 16:20:15.436	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 16:20:15.603	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 16:20:15.689	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 16:20:15.689	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 16:20:38.709	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"577421c1-147e-11f1-a4d7-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-28 16:59:26.743	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 16:59:26.766	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 16:59:30.228	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 16:59:30.231	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 16:59:30.231	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"92bca2f8-1482-11f1-b91b-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-28 16:59:30.231	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 16:59:30.270	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 16:59:30.363	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 16:59:30.363	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 17:06:30.137	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 17:06:30.149	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 17:06:36.698	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 17:06:36.704	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 17:06:36.704	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"92bca2f8-1482-11f1-b91b-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-28 17:06:36.704	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 17:06:36.726	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 17:06:36.832	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 17:06:36.833	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 17:15:50.581	[34mINFO[0m	v1/order.go:179	开启saga......
+2026-02-28 17:15:50.588	[31mERROR[0m	v1/order.go:74	新建订单失败: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:36790: connectex: No connection could be made because the target machine actively refused it."
+2026-02-28 17:16:40.852	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:16:40.983	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:16:41.223	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:16:41.407	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:16:41.560	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:17:11.806	[31mERROR[0m	v1/order.go:117	购物车中没有商品，无法下单
+2026-02-28 17:17:11.806	[31mERROR[0m	v1/order.go:74	新建订单失败: An internal server error occurred
+2026-02-28 17:18:08.298	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 17:18:08.341	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 17:18:12.155	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 17:18:12.159	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 17:18:12.159	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"92bca2f8-1482-11f1-b91b-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-28 17:18:12.159	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 17:18:12.183	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 17:18:12.270	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 17:18:12.270	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 17:21:33.152	[34mINFO[0m	v1/order.go:179	开启saga......
+2026-02-28 17:21:33.298	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 17:57:53.513	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 17:57:53.581	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 17:58:04.770	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"1fe0ef8e-147b-11f1-9419-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8021"]}]
+2026-02-28 17:58:04.776	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 17:58:04.776	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"92bca2f8-1482-11f1-b91b-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.121.30.224:8022"]}]
+2026-02-28 17:58:04.776	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-02-28 17:58:04.814	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-02-28 17:58:04.922	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 17:58:04.922	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-02-28 18:03:42.436	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 18:03:42.816	[34mINFO[0m	mq/rocketmq.go:144	延时消息发送成功
+2026-02-28 18:03:42.816	[34mINFO[0m	v1/order.go:201	开启saga......
+2026-02-28 18:03:43.123	[34mINFO[0m	v1/order.go:25	saga 调用
+2026-02-28 18:06:42.749	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-02-28 18:06:42.749	[34mINFO[0m	mq/rocketmq.go:113	mq 开始发送给库存服务  超时的消息
+2026-02-28 18:06:42.764	[34mINFO[0m	realize/data.go:143	订单超时处理成功
+2026-02-28 18:07:32.260	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 18:07:32.289	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

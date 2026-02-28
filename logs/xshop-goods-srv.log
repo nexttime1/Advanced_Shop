@@ -527,3 +527,13 @@ runtime.main
 2026-02-27 16:06:36.750	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
 2026-02-27 17:45:11.561	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-27 17:45:11.585	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 15:57:24.113	[34mINFO[0m	realize/data.go:57	Canal监听器启动成功，开始监听商品表binlog
+2026-02-28 15:57:24.113	[35mDEBUG[0m	mq/rocketmq.go:30	NewMQFactory
+2026-02-28 15:57:24.113	[34mINFO[0m	mq/rocketmq.go:40	rocketmq addr:192.168.163.132:9876
+2026-02-28 15:57:24.114	[34mINFO[0m	mq/rocketmq.go:60	RocketMQ生产者初始化成功 topic: goods_topic
+2026-02-28 15:57:27.275	[34mINFO[0m	es/es.go:111	商品MQ消费者启动成功,topic: goods_topic, group: goods_consumer_group 
+2026-02-28 15:57:27.304	[34mINFO[0m	canal/canal.go:70	Canal客户端初始化成功 destination: example
+2026-02-28 15:57:27.370	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 15:57:27.371	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8021
+2026-02-28 18:07:32.275	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 18:07:32.323	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

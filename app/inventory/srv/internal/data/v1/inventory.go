@@ -27,4 +27,6 @@ type InventoryStore interface {
 
 	// UpdateStockSellDetailStatus 更新库存销售状态
 	UpdateStockSellDetailStatus(ctx context.Context, txn *gorm.DB, ordersn string, status int32) error
+
+	AutoReback(ctx context.Context, txn *gorm.DB, OrderSns string) do.MQMessageType
 }

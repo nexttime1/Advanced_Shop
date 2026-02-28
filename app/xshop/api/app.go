@@ -80,14 +80,14 @@ func NewAPIApp(cfg *config.Config) (*gapp.App, error) {
 }
 
 func run(cfg *config.Config) app.RunFunc {
-	return func(baseName string) error {
+	return func(baseName string, ctx context.Context) error {
 		apiApp, err := NewAPIApp(cfg)
 		if err != nil {
 			return err
 		}
 
 		//启动
-		if err := apiApp.Run(); err != nil {
+		if err := apiApp.Run(ctx); err != nil {
 			log.Errorf("run api app error: %s", err)
 			return err
 		}

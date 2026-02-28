@@ -8,6 +8,7 @@ import (
 	"Advanced_Shop/gnova/registry/consul"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
+	"context"
 	"github.com/hashicorp/consul/api"
 )
 
@@ -35,7 +36,7 @@ func NewRegistrar(registry *options.RegistryOptions) registry.Registrar {
 	return r
 }
 
-func NeworderApp(cfg *config.Config) (*gapp.App, error) {
+func NeworderApp(cfg *config.Config, ctx context.Context) (*gapp.App, error) {
 	//初始化log
 	log.Init(cfg.Log)
 	defer log.Flush()
@@ -43,8 +44,8 @@ func NeworderApp(cfg *config.Config) (*gapp.App, error) {
 	//服务注册
 	register := NewRegistrar(cfg.Registry)
 
-	//生成rpc服务
-	rpcServer, err := NewOrderRPCServer(cfg)
+	//生成rpc服务  传根 ctx
+	rpcServer, err := NewOrderRPCServer(cfg, ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -57,14 +58,14 @@ func NeworderApp(cfg *config.Config) (*gapp.App, error) {
 }
 
 func run(cfg *config.Config) app.RunFunc {
-	return func(baseName string) error {
-		orderApp, err := NeworderApp(cfg)
+	return func(baseName string, ctx context.Context) error {
+		orderApp, err := NeworderApp(cfg, ctx)
 		if err != nil {
 			return err
 		}
 
 		//启动
-		if err := orderApp.Run(); err != nil {
+		if err := orderApp.Run(ctx); err != nil {
 			log.Errorf("run user app error: %s", err)
 			return err
 		}

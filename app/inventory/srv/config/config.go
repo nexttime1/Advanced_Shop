@@ -14,6 +14,7 @@ type Config struct {
 	Telemetry    *options.TelemetryOptions `json:"telemetry" mapstructure:"telemetry"`
 	Registry     *options.RegistryOptions  `json:"registry" mapstructure:"registry"`
 	RedisOptions *options.RedisOptions     `json:"redis" mapstructure:"redis"`
+	Mq           *options.RocketMQOptions  `json:"mq" mapstructure:"mq"`
 }
 
 func New() *Config {
@@ -25,6 +26,7 @@ func New() *Config {
 		Telemetry:    options.NewTelemetryOptions(),
 		Registry:     options.NewRegistryOptions(),
 		RedisOptions: options.NewRedisOptions(),
+		Mq:           options.NewRocketMQOptions(),
 	}
 }
 
@@ -36,7 +38,7 @@ func (o *Config) Flags() (fss cliflag.NamedFlagSets) {
 	o.Registry.AddFlags(fss.FlagSet("registry"))
 	o.MySQLOptions.AddFlags(fss.FlagSet("mysql"))
 	o.RedisOptions.AddFlags(fss.FlagSet("redis"))
-
+	o.Mq.AddFlags(fss.FlagSet("mq"))
 	return fss
 }
 
@@ -55,5 +57,6 @@ func (o *Config) Validate() []error {
 	errs = append(errs, o.Telemetry.Validate()...)
 	errs = append(errs, o.Registry.Validate()...)
 	errs = append(errs, o.RedisOptions.Validate()...)
+	errs = append(errs, o.Mq.Validate()...)
 	return errs
 }

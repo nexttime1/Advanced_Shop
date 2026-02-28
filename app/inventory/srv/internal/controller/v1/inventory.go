@@ -47,7 +47,7 @@ func (is *inventoryServer) InvDetail(ctx context.Context, info *invpb.GoodsInvIn
 func (is *inventoryServer) Sell(ctx context.Context, info *invpb.SellInfo) (*emptypb.Empty, error) {
 	var detail []do.GoodsDetail
 	for _, value := range info.GoodsInfo {
-		detail = append(detail, do.GoodsDetail{Goods: value.GoodsId, Num: value.Num})
+		detail = append(detail, do.GoodsDetail{GoodId: value.GoodsId, Num: value.Num})
 	}
 	err := is.srv.Inventories().Sell(ctx, info.OrderSn, detail)
 	if err != nil {
@@ -64,7 +64,7 @@ func (is *inventoryServer) Reback(ctx context.Context, info *invpb.SellInfo) (*e
 	log.Infof("订单%s归还库存", info.OrderSn)
 	var detail []do.GoodsDetail
 	for _, v := range info.GoodsInfo {
-		detail = append(detail, do.GoodsDetail{Goods: v.GoodsId, Num: v.Num})
+		detail = append(detail, do.GoodsDetail{GoodId: v.GoodsId, Num: v.Num})
 	}
 	err := is.srv.Inventories().Reback(ctx, info.OrderSn, detail)
 	if err != nil {

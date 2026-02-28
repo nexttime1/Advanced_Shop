@@ -1,6 +1,7 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"os"
 	//controller(参数校验) ->service(具体的业务逻辑) -> data(数据库的接口)
@@ -90,6 +91,9 @@ type App struct {
 	// cmd 底层依赖的 cobra.Command 实例，是 CLI 功能的核心载体
 	// 封装了命令行的解析、子命令管理、flag 管理等底层能力
 	cmd *cobra.Command
+	// 根 context
+	ctx        context.Context
+	cancelFunc context.CancelFunc
 }
 
 // Option defines optional parameters for initializing the application
@@ -105,7 +109,7 @@ func WithOptions(opt CliOptions) Option {
 }
 
 // RunFunc defines the application's startup callback function.
-type RunFunc func(basename string) error
+type RunFunc func(basename string, ctx context.Context) error
 
 // WithRunFunc is used to set the application startup callback function option.
 func WithRunFunc(run RunFunc) Option {
@@ -178,6 +182,7 @@ func NewApp(name string, basename string, opts ...Option) *App {
 		o(a)
 	}
 
+	a.ctx, a.cancelFunc = context.WithCancel(context.Background())
 	// 初始化命令
 	a.buildCommand()
 
@@ -293,8 +298,8 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	}
 	// run application
 	if a.runFunc != nil {
-		// 这里执行我的函数
-		return a.runFunc(a.basename)
+		// 改造 runFunc 签名，传入根 ctx
+		return a.runFunc(a.basename, a.ctx) // 关键修改：传递根 ctx
 	}
 
 	return nil
@@ -321,4 +326,10 @@ func (a *App) applyOptionRules() error {
 func printWorkingDir() {
 	wd, _ := os.Getwd()
 	log.Infof("%v WorkingDir: %s", progressMessage, wd)
+}
+
+func (a *App) Stop() {
+	if a.cancelFunc != nil {
+		a.cancelFunc()
+	}
 }

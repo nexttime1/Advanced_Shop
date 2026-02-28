@@ -541,3 +541,7 @@ created by google.golang.org/grpc.(*Server).serveStreams.func2 in goroutine 1073
 2026-02-27 16:06:01.654	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
 2026-02-27 17:45:11.543	[34mINFO[0m	app/app.go:151	start deregister service
 2026-02-27 17:45:11.561	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-02-28 17:19:56.964	[34mINFO[0m	app/app.go:104	start server
+2026-02-28 17:19:56.965	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8020
+2026-02-28 18:07:32.290	[34mINFO[0m	app/app.go:149	start deregister service
+2026-02-28 18:07:32.356	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
