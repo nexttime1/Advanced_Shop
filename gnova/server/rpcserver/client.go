@@ -92,6 +92,7 @@ func Dial(ctx context.Context, opts ...ClientOption) (*grpc.ClientConn, error) {
 	return dial(ctx, false, opts...)
 }
 
+// dial  客户端侧服务发现 + 客户端侧负载均衡 模式
 func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.ClientConn, error) {
 	options := clientOptions{
 		timeout:       2000 * time.Millisecond,
