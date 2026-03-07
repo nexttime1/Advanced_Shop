@@ -238,3 +238,41 @@ runtime.main
 2026-02-28 18:06:42.764	[34mINFO[0m	realize/data.go:143	订单超时处理成功
 2026-02-28 18:07:32.260	[34mINFO[0m	app/app.go:149	start deregister service
 2026-02-28 18:07:32.289	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-03 21:02:06.903	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:02:06.904	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:02:24.140	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:03:43.256	[34mINFO[0m	app/app.go:104	start server
+2026-03-03 21:03:43.257	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-03 21:03:43.407	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-03 21:03:43.419	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-03 21:03:58.274	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:03:58.274	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:03:58.321	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:05:25.166	[34mINFO[0m	app/app.go:104	start server
+2026-03-03 21:05:25.166	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-03 21:05:25.209	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-03 21:05:25.212	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-03 21:05:37.230	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:05:37.230	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:05:37.264	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:16:40.983	[34mINFO[0m	app/app.go:105	start server
+2026-03-03 21:16:40.984	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-03 21:16:41.026	[34mINFO[0m	app/app.go:150	start deregister service
+2026-03-03 21:16:41.031	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-03 21:18:18.870	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:18:18.872	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:18:18.896	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:19:31.987	[34mINFO[0m	app/app.go:105	start server
+2026-03-03 21:19:31.987	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-03 21:19:32.023	[34mINFO[0m	app/app.go:150	start deregister service
+2026-03-03 21:19:32.027	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-03 21:22:15.769	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:22:15.769	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:22:15.791	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:31:44.367	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-03 21:31:44.368	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-03 21:31:44.389	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-03 21:32:34.776	[34mINFO[0m	app/app.go:104	start server
+2026-03-03 21:33:23.122	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-03 21:39:14.099	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-03 21:39:14.103	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

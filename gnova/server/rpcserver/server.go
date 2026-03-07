@@ -77,7 +77,7 @@ func NewServer(opts ...ServerOption) *Server {
 	//把我们传入的拦截器转换成grpc的ServerOption  在它内部也是我们一样的方法  type ServerOption func(o *Server) 放到它那边
 	grpcOpts := []grpc.ServerOption{grpc.ChainUnaryInterceptor(unaryInts...)}
 
-	//把用户自己传入的grpc.ServerOption放在一起
+	//把用户自己传入的 grpc.ServerOption 放在一起
 	if len(srv.grpcOpts) > 0 {
 		grpcOpts = append(grpcOpts, srv.grpcOpts...)
 	}

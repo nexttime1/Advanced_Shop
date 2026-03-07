@@ -61,11 +61,13 @@ func defaultResolver(_ context.Context, entries []*api.ServiceEntry) []*registry
 		// 2. 解析服务端点（Endpoints）
 		endpoints := make([]string, 0)
 		for scheme, addr := range entry.Service.TaggedAddresses {
+			// 跳过Consul内置的lan/wan类型地址（这些是Consul内部用的，不是服务实际访问地址）
 			if scheme == "lan_ipv4" || scheme == "wan_ipv4" || scheme == "lan_ipv6" || scheme == "wan_ipv6" {
 				continue
 			}
 			endpoints = append(endpoints, addr.Address)
 		}
+		// 兜底逻辑：如果TaggedAddresses里没有效地址，就用Service的基础Address+Port拼接
 		if len(endpoints) == 0 && entry.Service.Address != "" && entry.Service.Port != 0 {
 			endpoints = append(endpoints, fmt.Sprintf("http://%s:%d", entry.Service.Address, entry.Service.Port))
 		}
@@ -104,6 +106,7 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 	addresses := make(map[string]api.ServiceAddress, len(svc.Endpoints))
 	// 健康检查
 	checkAddresses := make([]string, 0, len(svc.Endpoints))
+	// grpc://10.121.75.16:8023
 	for _, endpoint := range svc.Endpoints {
 		raw, err := url.Parse(endpoint)
 		if err != nil {
@@ -114,6 +117,7 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 
 		checkAddresses = append(checkAddresses, net.JoinHostPort(addr, strconv.FormatUint(port, 10)))
 		// TaggedAddresses：key=scheme（http），value=地址+端口 因为构造Consul服务注册对象需要这样的
+		// key = grpc   value = ServiceAddress{grpc://10.121.75.16:8023, 8023}
 		addresses[raw.Scheme] = api.ServiceAddress{Address: endpoint, Port: int(port)}
 	}
 	asr := &api.AgentServiceRegistration{
@@ -127,7 +131,7 @@ func (c *Client) Register(_ context.Context, svc *registry.ServiceInstance, enab
 		// Consul 的 Service.Address / Service.Port 只能有一个
 		host, portRaw, _ := net.SplitHostPort(checkAddresses[0]) // 拿到 host 和 prot 但是是string
 		port, _ := strconv.ParseInt(portRaw, 10, 32)
-		asr.Address = host
+		asr.Address = host // ip地址  我本机
 		asr.Port = int(port)
 	}
 	if enableHealthCheck {

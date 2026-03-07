@@ -1652,3 +1652,54 @@
 2026-02-28 18:07:32.291	[34mINFO[0m	app/app.go:149	start deregister service
 2026-02-28 18:07:32.331	[34mINFO[0m	restserver/server.go:159	rest server is stopping
 2026-02-28 18:07:32.334	[34mINFO[0m	restserver/server.go:165	rest server stopped
+2026-03-04 22:14:16.627	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-04 22:14:16.627	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-04 22:14:16.627	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-04 22:14:16.627	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-04 22:14:16.627	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-04 22:14:16.627	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-04 22:17:09.645	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-04 22:17:09.646	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-04 22:17:09.646	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-04 22:17:09.646	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-04 22:17:09.646	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-04 22:17:09.646	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-04 22:17:14.647	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-03-04 22:17:24.793	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-04 22:17:24.793	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-04 22:17:24.793	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-04 22:17:24.793	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-04 22:17:24.793	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-04 22:17:24.793	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-05 11:52:12.592	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-05 11:52:12.592	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-05 11:52:12.592	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-05 11:52:12.592	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-05 11:52:12.592	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-05 11:52:12.592	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-05 11:58:29.674	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-05 11:58:29.674	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-05 11:58:29.674	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-05 11:58:29.674	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-05 11:58:29.674	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-05 11:58:29.674	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-05 11:58:34.676	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-03-05 11:58:39.677	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-03-05 12:00:31.693	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-05 12:00:31.693	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-05 12:00:31.694	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-05 12:00:31.693	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-05 12:00:31.694	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-05 12:00:31.694	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-05 21:03:58.288	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-05 21:03:58.288	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-05 21:03:58.289	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-05 21:03:58.289	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-05 21:03:58.289	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-05 21:03:58.289	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-06 22:39:52.762	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-06 22:39:52.762	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-06 22:39:52.762	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-06 22:39:52.762	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-06 22:39:52.762	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-06 22:39:52.763	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
