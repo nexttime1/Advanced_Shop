@@ -987,3 +987,32 @@ runtime.main
 2026-02-28 18:06:42.812	[34mINFO[0m	db/mysql.go:192	库存归还处理成功
 2026-02-28 18:07:32.278	[34mINFO[0m	app/app.go:149	start deregister service
 2026-02-28 18:07:32.298	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-13 20:40:14.680	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-13 20:40:14.708	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-13 20:40:14.710	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-13 20:40:14.739	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-13 20:40:14.739	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-13 20:40:14.739	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-13 20:40:24.680	[34mINFO[0m	srv/app.go:74	Redis连接成功
+2026-03-13 20:40:24.716	[34mINFO[0m	db/mysql.go:152	库存服务MQ消费者启动成功，监听Topic： timeout_inventory
+2026-03-13 20:40:24.718	[34mINFO[0m	v1/service.go:46	✅ Redis客户端复用成功，认证通过
+2026-03-13 20:40:24.915	[34mINFO[0m	app/app.go:104	start server
+2026-03-13 20:40:24.916	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-03-13 21:45:21.239	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-13 21:45:21.256	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-15 21:48:15.773	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-15 21:48:15.774	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-15 21:48:15.774	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-15 21:53:14.734	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-15 21:53:14.734	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-15 21:53:14.734	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-15 21:53:14.763	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-15 21:53:14.763	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-15 21:53:14.763	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-15 21:53:24.735	[34mINFO[0m	srv/app.go:74	Redis连接成功
+2026-03-15 21:53:24.834	[34mINFO[0m	db/mysql.go:152	库存服务MQ消费者启动成功，监听Topic： timeout_inventory
+2026-03-15 21:53:24.839	[34mINFO[0m	v1/service.go:46	✅ Redis客户端复用成功，认证通过
+2026-03-15 21:53:24.993	[34mINFO[0m	app/app.go:104	start server
+2026-03-15 21:53:24.995	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8022
+2026-03-15 22:55:39.769	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-15 22:55:39.838	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

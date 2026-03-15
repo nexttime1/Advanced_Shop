@@ -2,12 +2,17 @@ package admin
 
 import (
 	"context"
+	"fmt"
 
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/app/xshop/api/config"
 	gapp "Advanced_Shop/gnova/app"
+	balancing "Advanced_Shop/gnova/server/rpcserver"
+	"Advanced_Shop/gnova/server/rpcserver/selector"
+	"Advanced_Shop/gnova/server/rpcserver/selector/random"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
+
 	"github.com/hashicorp/consul/api"
 
 	"Advanced_Shop/gnova/registry"
@@ -64,10 +69,13 @@ func NewAPIApp(cfg *config.Config) (*gapp.App, error) {
 	}
 
 	go storage.ConnectToRedis(context.Background(), redisConfig)
+	// 注册负载均衡器
+	selector.SetGlobalSelector(random.NewBuilder())
+	balancing.InitBuilder()
 
 	//生成http服务
 	restServer, err := NewAPIHTTPServer(cfg)
-
+	fmt.Println(err)
 	if err != nil {
 		return nil, err
 	}
