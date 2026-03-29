@@ -10,3 +10,28 @@
 2026-02-28 15:57:25.637	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8024
 2026-02-28 18:07:32.275	[34mINFO[0m	app/app.go:149	start deregister service
 2026-02-28 18:07:32.330	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-22 19:42:31.771	[31mFATAL[0m	srv/rpc.go:28	An internal server error occurred
+Advanced_Shop/app/action/srv.NewActionRPCServer
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/action/srv/rpc.go:28
+Advanced_Shop/app/action/srv.NewGoodsApp
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/action/srv/app.go:48
+Advanced_Shop/app/action/srv.NewApp.run.func2
+	D:/5524/go_project/xtm_shop/Advanced_Shop/app/action/srv/app.go:62
+Advanced_Shop/pkg/app.(*App).runCommand
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:302
+github.com/spf13/cobra.(*Command).execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1015
+github.com/spf13/cobra.(*Command).ExecuteC
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1148
+github.com/spf13/cobra.(*Command).Execute
+	C:/Users/20839/.go/pkg/mod/github.com/spf13/cobra@v1.10.2/command.go:1071
+Advanced_Shop/pkg/app.(*App).Run
+	D:/5524/go_project/xtm_shop/Advanced_Shop/pkg/app/app.go:255
+main.main
+	D:/5524/go_project/xtm_shop/Advanced_Shop/cmd/action/action.go:16
+runtime.main
+	D:/5524/go_project/env/go1.25.7.windows-amd64/go/src/runtime/proc.go:285
+2026-03-22 19:44:57.474	[34mINFO[0m	app/app.go:104	start server
+2026-03-22 19:44:57.475	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8024
+2026-03-22 21:13:02.747	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-22 21:13:02.800	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

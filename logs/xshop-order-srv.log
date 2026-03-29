@@ -294,3 +294,20 @@ runtime.main
 2026-03-15 21:53:26.039	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"563409f7-2076-11f1-8e83-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.216.150.34:8022"]}]
 2026-03-15 22:55:39.776	[34mINFO[0m	app/app.go:149	start deregister service
 2026-03-15 22:55:39.834	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-18 22:24:36.552	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-18 22:24:36.552	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-18 22:24:36.620	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-18 22:24:36.734	[34mINFO[0m	app/app.go:104	start server
+2026-03-18 22:24:36.734	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-18 22:24:50.681	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"38cb0436-22d6-11f1-9617-84a9388aedfb","name":"xshop-inventory-srv","version":"","metadata":null,"endpoints":["grpc://10.142.121.34:8022"]}]
+2026-03-18 22:24:59.054	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"38ac5642-22d6-11f1-9560-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.142.121.34:8021"]}]
+2026-03-19 00:21:14.802	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-19 00:21:14.874	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped
+2026-03-22 19:45:48.593	[35mDEBUG[0m	mq/rocketmq.go:32	NewMQFactory
+2026-03-22 19:45:48.595	[34mINFO[0m	mq/rocketmq.go:61	RocketMQ生产者初始化成功 topic: new_timeout_topic
+2026-03-22 19:45:48.666	[34mINFO[0m	realize/data.go:90	RocketMQ消费者启动成功，开始监听消息
+2026-03-22 19:45:48.795	[34mINFO[0m	app/app.go:104	start server
+2026-03-22 19:45:48.795	[34mINFO[0m	rpcserver/server.go:171	[grpc] server listening on: [::]:8023
+2026-03-22 19:45:52.559	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"aa107ca2-25e4-11f1-83ca-84a9388aedfb","name":"xshop-goods-srv","version":"","metadata":null,"endpoints":["grpc://10.121.40.211:8021"]}]
+2026-03-22 21:13:02.744	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-22 21:13:02.798	[34mINFO[0m	rpcserver/server.go:180	[grpc] server stopped

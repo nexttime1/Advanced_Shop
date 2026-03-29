@@ -96,7 +96,7 @@ func Dial(ctx context.Context, opts ...ClientOption) (*grpc.ClientConn, error) {
 func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.ClientConn, error) {
 	options := clientOptions{
 		timeout:       2000 * time.Millisecond,
-		balancerName:  "round_robin",
+		balancerName:  "selector",
 		enableTracing: true,
 	}
 
@@ -154,6 +154,9 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 		grpcOpts = append(grpcOpts, options.rpcOpts...)
 
 	}
+	// 添加超时
+	ctx, cancel := context.WithTimeout(ctx, options.timeout)
+	defer cancel() // 确保超时后释放资源
 
 	//client, err := grpc.NewClient(options.endpoint, grpcOpts...)
 	//if err != nil {
@@ -166,5 +169,5 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 	//	return nil, err
 	//}
 	// DialOption 也就是  我们传入的grpcOpts  本质上是 grpc  NewClient 的参数“（options）
-	return grpc.DialContext(ctx, options.endpoint, grpcOpts...)
+	return grpc.DialContext(ctx, options.endpoint, grpcOpts...) // 连接管理器
 }

@@ -1914,3 +1914,70 @@
 2026-03-15 22:55:39.763	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
 2026-03-15 22:55:39.763	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
 2026-03-15 22:55:39.763	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-18 22:28:10.067	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-18 22:28:10.067	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-18 22:28:10.067	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-18 22:28:10.067	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-18 22:28:10.067	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-18 22:28:10.067	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-18 22:34:04.989	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-18 22:34:38.341	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-18 22:35:04.982	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-18 22:35:04.982	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-18 22:35:04.982	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-18 22:35:04.982	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-18 22:55:48.765	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-18 22:55:56.077	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-18 22:55:56.077	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-18 22:55:56.079	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-18 22:55:56.079	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-18 22:55:56.079	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-22 19:42:12.789	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-22 19:42:12.789	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-22 19:42:12.789	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-22 19:42:12.789	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-22 19:42:12.789	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-22 19:42:12.790	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-22 19:42:17.791	[33mWARN[0m	storage/redis_cluster.go:123	Error trying to set test key: dial tcp 192.168.163.132:6379: i/o timeout
+2026-03-22 19:45:01.649	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-22 19:45:01.649	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-22 19:45:01.650	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-22 19:45:01.650	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-22 19:45:01.650	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-22 19:45:01.651	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-22 19:45:01.683	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-22 19:45:01.683	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-22 19:45:01.683	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-22 19:45:01.706	[34mINFO[0m	app/app.go:104	start server
+2026-03-22 19:45:01.707	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/ --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func1(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/cmdline --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func2(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/profile --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func3(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	POST   /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func4(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/symbol --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func5(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/trace --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapF.func6(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/allocs --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func7(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/block --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func8(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/goroutine --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func9(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/heap --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func10(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/mutex --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func11(7 handlers)
+2026-03-22 19:45:01.708	[34mINFO[0m	restserver/server.go:115	GET    /debug/pprof/threadcreate --> Advanced_Shop/gnova/server/restserver/pprof.RouteRegister.WrapH.func12(7 handlers)
+2026-03-22 19:45:01.709	[34mINFO[0m	restserver/server.go:115	GET    /metrics --> github.com/penglongli/gin-metrics/ginmetrics.(*Monitor).Use.func1(8 handlers)
+2026-03-22 19:45:01.709	[34mINFO[0m	restserver/server.go:145	rest server is running on port: 8001
+2026-03-22 19:45:05.022	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"8d0f8506-25e4-11f1-a59e-84a9388aedfb","name":"xshop-action-srv","version":"","metadata":null,"endpoints":["grpc://10.121.40.211:8024"]}]
+2026-03-22 19:45:19.603	[34mINFO[0m	app/app.go:149	start deregister service
+2026-03-22 19:45:19.608	[34mINFO[0m	restserver/server.go:159	rest server is stopping
+2026-03-22 19:45:19.608	[34mINFO[0m	restserver/server.go:165	rest server stopped
+2026-03-22 19:49:13.613	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-22 19:49:13.613	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-22 19:49:13.614	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-22 19:49:13.614	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-22 19:49:13.614	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-22 19:49:13.614	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-22 19:51:04.718	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"a62097c3-25e4-11f1-bf93-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.40.211:8020"]}]
+2026-03-22 20:01:20.440	[35mDEBUG[0m	storage/redis_cluster.go:98	Connecting to redis cluster
+2026-03-22 20:01:20.440	[34mINFO[0m	restserver/server.go:93	intall middleware: recovery
+2026-03-22 20:01:20.440	[35mDEBUG[0m	storage/redis_cluster.go:186	Creating new Redis connection pool
+2026-03-22 20:01:20.440	[34mINFO[0m	restserver/server.go:93	intall middleware: cors
+2026-03-22 20:01:20.440	[34mINFO[0m	storage/redis_cluster.go:229	--> [REDIS] Creating single-node client
+2026-03-22 20:01:20.440	[34mINFO[0m	restserver/server.go:93	intall middleware: context
+2026-03-22 20:01:53.964	[34mINFO[0m	discovery/resolver.go:83	[resolver] update instances: [{"id":"a62097c3-25e4-11f1-bf93-84a9388aedfb","name":"xshop-user-srv","version":"","metadata":null,"endpoints":["grpc://10.121.40.211:8020"]}]

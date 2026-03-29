@@ -299,7 +299,7 @@ func (a *App) runCommand(cmd *cobra.Command, args []string) error {
 	// run application
 	if a.runFunc != nil {
 		// 改造 runFunc 签名，传入根 ctx
-		return a.runFunc(a.basename, a.ctx) // 关键修改：传递根 ctx
+		return a.runFunc(a.basename, a.ctx) // 传递根 ctx
 	}
 
 	return nil
