@@ -13,21 +13,17 @@ import (
 type Option func(o *options)
 
 type options struct {
-	id        string
-	endpoints []*url.URL
-	name      string
+	id        string      // 服务唯一ID（UUID）
+	name      string      // 服务名称
+	endpoints []*url.URL  // 服务端点列表
+	sigs      []os.Signal // 监听的系统信号
 
-	sigs []os.Signal
+	registrar        registry.Registrar // 注册中心
+	registrarTimeout time.Duration      // 注册超时
+	stopTimeout      time.Duration      // 停止超时
 
-	//允许用户传入自己的实现
-	registrar        registry.Registrar
-	registrarTimeout time.Duration
-
-	//stop超时时间
-	stopTimeout time.Duration
-
-	restServer *restserver.Server
-	rpcServer  *rpcserver.Server
+	restServer *restserver.Server // HTTP 服务器
+	rpcServer  *rpcserver.Server  // gRPC 服务器
 }
 
 func WithRegistrar(registrar registry.Registrar) Option {
