@@ -41,6 +41,6 @@ func main() {
 
 	// ✅ 正确获取接口内部的动态类型（Coder）
 	a := reflect.ValueOf(b).Type()
-	fmt.Println("接口动态类型 a：", a)  // main.Coder
+	fmt.Println("接口动态类型 a：", a)     // main.Coder
 	fmt.Println("a 的种类：", a.Kind()) // struct
 }
