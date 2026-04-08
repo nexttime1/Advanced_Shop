@@ -118,6 +118,25 @@ func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, OrderSns stri
 		// 没找到 说明没有  或者 防止重复消费  这个消息直接跳过 所以
 		return do.DirectPass
 	}
+
+	// 先抢占，用乐观锁把 status 从 1 改成 2
+	// 基于 id + version 做乐观锁，只有一个并发请求能成功
+	result := txn.Model(&history).
+		Where("id = ? AND version = ? AND status = 1", history.ID, history.Version).
+		Updates(map[string]interface{}{
+			"status":  2,
+			"version": history.Version + 1,
+		})
+
+	if result.Error != nil {
+		return do.OptionFail
+	}
+
+	// RowsAffected == 0 说明被别人抢先改了，本次直接跳过
+	if result.RowsAffected == 0 {
+		return do.DirectPass
+	}
+
 	// 找到了  进行归还库存 并且 改历史记录 状态 变成2
 	// 构造 Reback 函数需要的参数
 	var info do.RebackInfo
