@@ -92,6 +92,10 @@ func (ds *mysqlStore) Begin() *gorm.DB {
 	return ds.db.Begin()
 }
 
+func (ds *mysqlStore) DB() *gorm.DB {
+	return ds.db
+}
+
 func (m *mysqlStore) Listen(ctx context.Context) {
 
 	mqConsumer, err := rocketmq.NewPushConsumer(consumer.WithNameServer([]string{m.mqOpts.Addr()}),
@@ -153,50 +157,81 @@ func (m *mysqlStore) Listen(ctx context.Context) {
 
 }
 
+// AutoReBack ==================== MQ消费入口 ====================
 func (m *mysqlStore) AutoReBack(ctx context.Context, msg ...*primitive.MessageExt) (consumer.ConsumeResult, error) {
-	zlog.Infof("开始处理库存归还消息，本次处理消息数： %d", len(msg))
-	needRetry := false
-	for i := range msg {
-		var orderInfo do.OrderMQMessageRequest
-		err := json.Unmarshal(msg[i].Body, &orderInfo)
-		if err != nil {
-			zlog.Error("解析订单超时消息体失败, 跳过该消息")
-			// 解析失败：标记无需重试（消息本身有问题，重试也没用），继续处理下一条
-			continue
-		}
-		// 开启事务
-		txn := m.Begin()
-		rollbackFlag := true // 标记当前消息是否需要回滚
-		// 延迟处理：panic/未提交时回滚事务
-		defer func() {
-			if r := recover(); r != nil {
-				zlog.Errorf("处理库存归还消息失败，OrderSn: %s, err: %v", orderInfo.OrderSns, r)
-				txn.Rollback()
-			} else if rollbackFlag {
-				txn.Rollback()
-			}
-		}()
-		number := m.Inventorys().AutoReback(ctx, txn, orderInfo.OrderSns)
-		if number == do.OptionFail {
-			needRetry = true
-			continue
-		}
-		// 提交当前消息的事务
-		err = txn.Commit().Error
-		if err != nil {
-			zlog.Error("提交库存归还事务失败")
-			needRetry = true
-			continue
-		}
-		rollbackFlag = false
-		zlog.Info("库存归还处理成功")
 
+	zlog.Infof("开始处理库存归还消息，本次消息数: %d", len(msg))
+	needRetry := false
+
+	for i := range msg {
+		// 每条消息独立处理，互不影响
+		if err := m.processOneMessage(ctx, msg[i]); err != nil {
+			zlog.Errorf("消息处理失败，msgId: %s, err: %v", msg[i].MsgId, err)
+			needRetry = true
+			// 继续处理下一条，不能因为一条失败影响其他
+		}
 	}
+
 	if needRetry {
-		// 有消息处理失败，返回重试（客户端会重新推送未处理成功的消息）
 		return consumer.ConsumeRetryLater, nil
 	}
-	// 所有消息处理完成（成功/无需处理）
 	return consumer.ConsumeSuccess, nil
+}
 
+// ==================== 单条消息处理 ====================
+func (m *mysqlStore) processOneMessage(ctx context.Context, msg *primitive.MessageExt) error {
+
+	// 解析消息体
+	var orderInfo do.OrderMQMessageRequest
+	if err := json.Unmarshal(msg.Body, &orderInfo); err != nil {
+		// 消息体损坏，记录告警，直接丢弃（重试无意义）
+		zlog.Errorf("消息体解析失败，msgId: %s, body: %s, err: %v", msg.MsgId, string(msg.Body), err)
+		return nil // 返回nil表示不重试，避免死信队列积压
+	}
+
+	zlog.Infof("开始处理订单库存归还，OrderSn: %s", orderInfo.OrderSns)
+
+	// 开启事务
+	txn := m.Begin()
+	if txn.Error != nil {
+		return fmt.Errorf("开启事务失败: %w", txn.Error)
+	}
+
+	// 事务闭包，确保一定被处理
+	committed := false
+	defer func() {
+		if !committed {
+			if err := txn.Rollback().Error; err != nil {
+				zlog.Errorf("事务回滚失败，OrderSn: %s, err: %v",
+					orderInfo.OrderSns, err)
+			} else {
+				zlog.Warnf("事务已回滚，OrderSn: %s", orderInfo.OrderSns)
+			}
+		}
+	}()
+
+	// 核心业务逻辑
+	result, err := m.Inventorys().AutoReback(ctx, txn, orderInfo.OrderSns)
+
+	if err != nil {
+		// 业务失败，defer会自动回滚
+		return fmt.Errorf("库存归还业务失败，OrderSn: %s, err: %w", orderInfo.OrderSns, err)
+	}
+
+	// 幂等：已处理过，直接跳过，但要提交（避免没必要的回滚日志）
+	if result == do.DirectPass {
+		committed = true // 标记为"不需要回滚"，幂等成功
+		zlog.Infof("订单库存归还已处理过，跳过，OrderSn: %s", orderInfo.OrderSns)
+		return nil
+	}
+
+	// 6. 提交事务
+	if err := txn.Commit().Error; err != nil {
+		// defer会回滚
+		return fmt.Errorf("提交事务失败，OrderSn: %s, err: %w",
+			orderInfo.OrderSns, err)
+	}
+	committed = true
+	zlog.Infof("库存归还成功，OrderSn: %s", orderInfo.OrderSns)
+	return nil
 }

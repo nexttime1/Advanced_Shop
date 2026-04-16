@@ -1,7 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-  
     {
       "name": "Debug API",
       "type": "go",
@@ -9,6 +8,16 @@
       "mode": "debug",
       "program": "${workspaceFolder}/cmd/shop",
       "args": ["-c", "configs/shop/api.yaml"],
+      "cwd": "${workspaceFolder}"
+    },
+    // 新增：调试 test/gin/enter.go 无参数配置
+    {
+      "name": "Debug test/gin/enter",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/test/gin", // 指向目标文件所在目录
+      "args": [], // 无参数，空数组
       "cwd": "${workspaceFolder}"
     }
   ]

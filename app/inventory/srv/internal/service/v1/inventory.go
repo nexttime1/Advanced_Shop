@@ -2,18 +2,25 @@ package v1
 
 import (
 	v1 "Advanced_Shop/app/inventory/srv/internal/data/v1"
-	"Advanced_Shop/app/pkg/code"
+	code2 "Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/options"
+	"Advanced_Shop/gnova/code"
 	"Advanced_Shop/pkg/errors"
 	"context"
+	"database/sql"
+	"github.com/dtm-labs/client/dtmcli"
 	"github.com/go-redsync/redsync/v4"
 	redsyncredis "github.com/go-redsync/redsync/v4/redis"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	"gorm.io/gorm"
 	"sort"
 	"strconv"
 	"time"
 
 	"Advanced_Shop/app/inventory/srv/internal/domain/do"
 	"Advanced_Shop/app/inventory/srv/internal/domain/dto"
+	"github.com/dtm-labs/client/dtmgrpc"
 
 	"Advanced_Shop/pkg/log"
 )
@@ -64,7 +71,12 @@ func (is *inventoryService) Get(ctx context.Context, goodsID uint64) (*dto.Inven
 
 func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []do.GoodsDetail) error {
 	log.Infof("订单%s扣减库存", ordersn)
-
+	// 使用屏障子事务
+	barrier, err := dtmgrpc.BarrierFromGrpc(ctx)
+	if err != nil {
+		log.Errorf("订单%s创建屏障失败: %v", ordersn, err)
+		return errors.WithCode(code.ErrUnknown, "创建屏障失败: %v", err)
+	}
 	// 新建实例
 	rs := redsync.New(is.pool)
 
@@ -73,164 +85,119 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 	var detail = do.GoodsDetailList(details)
 	sort.Sort(detail) // 实现了接口
 
-	txn := is.data.Begin()
-	defer func() {
-		if err := recover(); err != nil {
-			_ = txn.Rollback()
-			log.Error("事务进行中出现异常，回滚")
-			return
+	db := is.data.DB()
+
+	// 直接用封装好的helper，闭包里的tx就是*gorm.DB，你的repo照常用
+	return CallWithGorm(barrier, db, func(tx *gorm.DB) error {
+		for _, goodsInfo := range detail {
+			// 拿锁  一定是 先排序在拿锁
+			mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
+			defer mutex.Unlock()
+			if err := mutex.Lock(); err != nil {
+				return err
+			}
+
+			inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
+			if err != nil {
+				return err
+			}
+
+			if inv.Stock < goodsInfo.Num {
+				// TODO 错误码
+				return status.Errorf(codes.Aborted, "库存不足: 商品%d", goodsInfo.GoodId)
+			}
+
+			if err := is.data.Inventorys().Reduce(ctx, tx, uint64(goodsInfo.GoodId), int(goodsInfo.Num)); err != nil {
+				return err
+			}
+
 		}
-	}()
 
-	// 生成历史记录
-	record := do.StockSellDetailDO{
-		OrderSn: ordersn,
-		Status:  1, // 1 代表 扣了没还
-		Detail:  detail,
-	}
-
-	for _, goodsInfo := range detail {
-
-		// 拿锁  一定是 先排序在拿锁
-		mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
-		if err := mutex.Lock(); err != nil {
-			log.Errorf("商品%d获取锁失败, 错误为：%v", goodsInfo.GoodId, err)
-			txn.Rollback()
-			return err
+		// 生成历史记录
+		record := &do.StockSellDetailDO{
+			OrderSn: ordersn,
+			Status:  0,
+			Detail:  detail,
+			Version: 0,
 		}
-
-		inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
+		err = is.data.Inventorys().CreateStockSellDetail(ctx, tx, record)
 		if err != nil {
-			log.Errorf("订单%s获取库存失败", ordersn)
-			txn.Rollback()
+			log.Errorf("订单%s创建历史表失败", ordersn)
 			return err
 		}
+		return nil
+	})
 
-		// 判断库存是否充足
-		if inv.Stock < goodsInfo.Num {
-			txn.Rollback() //回滚
-			log.Errorf("商品%d库存%d不足, 现有库存: %d", goodsInfo.GoodId, goodsInfo.Num, inv.Stock)
-			return errors.WithCode(code.ErrInvNotEnough, "库存不足")
-		}
-		inv.Stock -= goodsInfo.Num
-
-		err = is.data.Inventorys().Reduce(ctx, txn, uint64(goodsInfo.GoodId), int(goodsInfo.Num))
-		if err != nil {
-			txn.Rollback() //回滚
-			log.Errorf("订单%s扣减库存失败", ordersn)
-			return err
-		}
-
-		//释放锁
-		if _, err = mutex.Unlock(); err != nil {
-			txn.Rollback() //回滚
-			log.Errorf("订单%s释放锁出现异常", ordersn)
-		}
-	}
-
-	err := is.data.Inventorys().CreateStockSellDetail(ctx, txn, &record)
-	if err != nil {
-		txn.Rollback() //回滚
-		log.Errorf("订单%s创建扣减库存记录失败", ordersn)
-		return err
-	}
-
-	txn.Commit()
-	return nil
 }
 
 func (is *inventoryService) Reback(ctx context.Context, ordersn string, details []do.GoodsDetail) error {
 	log.Infof("订单%s归还库存", ordersn)
-	// 新建实例
-	rs := redsync.New(is.pool)
 
-	// 防止 抖动或者多次请求 同时间到达 直接开锁 最后放开
-	mutex := rs.NewMutex(orderLockPrefix + ordersn)
-	mutex.Lock()
-	defer mutex.Unlock()
-	txn := is.data.Begin()
-	defer func() {
-		if err := recover(); err != nil {
-			_ = txn.Rollback()
-			log.Error("事务进行中出现异常，回滚")
-			return
-		}
-	}()
-
-	sellDetail, err := is.data.Inventorys().GetSellDetail(ctx, txn, ordersn)
+	barrier, err := dtmgrpc.BarrierFromGrpc(ctx)
 	if err != nil {
-		txn.Rollback()
-		if errors.IsCode(err, code.ErrInvSellDetailNotFound) {
-			//空回滚
-			log.Errorf("订单%s扣减库存记录不存在, 忽略", ordersn)
+		return status.Errorf(codes.Internal, "创建屏障失败: %v", err)
+	}
+
+	// 新建实例
+	gormDB := is.data.DB()
+
+	return CallWithGorm(barrier, gormDB, func(tx *gorm.DB) error {
+		sellDetail, err := is.data.Inventorys().GetSellDetail(ctx, tx, ordersn)
+		if err != nil {
+			if errors.IsCode(err, code2.ErrInvSellDetailNotFound) {
+				log.Infof("订单%s扣减记录不存在，空回滚", ordersn)
+				return nil
+			}
+			return err
+		}
+
+		// 我认为不太可能
+		if sellDetail.Status == 2 || sellDetail.Status == 1 {
+			log.Infof("订单%s已归还，跳过", ordersn)
 			return nil
 		}
-		log.Errorf("订单%s获取扣减库存记录失败", ordersn)
-		return err
-	}
 
-	if sellDetail.Status == 2 {
-		log.Infof("订单%s扣减库存记录已经归还, 忽略", ordersn)
+		for _, goodsInfo := range details {
+
+			retryCount := 0
+			var updateSuccess bool
+			for retryCount < maxOptimisticRetry {
+				inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
+				if err != nil {
+					log.Errorf("订单%s获取库存失败", ordersn)
+					return err
+				}
+				inv.Stock += goodsInfo.Num
+				row, err := is.data.Inventorys().Increase(ctx, tx, inv)
+				if err != nil {
+					log.Errorf("订单%s归还库存失败", ordersn)
+					return err
+				}
+				if row > 0 {
+					updateSuccess = true
+					log.Infof("订单%s商品%d乐观锁更新库存成功，库存变为%d", ordersn, inv.Stock)
+					break
+				}
+				// 重试
+				retryCount++
+			}
+			if !updateSuccess {
+				errMsg := "订单" + ordersn + "商品" + string(goodsInfo.GoodId) + "乐观锁重试次数耗尽，库存归还失败"
+				log.Errorf(errMsg)
+				return errors.WithCode(code2.ErrOptimisticRetry, errMsg)
+			}
+
+		}
+
+		err = is.data.Inventorys().UpdateStockSellDetailStatus(ctx, tx, ordersn, 2)
+		if err != nil {
+			log.Errorf("订单%s更新扣减库存记录失败", ordersn)
+			return err
+		}
+
+		log.Infof("订单%s归还库存成功", ordersn)
 		return nil
-	}
-
-	var detail = do.GoodsDetailList(details)
-	sort.Sort(detail)
-
-	for _, goodsInfo := range detail {
-		retryCount := 0
-		var updateSuccess bool
-
-		// 乐观锁重试逻辑
-		for retryCount < maxOptimisticRetry {
-			inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
-			if err != nil {
-				txn.Rollback() //回滚
-				log.Errorf("订单%s获取库存失败", ordersn)
-				return err
-			}
-			inv.Stock += goodsInfo.Num
-
-			row, err := is.data.Inventorys().Increase(ctx, txn, inv)
-			if err != nil {
-				txn.Rollback() // 回滚
-				log.Errorf("订单%s归还库存失败", ordersn)
-				return err
-			}
-			if row > 0 {
-				updateSuccess = true
-				log.Infof("订单%s商品%d乐观锁更新库存成功，库存变为%d", ordersn, inv.Stock)
-				break
-			}
-			// 重试
-			retryCount++
-			log.Warnf("订单%s商品%d乐观锁冲突，重试次数: %d/%d",
-				ordersn, inv.Goods, retryCount, maxOptimisticRetry)
-			time.Sleep(optimisticRetryInterval)
-		}
-		if !updateSuccess {
-			_ = txn.Rollback()
-			errMsg := "订单" + ordersn + "商品" + string(goodsInfo.GoodId) + "乐观锁重试次数耗尽，库存归还失败"
-			log.Errorf(errMsg)
-			return errors.WithCode(code.ErrOptimisticRetry, errMsg)
-		}
-	}
-
-	err = is.data.Inventorys().UpdateStockSellDetailStatus(ctx, txn, ordersn, 2)
-	if err != nil {
-		txn.Rollback() //回滚
-		log.Errorf("订单%s更新扣减库存记录失败", ordersn)
-		return err
-	}
-
-	err = txn.Commit().Error
-	if err != nil {
-		log.Errorf("订单%s提交归还库存事务失败: %v", ordersn, err)
-		return err
-	}
-
-	log.Infof("订单%s归还库存成功", ordersn)
-	return nil
+	})
 }
 
 func newInventoryService(s *service) *inventoryService {
@@ -238,3 +205,26 @@ func newInventoryService(s *service) *inventoryService {
 }
 
 var _ InventorySrv = &inventoryService{}
+
+// CallWithGorm 让DTM屏障支持GORM事务
+// 原理：拿到底层sql.DB开事务，把sql.Tx转给GORM，这样既能用屏障又能用GORM
+func CallWithGorm(barrier *dtmcli.BranchBarrier, db *gorm.DB, busiCall func(tx *gorm.DB) error) error {
+	// 1. 从gorm拿到底层 *sql.DB
+	sqlDB, err := db.DB()
+	if err != nil {
+		return err
+	}
+
+	// 2. 调用DTM原生的CallWithDB，拿到 *sql.Tx
+	return barrier.CallWithDB(sqlDB, func(sqlTx *sql.Tx) error {
+		// 3. 把 *sql.Tx 包装成 *gorm.DB，这样你的repo方法全部可以继续用
+		gormTx := db.WithContext(db.Statement.Context)
+
+		// 关键：用DTM给的sqlTx替换gorm内部的连接
+		// gorm提供了 ConnPool 接口，sql.Tx 实现了这个接口
+		gormTx.Statement.ConnPool = sqlTx
+
+		// 4. 执行业务逻辑，用的是包装好的gormTx
+		return busiCall(gormTx)
+	})
+}

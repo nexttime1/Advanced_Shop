@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	response, err := http.Post("http://localhost:8080/hello", "application/json", nil)
+	response, err := http.Post("http://localhost:8080/api/t1", "application/json", nil)
 	if err != nil {
 		fmt.Println(err)
 		return

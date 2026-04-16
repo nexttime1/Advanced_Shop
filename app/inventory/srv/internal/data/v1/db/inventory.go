@@ -6,6 +6,7 @@ import (
 	code2 "Advanced_Shop/gnova/code"
 	"Advanced_Shop/pkg/errors"
 	"context"
+	"fmt"
 	"time"
 
 	"Advanced_Shop/app/inventory/srv/internal/data/v1"
@@ -111,101 +112,171 @@ func newInventorys(data *mysqlStore) *inventorys {
 	return &inventorys{db: data.db}
 }
 
-func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, OrderSns string) do.MQMessageType {
+// ==================== MQ 库存归还核心逻辑 ====================
+func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, orderSn string) (do.MQMessageType, error) {
+
+	// 1. 查询归还记录（只查 status=2 已完成的，幂等判断）
 	var history do.StockSellDetailDO
-	err := txn.Where(do.StockSellDetailDO{OrderSn: OrderSns, Status: 1}).Take(&history).Error
-	if err != nil {
-		// 没找到 说明没有  或者 防止重复消费  这个消息直接跳过 所以
-		return do.DirectPass
+
+	// 先检查是否已经完成（幂等）
+	err := txn.Where(&do.StockSellDetailDO{
+		OrderSn: orderSn,
+		Status:  do.StockSellStatusDone,
+	}).Take(&history).Error
+
+	if err == nil {
+		// 已完成，幂等放行
+		log.Infof("订单已完成归还，幂等跳过，OrderSn: %s", orderSn)
+		return do.DirectPass, nil
 	}
 
-	// 先抢占，用乐观锁把 status 从 1 改成 2
-	// 基于 id + version 做乐观锁，只有一个并发请求能成功
+	if !errors.Is(err, gorm.ErrRecordNotFound) {
+		return do.OptionFail, fmt.Errorf("查询归还记录失败: %w", err)
+	}
+
+	// 2. 查询待处理记录（status=0 待处理 或 status=1 处理中但事务回滚的）
+	//    注意：status=1 可能是上次事务回滚后遗留，需要重新处理
+	err = txn.Where("order_sn = ? AND status IN (?)",
+		orderSn,
+		[]int{do.StockSellStatusPending, do.StockSellStatusProcessing},
+	).Take(&history).Error
+
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		// 没有待处理记录，说明已经处理完成（被其他节点处理）
+		log.Infof("未找到待处理归还记录，幂等跳过，OrderSn: %s", orderSn)
+		return do.DirectPass, nil
+	}
+
+	if err != nil {
+		return do.OptionFail, fmt.Errorf("查询待处理记录失败: %w", err)
+	}
+
+	//    抢占：status → 处理中(1)，使用乐观锁
+	//    目的：多节点并发时，只有一个节点能抢到
 	result := txn.Model(&history).
-		Where("id = ? AND version = ? AND status = 1", history.ID, history.Version).
+		Where("id = ? AND version = ? AND status IN (?)",
+			history.ID,
+			history.Version,
+			[]int{do.StockSellStatusPending, do.StockSellStatusProcessing},
+		).
 		Updates(map[string]interface{}{
-			"status":  2,
+			"status":  do.StockSellStatusProcessing, // 标记为处理中
 			"version": history.Version + 1,
 		})
 
 	if result.Error != nil {
-		return do.OptionFail
+		return do.OptionFail,
+			fmt.Errorf("抢占归还记录失败: %w", result.Error)
 	}
 
-	// RowsAffected == 0 说明被别人抢先改了，本次直接跳过
 	if result.RowsAffected == 0 {
-		return do.DirectPass
+		// 被其他节点抢占，本次跳过
+		log.Infof("归还记录被其他节点抢占，跳过，OrderSn: %s", orderSn)
+		return do.DirectPass, nil
 	}
 
-	// 找到了  进行归还库存 并且 改历史记录 状态 变成2
-	// 构造 Reback 函数需要的参数
-	var info do.RebackInfo
-	var list []*do.GoodsInvInfo
+	// 更新本地version，后续操作使用新version
+	history.Version = history.Version + 1
+	history.Status = do.StockSellStatusProcessing
+
+	// 4. 执行实际库存归还
+	var goodsList []*do.GoodsInvInfo
 	for _, inv := range history.Detail {
-		list = append(list, &do.GoodsInvInfo{
+		goodsList = append(goodsList, &do.GoodsInvInfo{
 			GoodsId: inv.GoodId,
 			Num:     inv.Num,
 		})
 	}
-	info.GoodsInfo = list
-	info.OrderSn = OrderSns
-	number := Reback(txn, &info)
-	if number == do.OptionFail {
-		return do.OptionFail
-	}
-	// 下面一定是 继续了
 
-	// 改历史记录 状态 变成2  并且要必须是 我们拿到的版本 如果不是 正常有个for循环 咱这个环境下 我们就没必要for了 因为一会就延迟再来一次
+	rebackInfo := &do.RebackInfo{
+		GoodsInfo: goodsList,
+		OrderSn:   orderSn,
+	}
+
+	if err := Reback(ctx, txn, rebackInfo); err != nil {
+		// status=1 的记录也会随事务回滚到修改前的状态(0或1)
+		// 下次重试时，查询 status IN (0,1) 仍然能找到，可以继续处理
+		return do.OptionFail,
+			fmt.Errorf("执行库存归还失败: %w", err)
+	}
+
+	// 5. 标记为已完成（status: 处理中→完成）
 	err = txn.Model(&history).
-		Where("id = ? and version = ?", history.ID, history.Version). // 基于 ID 和 version 做乐观锁
+		Where("id = ? AND version = ?", history.ID, history.Version).
 		Updates(map[string]interface{}{
-			"status":  2,
+			"status":  do.StockSellStatusDone,
 			"version": history.Version + 1,
 		}).Error
+
 	if err != nil {
-		return do.OptionFail
+		return do.OptionFail,
+			fmt.Errorf("更新归还状态为完成失败: %w", err)
 	}
-	return do.Continuing
+
+	return do.Continuing, nil
 }
 
-func Reback(tx *gorm.DB, info *do.RebackInfo) do.MQMessageType {
+// ==================== MQ 库存归还操作（带乐观锁重试）====================
+func Reback(ctx context.Context, tx *gorm.DB, info *do.RebackInfo) error {
 
-	// 传递事务，保证操作原子性
 	for _, invInfo := range info.GoodsInfo {
-		// 乐观锁保证 高并发情况下 不会发生错误  比如两个请求同一个商品进行归还  读取的值都是100 都加50  防止最后是150
-		retryCount := 0
-		maxOptimisticRetry := 10
-		for retryCount < maxOptimisticRetry {
-			var model do.InventoryDO
-			err := tx.Where("goods = ?", invInfo.GoodsId).Take(&model).Error
-			if err != nil {
-				log.Errorf("商品库存不存在 err: %v", err)
-				break
-			}
-			// 库存 +
-			model.Stock += invInfo.Num
-
-			err = tx.Model(do.InventoryDO{}).Where("goods = ? and version = ?", model.Goods, model.Version).Select("stock", "version").Updates(map[string]interface{}{"stock": model.Stock, "version": model.Version + 1}).Error
-			if err != nil {
-				retryCount++
-				log.Warnf("商品%d乐观锁重试，当前次数: %d", invInfo.GoodsId, retryCount)
-				time.Sleep(100 * time.Millisecond)
-				continue
-			} else {
-				break
-			}
+		if err := rebackSingleGoods(ctx, tx, invInfo); err != nil {
+			return fmt.Errorf("商品%d库存归还失败: %w",
+				invInfo.GoodsId, err)
 		}
-		// 重试次数耗尽仍未成功
-		if retryCount >= maxOptimisticRetry {
-			log.Errorf("商品%d乐观锁重试次数耗尽，更新失败", invInfo.GoodsId)
-			// 这里错了直接return  因为这个订单中的一个商品归还失败 肯定要回滚所以后面没必要归还
-			return do.OptionFail
-		}
-
 	}
-	// 归还成功 继续操作
-	return do.Continuing
+	return nil
+}
 
+func rebackSingleGoods(ctx context.Context, tx *gorm.DB, invInfo *do.GoodsInvInfo) error {
+
+	for retry := 0; retry < do.MaxOptimisticRetry; retry++ {
+		// 1. 读取当前库存
+		var model do.InventoryDO
+		if err := tx.Where("goods = ?", invInfo.GoodsId).
+			Take(&model).Error; err != nil {
+			return fmt.Errorf("查询商品库存失败，goodsId: %d, err: %w",
+				invInfo.GoodsId, err)
+		}
+
+		newStock := model.Stock + invInfo.Num
+
+		// 2. 乐观锁更新
+		result := tx.Model(&do.InventoryDO{}).
+			Where("goods = ? AND version = ?", model.Goods, model.Version).
+			Updates(map[string]interface{}{
+				"stock":   newStock,
+				"version": model.Version + 1,
+			})
+
+		if result.Error != nil {
+			return fmt.Errorf("更新库存失败，goodsId: %d, err: %w",
+				invInfo.GoodsId, result.Error)
+		}
+
+		// 3. 【关键修复】判断RowsAffected而不是err
+		if result.RowsAffected > 0 {
+			log.Infof("商品%d库存归还成功，归还数量: %d，新库存: %d",
+				invInfo.GoodsId, invInfo.Num, newStock)
+			return nil
+		}
+
+		// 4. 乐观锁冲突，重试
+		log.Warnf("商品%d乐观锁冲突，重试第%d次",
+			invInfo.GoodsId, retry+1)
+
+		// 检查context是否取消
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("context已取消，goodsId: %d", invInfo.GoodsId)
+		default:
+		}
+
+		time.Sleep(do.OptimisticRetryInterval)
+	}
+
+	return fmt.Errorf("商品%d乐观锁重试%d次耗尽，更新失败",
+		invInfo.GoodsId, do.MaxOptimisticRetry)
 }
 
 var _ v1.InventoryStore = &inventorys{}

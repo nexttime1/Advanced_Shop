@@ -9,4 +9,5 @@ type DataFactory interface {
 	Inventorys() InventoryStore
 	Listen(ctx context.Context)
 	Begin() *gorm.DB
+	DB() *gorm.DB
 }
