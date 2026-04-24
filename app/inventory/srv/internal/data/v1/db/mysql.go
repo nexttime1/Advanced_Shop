@@ -1,31 +1,35 @@
 package mysql
 
 import (
+	v12 "Advanced_Shop/app/inventory/srv/internal/data/v1"
 	"Advanced_Shop/app/inventory/srv/internal/domain/do"
 	"Advanced_Shop/app/pkg/options"
 	"Advanced_Shop/gnova/code"
+	"Advanced_Shop/pkg/errors"
 	zlog "Advanced_Shop/pkg/log"
+	"Advanced_Shop/pkg/storage"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/apache/rocketmq-client-go/v2"
 	"github.com/apache/rocketmq-client-go/v2/consumer"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
+	redsyncredis "github.com/go-redsync/redsync/v4/redis"
+	"github.com/go-redsync/redsync/v4/redis/goredis/v9"
+	"github.com/redis/go-redis/v9"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"log"
 	"os"
 	"sync"
 	"time"
-
-	v12 "Advanced_Shop/app/inventory/srv/internal/data/v1"
-	"Advanced_Shop/pkg/errors"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 type mysqlStore struct {
 	db     *gorm.DB
 	mqOpts *options.RocketMQOptions
+	pool   redsyncredis.Pool
 }
 
 func (m *mysqlStore) Inventorys() v12.InventoryStore {
@@ -71,10 +75,30 @@ func GetDBFactoryOr(mysqlOpts *options.MySQLOptions, mqOpts *options.RocketMQOpt
 			return
 		}
 
+		// 第一步：复用storage层已经配置好的Redis客户端（带密码、超时等）
+		// 注意：这里要从storage层获取已初始化的客户端，而不是重新创建
+		redisCluster := &storage.RedisCluster{} // 实例化storage的RedisCluster
+		redisClient := redisCluster.GetClient() // 获取已认证的Redis客户端
+		if redisClient == nil {
+			zlog.Fatal("无法从storage层获取Redis客户端（请确保storage.ConnectToRedis已执行）")
+		}
+
+		// 第二步：验证客户端是否能正常认证（可选，但建议保留）
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+		if err := redisClient.Ping(ctx).Err(); err != nil {
+			zlog.Fatalf("Redis客户端认证失败：%v，请检查密码配置", err)
+		}
+		zlog.Info("✅ Redis客户端复用成功，认证通过")
+
+		// 第三步：基于已认证的客户端创建redsync的Pool（仅此一个即可）
+		pool := goredis.NewPool(redisClient.(redis.UniversalClient))
+
 		sqlDB, _ := db.DB()
 		dbFactory = &mysqlStore{
 			db:     db,
 			mqOpts: mqOpts,
+			pool:   pool,
 		}
 
 		sqlDB.SetMaxOpenConns(mysqlOpts.MaxOpenConnections)
@@ -90,6 +114,10 @@ func GetDBFactoryOr(mysqlOpts *options.MySQLOptions, mqOpts *options.RocketMQOpt
 
 func (ds *mysqlStore) Begin() *gorm.DB {
 	return ds.db.Begin()
+}
+
+func (ds *mysqlStore) Pool() redsyncredis.Pool {
+	return ds.pool
 }
 
 func (ds *mysqlStore) DB() *gorm.DB {
@@ -211,7 +239,7 @@ func (m *mysqlStore) processOneMessage(ctx context.Context, msg *primitive.Messa
 	}()
 
 	// 核心业务逻辑
-	result, err := m.Inventorys().AutoReback(ctx, txn, orderInfo.OrderSns)
+	result, err := m.Inventorys().AutoReback(ctx, txn, orderInfo.OrderSns, m.pool)
 
 	if err != nil {
 		// 业务失败，defer会自动回滚

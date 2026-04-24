@@ -20,3 +20,8 @@ const (
 	MaxOptimisticRetry      = 10
 	OptimisticRetryInterval = 100 * time.Millisecond
 )
+
+const (
+	InventoryLockPrefix = "inventory_"
+	OrderLockPrefix     = "order_"
+)

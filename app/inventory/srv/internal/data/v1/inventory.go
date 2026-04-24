@@ -3,6 +3,7 @@ package v1
 import (
 	"Advanced_Shop/app/inventory/srv/internal/domain/do"
 	"context"
+	redsyncredis "github.com/go-redsync/redsync/v4/redis"
 	"gorm.io/gorm"
 )
 
@@ -19,8 +20,12 @@ type InventoryStore interface {
 	// Reduce 扣减库存
 	Reduce(ctx context.Context, txn *gorm.DB, goodsID uint64, num int) error
 
+	GetWithTx(ctx context.Context, txn *gorm.DB, goodsID uint64) (*do.InventoryDO, error)
+
+	// IncreaseSLock  乐观锁 新增库存
+	IncreaseSLock(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) (int64, error)
 	// Increase 新增库存
-	Increase(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) (int64, error)
+	Increase(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) error
 
 	// CreateStockSellDetail 新增库存销售信息
 	CreateStockSellDetail(ctx context.Context, txn *gorm.DB, detail *do.StockSellDetailDO) error
@@ -28,5 +33,5 @@ type InventoryStore interface {
 	// UpdateStockSellDetailStatus 更新库存销售状态
 	UpdateStockSellDetailStatus(ctx context.Context, txn *gorm.DB, ordersn string, status int32) error
 
-	AutoReback(ctx context.Context, txn *gorm.DB, OrderSns string) (do.MQMessageType, error)
+	AutoReback(ctx context.Context, txn *gorm.DB, OrderSns string, pool redsyncredis.Pool) (do.MQMessageType, error)
 }

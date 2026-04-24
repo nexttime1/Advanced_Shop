@@ -18,4 +18,7 @@ const (
 
 	// ErrInvalidParameter - 400: Invalid request parameter.
 	ErrInvalidParameter // 100706
+
+	// ErrRedisLock - 400: Redis Lock error.
+	ErrRedisLock
 )

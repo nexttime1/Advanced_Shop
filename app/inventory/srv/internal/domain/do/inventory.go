@@ -62,12 +62,7 @@ type OrderMQMessageRequest struct {
 	OrderSns string
 }
 
-type GoodsInvInfo struct {
-	GoodsId int32 `json:"goods_id"`
-	Num     int32 `json:"num"`
-}
-
 type RebackInfo struct {
-	GoodsInfo []*GoodsInvInfo `json:"goods_info"`
-	OrderSn   string          `json:"order_sn"`
+	GoodsInfo []GoodsDetail `json:"goods_info"`
+	OrderSn   string        `json:"order_sn"`
 }

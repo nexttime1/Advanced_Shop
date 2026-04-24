@@ -10,7 +10,6 @@ import (
 	"database/sql"
 	"github.com/dtm-labs/client/dtmcli"
 	"github.com/go-redsync/redsync/v4"
-	redsyncredis "github.com/go-redsync/redsync/v4/redis"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"gorm.io/gorm"
@@ -23,11 +22,6 @@ import (
 	"github.com/dtm-labs/client/dtmgrpc"
 
 	"Advanced_Shop/pkg/log"
-)
-
-const (
-	inventoryLockPrefix = "inventory_"
-	orderLockPrefix     = "order_"
 )
 
 const (
@@ -53,8 +47,6 @@ type inventoryService struct {
 	data v1.DataFactory
 
 	redisOptions *options.RedisOptions
-
-	pool redsyncredis.Pool
 }
 
 func (is *inventoryService) Create(ctx context.Context, inv *dto.InventoryDTO) error {
@@ -78,7 +70,7 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 		return errors.WithCode(code.ErrUnknown, "创建屏障失败: %v", err)
 	}
 	// 新建实例
-	rs := redsync.New(is.pool)
+	rs := redsync.New(is.data.Pool())
 
 	// 按照商品的id排序，然后从小大小逐个扣减库存，这样可以减少锁的竞争
 	// 如果无序的话 那么就有可能订单a 扣减 1,3,4 订单B 扣减 3,2,1
@@ -91,13 +83,13 @@ func (is *inventoryService) Sell(ctx context.Context, ordersn string, details []
 	return CallWithGorm(barrier, db, func(tx *gorm.DB) error {
 		for _, goodsInfo := range detail {
 			// 拿锁  一定是 先排序在拿锁
-			mutex := rs.NewMutex(inventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
+			mutex := rs.NewMutex(do.InventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
 			defer mutex.Unlock()
 			if err := mutex.Lock(); err != nil {
 				return err
 			}
 
-			inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
+			inv, err := is.data.Inventorys().GetWithTx(ctx, tx, uint64(goodsInfo.GoodId))
 			if err != nil {
 				return err
 			}
@@ -138,8 +130,12 @@ func (is *inventoryService) Reback(ctx context.Context, ordersn string, details 
 		return status.Errorf(codes.Internal, "创建屏障失败: %v", err)
 	}
 
-	// 新建实例
+	// 新建 redsync 实例
+	rs := redsync.New(is.data.Pool())
+
 	gormDB := is.data.DB()
+	var detail = do.GoodsDetailList(details)
+	sort.Sort(detail) // 与 Sell 保持相同排序，防止死锁
 
 	return CallWithGorm(barrier, gormDB, func(tx *gorm.DB) error {
 		sellDetail, err := is.data.Inventorys().GetSellDetail(ctx, tx, ordersn)
@@ -151,46 +147,36 @@ func (is *inventoryService) Reback(ctx context.Context, ordersn string, details 
 			return err
 		}
 
-		// 我认为不太可能
 		if sellDetail.Status == 2 || sellDetail.Status == 1 {
 			log.Infof("订单%s已归还，跳过", ordersn)
 			return nil
 		}
 
-		for _, goodsInfo := range details {
-
-			retryCount := 0
-			var updateSuccess bool
-			for retryCount < maxOptimisticRetry {
-				inv, err := is.data.Inventorys().Get(ctx, uint64(goodsInfo.GoodId))
-				if err != nil {
-					log.Errorf("订单%s获取库存失败", ordersn)
-					return err
-				}
-				inv.Stock += goodsInfo.Num
-				row, err := is.data.Inventorys().Increase(ctx, tx, inv)
-				if err != nil {
-					log.Errorf("订单%s归还库存失败", ordersn)
-					return err
-				}
-				if row > 0 {
-					updateSuccess = true
-					log.Infof("订单%s商品%d乐观锁更新库存成功，库存变为%d", ordersn, inv.Stock)
-					break
-				}
-				// 重试
-				retryCount++
-			}
-			if !updateSuccess {
-				errMsg := "订单" + ordersn + "商品" + string(goodsInfo.GoodId) + "乐观锁重试次数耗尽，库存归还失败"
-				log.Errorf(errMsg)
-				return errors.WithCode(code2.ErrOptimisticRetry, errMsg)
+		for _, goodsInfo := range detail {
+			// 加 Redis 分布式锁
+			mutex := rs.NewMutex(do.InventoryLockPrefix + strconv.FormatInt(int64(goodsInfo.GoodId), 10))
+			defer mutex.Unlock()
+			if err := mutex.Lock(); err != nil {
+				log.Errorf("订单%s商品%d获取Redis锁失败: %v", ordersn, goodsInfo.GoodId, err)
+				return errors.WithCode(code2.ErrRedisLock, "获取Redis锁失败: %v", err)
 			}
 
+			inv, err := is.data.Inventorys().GetWithTx(ctx, tx, uint64(goodsInfo.GoodId))
+			if err != nil {
+				log.Errorf("订单%s获取库存失败", ordersn)
+				return err
+			}
+			inv.Stock += goodsInfo.Num
+
+			if err := is.data.Inventorys().Increase(ctx, tx, inv); err != nil {
+				log.Errorf("订单%s商品%d归还库存失败: %v", ordersn, goodsInfo.GoodId, err)
+				return err
+			}
+
+			log.Infof("订单%s商品%d归还库存%d成功", ordersn, goodsInfo.GoodId, goodsInfo.Num)
 		}
 
-		err = is.data.Inventorys().UpdateStockSellDetailStatus(ctx, tx, ordersn, 2)
-		if err != nil {
+		if err = is.data.Inventorys().UpdateStockSellDetailStatus(ctx, tx, ordersn, 2); err != nil {
 			log.Errorf("订单%s更新扣减库存记录失败", ordersn)
 			return err
 		}
@@ -201,7 +187,7 @@ func (is *inventoryService) Reback(ctx context.Context, ordersn string, details 
 }
 
 func newInventoryService(s *service) *inventoryService {
-	return &inventoryService{data: s.data, redisOptions: s.redisOptions, pool: s.pool}
+	return &inventoryService{data: s.data, redisOptions: s.redisOptions}
 }
 
 var _ InventorySrv = &inventoryService{}

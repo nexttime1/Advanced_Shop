@@ -7,6 +7,10 @@ import (
 	"Advanced_Shop/pkg/errors"
 	"context"
 	"fmt"
+	"github.com/go-redsync/redsync/v4"
+	redsyncredis "github.com/go-redsync/redsync/v4/redis"
+	"sort"
+	"strconv"
 	"time"
 
 	"Advanced_Shop/app/inventory/srv/internal/data/v1"
@@ -57,7 +61,7 @@ func (i *inventorys) Reduce(ctx context.Context, txn *gorm.DB, goodsID uint64, n
 	return db.Model(&do.InventoryDO{}).Where("goods=?", goodsID).Where("stock >= ?", num).UpdateColumn("stock", gorm.Expr("stock - ?", num)).Error
 }
 
-func (i *inventorys) Increase(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) (int64, error) {
+func (i *inventorys) IncreaseSLock(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) (int64, error) {
 	db := i.db
 	if txn != nil {
 		db = txn
@@ -68,6 +72,20 @@ func (i *inventorys) Increase(ctx context.Context, txn *gorm.DB, inventory *do.I
 		Updates(map[string]interface{}{"stock": inventory.Stock, "version": inventory.Version + 1})
 	// 查不到 也不报错
 	return tx.RowsAffected, tx.Error
+
+}
+
+func (i *inventorys) Increase(ctx context.Context, txn *gorm.DB, inventory *do.InventoryDO) error {
+	db := i.db
+	if txn != nil {
+		db = txn
+	}
+	err := db.Model(do.InventoryDO{}).Where("goods = ?", inventory.Goods).Update("stock", inventory.Stock).Error
+	if err != nil {
+		log.Errorf("increase inventory stock error: %v", err)
+		return errors.WithCode(code2.ErrDatabase, "increase inventory stock error")
+	}
+	return err
 
 }
 
@@ -108,12 +126,27 @@ func (i *inventorys) Get(ctx context.Context, goodsID uint64) (*do.InventoryDO, 
 	return &inv, nil
 }
 
+func (i *inventorys) GetWithTx(ctx context.Context, txn *gorm.DB, goodsID uint64) (*do.InventoryDO, error) {
+	inv := do.InventoryDO{}
+	err := txn.Where("goods = ?", goodsID).First(&inv).Error
+	if err != nil {
+		log.Errorf("get inv err: %v", err)
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, errors.WithCode(code.ErrInventoryNotFound, err.Error())
+		}
+
+		return nil, errors.WithCode(code2.ErrDatabase, err.Error())
+	}
+
+	return &inv, nil
+}
+
 func newInventorys(data *mysqlStore) *inventorys {
 	return &inventorys{db: data.db}
 }
 
-// ==================== MQ 库存归还核心逻辑 ====================
-func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, orderSn string) (do.MQMessageType, error) {
+// AutoReback MQ 库存归还核心逻辑
+func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, orderSn string, pool redsyncredis.Pool) (do.MQMessageType, error) {
 
 	// 1. 查询归还记录（只查 status=2 已完成的，幂等判断）
 	var history do.StockSellDetailDO
@@ -180,20 +213,12 @@ func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, orderSn strin
 	history.Status = do.StockSellStatusProcessing
 
 	// 4. 执行实际库存归还
-	var goodsList []*do.GoodsInvInfo
-	for _, inv := range history.Detail {
-		goodsList = append(goodsList, &do.GoodsInvInfo{
-			GoodsId: inv.GoodId,
-			Num:     inv.Num,
-		})
-	}
-
 	rebackInfo := &do.RebackInfo{
-		GoodsInfo: goodsList,
+		GoodsInfo: history.Detail,
 		OrderSn:   orderSn,
 	}
 
-	if err := Reback(ctx, txn, rebackInfo); err != nil {
+	if err := Reback(ctx, txn, rebackInfo, pool); err != nil {
 		// status=1 的记录也会随事务回滚到修改前的状态(0或1)
 		// 下次重试时，查询 status IN (0,1) 仍然能找到，可以继续处理
 		return do.OptionFail,
@@ -216,67 +241,79 @@ func (i *inventorys) AutoReback(ctx context.Context, txn *gorm.DB, orderSn strin
 	return do.Continuing, nil
 }
 
-// ==================== MQ 库存归还操作（带乐观锁重试）====================
-func Reback(ctx context.Context, tx *gorm.DB, info *do.RebackInfo) error {
+// ==================== Redis 分布式锁执行归还 ====================
+func Reback(ctx context.Context, tx *gorm.DB, info *do.RebackInfo, pool redsyncredis.Pool) error {
+	rs := redsync.New(pool)
+	//  GoodsDetailList 就是 []GoodsDetail，直接强转，复用已有排序接口
+	sort.Sort(do.GoodsDetailList(info.GoodsInfo))
 
+	// 按排好序的顺序逐个拿锁，拿锁失败则释放已持有的，避免泄漏
+	mutexes := make([]*redsync.Mutex, 0, len(info.GoodsInfo))
+	for _, invInfo := range info.GoodsInfo {
+		mutex := rs.NewMutex(
+			do.InventoryLockPrefix+strconv.FormatInt(int64(invInfo.GoodId), 10),
+			redsync.WithExpiry(8*time.Second),
+			redsync.WithTries(3),
+			redsync.WithRetryDelay(100*time.Millisecond),
+		)
+		if err := mutex.LockContext(ctx); err != nil {
+			for _, acquired := range mutexes {
+				if _, unlockErr := acquired.Unlock(); unlockErr != nil {
+					log.Errorf("归还释放锁失败，OrderSn: %s, err: %v", info.OrderSn, unlockErr)
+				}
+			}
+			return fmt.Errorf("商品%d获取分布式锁失败: %w", invInfo.GoodId, err)
+		}
+		mutexes = append(mutexes, mutex)
+	}
+
+	// 函数退出统一释放所有锁
+	defer func() {
+		for _, mutex := range mutexes {
+			if _, err := mutex.Unlock(); err != nil {
+				log.Errorf("归还释放分布式锁失败，OrderSn: %s, err: %v", info.OrderSn, err)
+			}
+		}
+	}()
+
+	// 持锁后直接执行，无需乐观锁重试
 	for _, invInfo := range info.GoodsInfo {
 		if err := rebackSingleGoods(ctx, tx, invInfo); err != nil {
-			return fmt.Errorf("商品%d库存归还失败: %w",
-				invInfo.GoodsId, err)
+			return fmt.Errorf("商品%d库存归还失败: %w", invInfo.GoodId, err)
 		}
 	}
 	return nil
 }
 
-func rebackSingleGoods(ctx context.Context, tx *gorm.DB, invInfo *do.GoodsInvInfo) error {
+// ==================== 单个商品归还（持锁后直接读写）====================
+func rebackSingleGoods(ctx context.Context, tx *gorm.DB, invInfo do.GoodsDetail) error {
 
-	for retry := 0; retry < do.MaxOptimisticRetry; retry++ {
-		// 1. 读取当前库存
-		var model do.InventoryDO
-		if err := tx.Where("goods = ?", invInfo.GoodsId).
-			Take(&model).Error; err != nil {
-			return fmt.Errorf("查询商品库存失败，goodsId: %d, err: %w",
-				invInfo.GoodsId, err)
-		}
-
-		newStock := model.Stock + invInfo.Num
-
-		// 2. 乐观锁更新
-		result := tx.Model(&do.InventoryDO{}).
-			Where("goods = ? AND version = ?", model.Goods, model.Version).
-			Updates(map[string]interface{}{
-				"stock":   newStock,
-				"version": model.Version + 1,
-			})
-
-		if result.Error != nil {
-			return fmt.Errorf("更新库存失败，goodsId: %d, err: %w",
-				invInfo.GoodsId, result.Error)
-		}
-
-		// 3. 【关键修复】判断RowsAffected而不是err
-		if result.RowsAffected > 0 {
-			log.Infof("商品%d库存归还成功，归还数量: %d，新库存: %d",
-				invInfo.GoodsId, invInfo.Num, newStock)
-			return nil
-		}
-
-		// 4. 乐观锁冲突，重试
-		log.Warnf("商品%d乐观锁冲突，重试第%d次",
-			invInfo.GoodsId, retry+1)
-
-		// 检查context是否取消
-		select {
-		case <-ctx.Done():
-			return fmt.Errorf("context已取消，goodsId: %d", invInfo.GoodsId)
-		default:
-		}
-
-		time.Sleep(do.OptimisticRetryInterval)
+	var model do.InventoryDO
+	if err := tx.Where("goods = ?", invInfo.GoodId).Take(&model).Error; err != nil {
+		return fmt.Errorf("查询商品库存失败，goodsId: %d, err: %w", invInfo.GoodId, err)
 	}
 
-	return fmt.Errorf("商品%d乐观锁重试%d次耗尽，更新失败",
-		invInfo.GoodsId, do.MaxOptimisticRetry)
+	newStock := model.Stock + invInfo.Num
+
+	// ✅ 持有分布式锁，并发安全，不需要 version 作为更新条件
+	result := tx.Model(&do.InventoryDO{}).
+		Where("goods = ?", model.Goods).
+		Updates(map[string]interface{}{
+			"stock":   newStock,
+			"version": model.Version + 1, // 依然自增，保留审计语义
+		})
+
+	if result.Error != nil {
+		return fmt.Errorf("更新库存失败，goodsId: %d, err: %w", invInfo.GoodId, result.Error)
+	}
+
+	if result.RowsAffected == 0 {
+		return fmt.Errorf("商品%d库存记录不存在", invInfo.GoodId)
+	}
+
+	log.Infof("商品%d库存归还成功，归还数量: %d，新库存: %d",
+		invInfo.GoodId, invInfo.Num, newStock)
+	return nil
 }
 
 var _ v1.InventoryStore = &inventorys{}
