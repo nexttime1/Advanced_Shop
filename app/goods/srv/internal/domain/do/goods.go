@@ -23,6 +23,7 @@ type GoodsSearchDO struct {
 	MarketPrice float32 `json:"market_price"`
 	GoodsBrief  string  `json:"goods_brief"`
 	ShopPrice   float32 `json:"shop_price"`
+	Timestamp   int64   `json:"timestamp"` // MySQL执行时间戳=版本号
 }
 
 func (GoodsSearchDO) GetIndexName() string {

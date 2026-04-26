@@ -176,7 +176,8 @@ func (c *dataSearch) SyncGoodsToES(ctx context.Context, msgs ...*primitive.Messa
 		var msgBody struct {
 			EventType string                 `json:"event_type"` // INSERT/UPDATE/DELETE
 			Table     string                 `json:"table"`
-			Goods     map[string]interface{} `json:"goods"` // 商品字段（id/name/category_id等）
+			Goods     map[string]interface{} `json:"goods"`     // 商品字段（id/name/category_id等）
+			Timestamp int64                  `json:"timestamp"` // MySQL执行时间戳=版本号
 		}
 		err := json.Unmarshal(msg.Body, &msgBody)
 		if err != nil {
@@ -203,7 +204,7 @@ func (c *dataSearch) SyncGoodsToES(ctx context.Context, msgs ...*primitive.Messa
 		// 根据事件类型同步到ES
 		goodsStore := c.Goods() // 从SearchFactory获取ES操作实例
 		switch msgBody.EventType {
-		case "INSERT", "UPDATE":
+		case "INSERT":
 			// 新增/更新：写入ES
 			err = goodsStore.Create(ctx, goodsSearchDO)
 			if err != nil {
@@ -212,7 +213,13 @@ func (c *dataSearch) SyncGoodsToES(ctx context.Context, msgs ...*primitive.Messa
 				return consumer.ConsumeRetryLater, errors.WithCode(code.ErrDatabase, errMsg)
 			}
 			zlog.Infof("商品数据同步到ES成功 goodsID: %v", goodsSearchDO.ID)
-
+		case "UPDATE":
+			err = goodsStore.Update(ctx, goodsSearchDO)
+			if err != nil {
+				errMsg := fmt.Sprintf("更新ES失败, goodsID=%d, err=%v", goodsSearchDO.ID, err)
+				zlog.Error(errMsg)
+				return consumer.ConsumeRetryLater, errors.WithCode(code.ErrDatabase, errMsg)
+			}
 		case "DELETE":
 			// 删除：从ES删除
 			err = goodsStore.Delete(ctx, uint64(goodsSearchDO.ID))
@@ -317,6 +324,9 @@ func convertToGoodsSearchDO(goodsMap map[string]interface{}) (*do.GoodsSearchDO,
 		isHot, _ := strconv.ParseBool(isHotStr)
 		goodsDO.IsHot = isHot
 	}
+
+	// 时间戳
+	goodsDO.Timestamp = goodsMap["timestamp"].(int64)
 
 	return goodsDO, nil
 }

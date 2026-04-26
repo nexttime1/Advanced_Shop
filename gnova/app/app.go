@@ -91,7 +91,7 @@ func (a *App) Run(rootCtx context.Context) error {
 
 		// 在启动一个goroutine 去监听是否有 err 产生
 		srv := srv
-		eg.Go(func() error {
+		eg.Go(func() error { // 为了应对 传入两个 server
 
 			<-ctx.Done() // wait for stop signal
 

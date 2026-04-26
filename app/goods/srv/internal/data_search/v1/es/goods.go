@@ -29,6 +29,8 @@ func (g *goods) Create(ctx context.Context, goods *do.GoodsSearchDO) error {
 		Index(goods.GetIndexName()).
 		Id(strconv.Itoa(int(goods.ID))).
 		BodyJson(&goods).
+		Version(goods.Timestamp). // 传入时间戳版本号
+		VersionType("external").
 		Do(context.TODO())
 	return err
 }
