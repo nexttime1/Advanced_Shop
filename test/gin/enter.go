@@ -16,7 +16,7 @@ func myMiddleWare1(c *gin.Context) {
 	fmt.Println("自己的中间件1")
 }
 func myMiddleWare11(c *gin.Context) {
-	fmt.Println("自己的中间件11")
+	fmt.Println("测试后给根 11")
 }
 
 func main() {
@@ -28,7 +28,9 @@ func main() {
 	mux.POST("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "pone")
 	})
+
 	group := mux.Group("/api")
+	mux.Use(myMiddleWare11)
 	group.Use(myMiddleWare1)
 	group.POST("/t1", func(c *gin.Context) {
 		c.JSON(http.StatusOK, "pone")

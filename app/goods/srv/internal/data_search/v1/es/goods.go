@@ -41,15 +41,18 @@ func (g *goods) Delete(ctx context.Context, ID uint64) error {
 }
 
 func (g *goods) Update(ctx context.Context, goods *do.GoodsSearchDO) error {
-	err := g.Delete(ctx, uint64(goods.ID))
-	if err != nil {
-		return err
+	_, err := g.esClient.Index().
+		Index(goods.GetIndexName()).
+		Id(strconv.Itoa(int(goods.ID))).
+		BodyJson(&goods).
+		Version(goods.Timestamp). // MySQL 的 updated_at.UnixMilli()
+		VersionType("external").
+		Do(ctx)
+
+	if elastic.IsConflict(err) {
+		return nil // 旧消息，直接丢弃
 	}
-	err = g.Create(ctx, goods)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func (g *goods) Search(ctx context.Context, req *v1.GoodsFilterRequest) (*do.GoodsSearchDOList, error) {

@@ -1,24 +1,28 @@
+//go:generate codegen -type=int
+
 package code
 
+// User: user service errors.
+// Code must start with 1004xx.
 const (
 	// ErrUserNotFound - 404: User not found.
 	ErrUserNotFound int = iota + 100401
 
-	// ErrUserPasswordIncorrect - 404: User Password Incorrect.
+	// ErrUserPasswordIncorrect - 401: User password incorrect.
 	ErrUserPasswordIncorrect
 
-	// ErrCodeNotExist - 404: Code Not Exist.
+	// ErrCodeNotExist - 404: Verification code not exist.
 	ErrCodeNotExist
 
-	// ErrCodeInCorrect - 404: Code Not Correct.
+	// ErrCodeInCorrect - 400: Verification code incorrect.
 	ErrCodeInCorrect
 
-	// ErrUserAlreadyExists - 400: User Already Exists
+	// ErrUserAlreadyExists - 400: User already exists.
 	ErrUserAlreadyExists
 
-	// ErrSmsSend - 404: Err Sms Send
+	// ErrSmsSend - 500: Failed to send SMS.
 	ErrSmsSend
 
-	// ErrForbidden - 403: User Privilege Err
+	// ErrForbidden - 403: User privilege insufficient.
 	ErrForbidden
 )

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"reflect"
 )
@@ -35,12 +36,16 @@ func main() {
 
 	var b fmt.Stringer
 	b = coder
-	// 🔥 修复：不要用 TypeOf(b).Elem()
-	fmt.Println("TypeOf(b) 类型：", reflect.TypeOf(b))        // fmt.Stringer (接口)
-	fmt.Println("TypeOf(b) 种类：", reflect.TypeOf(b).Kind()) // interface
+
+	// 会"自动解包"到实际类型
+	fmt.Println("TypeOf(b) 类型：", reflect.TypeOf(b))        // main.Coder
+	fmt.Println("TypeOf(b) 种类：", reflect.TypeOf(b).Kind()) // struct
 
 	// ✅ 正确获取接口内部的动态类型（Coder）
 	a := reflect.ValueOf(b).Type()
 	fmt.Println("接口动态类型 a：", a)     // main.Coder
 	fmt.Println("a 的种类：", a.Kind()) // struct
+	json.Marshal()
+	json.Unmarshal()
+
 }
