@@ -1,13 +1,12 @@
 package auth
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	"fmt"
 	"time"
 
 	"Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/server/restserver/middlewares"
-	"Advanced_Shop/pkg/common/core"
-
 	"Advanced_Shop/pkg/errors"
 	jwt "github.com/dgrijalva/jwt-go/v4"
 	"github.com/gin-gonic/gin"
@@ -45,7 +44,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		header := c.Request.Header.Get("Authorization")
 		if len(header) == 0 {
-			core.WriteErrResponse(c, errors.WithCode(code.ErrMissingHeader, "Authorization header cannot be empty."), nil)
+			common.WriteErrResponse(c, errors.WithCode(code.ErrMissingHeader, "Authorization header cannot be empty."))
 			c.Abort()
 
 			return
@@ -83,7 +82,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 			return []byte(secret.Key), nil
 		}, jwt.WithAudience(AuthzAudience))
 		if err != nil || !parsedT.Valid {
-			core.WriteErrResponse(c, errors.WithCode(code.ErrSignatureInvalid, err.Error()), nil)
+			common.WriteErrResponse(c, errors.WithCode(code.ErrSignatureInvalid, err.Error()))
 			c.Abort()
 
 			return
@@ -91,7 +90,7 @@ func (cache CacheStrategy) AuthFunc() gin.HandlerFunc {
 
 		if KeyExpired(secret.Expires) {
 			tm := time.Unix(secret.Expires, 0).Format("2006-01-02 15:04:05")
-			core.WriteErrResponse(c, errors.WithCode(code.ErrExpired, "expired at: %s", tm), nil)
+			common.WriteErrResponse(c, errors.WithCode(code.ErrExpired, "expired at: %s", tm))
 			c.Abort()
 
 			return

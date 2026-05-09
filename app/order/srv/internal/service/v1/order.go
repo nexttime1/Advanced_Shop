@@ -60,8 +60,16 @@ func (os *orderService) Create(ctx context.Context, order *dto.OrderInfoResponse
 			return
 		}
 	}()
+	// 幂等性
+	exists, err := os.data.NewDB().Orders().ExistsByOrderSn(ctx, txn, order.OrderSn)
+	if exists {
+		// 订单已存在，直接返回成功（幂等）
+		txn.Commit()
+		return nil
+	}
+
 	// 所有的创建在这里
-	err := os.data.NewDB().Orders().Create(ctx, txn, order)
+	err = os.data.NewDB().Orders().Create(ctx, txn, order)
 	if err != nil {
 		txn.Rollback()
 		log.Errorf("创建订单失败，err:%v", err)

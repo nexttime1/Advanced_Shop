@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/app/pkg/common"
 	"strings"
 
 	"Advanced_Shop/gnova/code"
@@ -37,10 +37,9 @@ func (a AutoStrategy) AuthFunc() gin.HandlerFunc {
 		authHeader := strings.SplitN(c.Request.Header.Get("Authorization"), " ", 2)
 
 		if len(authHeader) != authHeaderCount {
-			core.WriteErrResponse(
+			common.WriteErrResponse(
 				c,
 				errors.WithCode(code.ErrInvalidAuthHeader, "Authorization header format is wrong."),
-				nil,
 			)
 			c.Abort()
 
@@ -54,7 +53,7 @@ func (a AutoStrategy) AuthFunc() gin.HandlerFunc {
 			operator.SetStrategy(a.jwt)
 			// a.JWT.MiddlewareFunc()(c)
 		default:
-			core.WriteErrResponse(c, errors.WithCode(code.ErrSignatureInvalid, "unrecognized Authorization header."), nil)
+			common.WriteErrResponse(c, errors.WithCode(code.ErrSignatureInvalid, "unrecognized Authorization header."))
 			c.Abort()
 
 			return

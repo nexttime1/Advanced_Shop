@@ -1,6 +1,6 @@
 package trace
 
-const TraceName = "xshop"
+const TraceName = "grpc-client-tracer"
 
 type Options struct {
 	Name     string  `json:"name"`     // 服务名称，会显示在 Jaeger/Zipkin UI 中

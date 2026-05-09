@@ -1,11 +1,11 @@
 package user
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	"time"
 
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/gnova/server/restserver/middlewares"
-	"Advanced_Shop/pkg/common/core"
 	jtime "Advanced_Shop/pkg/common/time"
 	"github.com/gin-gonic/gin"
 )
@@ -17,19 +17,18 @@ type UpdateUserForm struct {
 	Password string `json:"password,omitempty"`
 }
 
-func (us *userServer) UpdateUser(ctx *gin.Context) {
+func (us *userServer) UpdateUser(ctx *gin.Context) error {
 	var cr UpdateUserForm
 	if err := ctx.ShouldBind(&cr); err != nil {
-		gin2.HandleValidatorError(ctx, err, us.trans)
-		return
+		return gin2.HandleValidatorError(ctx, err, us.trans)
+
 	}
 
 	userID, _ := ctx.Get(middlewares.KeyUserID)
 	userIDInt := uint64(userID.(float64))
 	userDTO, err := us.sf.Users().Get(ctx, userIDInt)
 	if err != nil {
-		core.WriteErrResponse(ctx, err, nil)
-		return
+		return err
 	}
 
 	userDTO.NickName = cr.Name
@@ -42,8 +41,8 @@ func (us *userServer) UpdateUser(ctx *gin.Context) {
 
 	err = us.sf.Users().Update(ctx, userDTO)
 	if err != nil {
-		core.WriteErrResponse(ctx, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(ctx, "修改成功")
+	common.OkWithMessage(ctx, "修改成功")
+	return nil
 }

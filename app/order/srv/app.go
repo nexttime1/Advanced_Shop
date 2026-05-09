@@ -2,8 +2,10 @@ package srv
 
 import (
 	"Advanced_Shop/app/order/srv/config"
+	_ "Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/options"
 	gapp "Advanced_Shop/gnova/app"
+	_ "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
 	"Advanced_Shop/pkg/app"

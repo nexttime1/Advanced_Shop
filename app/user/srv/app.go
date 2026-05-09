@@ -11,6 +11,8 @@ import (
 	"github.com/google/wire"
 	"github.com/hashicorp/consul/api"
 
+	_ "Advanced_Shop/app/pkg/code"
+	_ "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
 )
@@ -22,7 +24,7 @@ func NewApp() *app.App {
 	//这里这个new 做了很多事情 比如 log的初始化 你的rpc服务的端口，name 注册逻辑的前置参数初始化 等等
 	cfg := config.New()
 	appl := app.NewApp("user",
-		"xshop",
+		"user-server",
 		app.WithOptions(cfg),
 		app.WithRunFunc(run(cfg)),
 		//app.WithNoConfig(), //设置不读取配置文件
@@ -53,6 +55,7 @@ func NewUserApp(logOpts *log.Options, registry registry.Registrar,
 		gapp.WithName(serverOpts.Name),
 		gapp.WithRPCServer(rpcServer),
 		gapp.WithRegistrar(registry), // 在这注入   注册和注销 函数的实现
+		gapp.WithMetricsPort(serverOpts.MetricPort),
 	), nil
 }
 

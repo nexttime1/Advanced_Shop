@@ -9,6 +9,8 @@ import (
 	"context"
 	"github.com/hashicorp/consul/api"
 
+	_ "Advanced_Shop/app/pkg/code"
+	_ "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
 )

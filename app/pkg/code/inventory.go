@@ -6,7 +6,7 @@ package code
 // Code must start with 1006xx.
 const (
 	// ErrInventoryNotFound - 404: Inventory not found.
-	ErrInventoryNotFound int = iota + 100601
+	ErrInventoryNotFound int = iota + 103001
 
 	// ErrInvSellDetailNotFound - 404: Inventory sell detail not found.
 	ErrInvSellDetailNotFound

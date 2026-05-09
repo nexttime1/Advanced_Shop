@@ -37,13 +37,10 @@ func newJWTAuth(opts *options.JwtOptions) middlewares.AuthStrategy {
 	return auth.NewJWTStrategy(*gjwt)
 }
 
-// 作用：gin-jwt 解析完 Token 后，自动执行这个函数
 func claimHandlerFunc(c *gin.Context) interface{} {
-	// 1. 从 gin 上下文提取 JWT 载荷（map[string]interface{}）
 	claims := ginjwt.ExtractClaims(c)
-	// 2. 把 userid、role 存到 Gin 上下文，给业务接口用
+	// 存入userid 和 role   JWT解析后数值为float64，暂存
 	c.Set(middlewares.KeyUserID, claims[middlewares.KeyUserID])
 	c.Set(middlewares.KeyRole, claims[middlewares.KeyRole])
-	// 3. 返回用户ID（给 gin-jwt 内部使用）
 	return claims[middlewares.KeyUserID]
 }

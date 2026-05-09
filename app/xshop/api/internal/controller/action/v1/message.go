@@ -5,18 +5,15 @@ import (
 	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/action"
-	"Advanced_Shop/pkg/common/core"
-	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
 )
 
-func (ac *actionController) MessageListView(c *gin.Context) {
+func (ac *actionController) MessageListView(c *gin.Context) error {
 	log.Info("message list function called.")
 	userID, role, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	request := proto.MessageRequest{
@@ -30,8 +27,8 @@ func (ac *actionController) MessageListView(c *gin.Context) {
 	List, err := ac.srv.Message().MessageList(ctx, &request)
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
+
 	}
 
 	var response []action.MessageResponse
@@ -48,23 +45,22 @@ func (ac *actionController) MessageListView(c *gin.Context) {
 
 	}
 
-	core.OkWithList(c, response, List.Total)
-
+	common.OkWithList(c, response, List.Total)
+	return nil
 }
 
-func (ac *actionController) CreateMessageView(c *gin.Context) {
+func (ac *actionController) CreateMessageView(c *gin.Context) error {
 	log.Info("message create function called.")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	var cr action.MessageRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, ac.trans)
-		return
+		return gin2.HandleValidatorError(c, err, ac.trans)
+
 	}
 
 	ctx := c.Request.Context()
@@ -76,12 +72,11 @@ func (ac *actionController) CreateMessageView(c *gin.Context) {
 		File:        cr.File,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	RMap := map[string]interface{}{
 		"id": req.Id,
 	}
-	core.OkWithData(c, RMap)
-
+	common.OkWithData(c, RMap)
+	return nil
 }

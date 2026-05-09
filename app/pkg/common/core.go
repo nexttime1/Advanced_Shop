@@ -1,7 +1,7 @@
-package core
+package common
 
 import (
-	"fmt"
+	"Advanced_Shop/pkg/log"
 	"net/http"
 
 	"Advanced_Shop/pkg/errors"
@@ -20,22 +20,19 @@ type ErrResponse struct {
 	Message string `json:"msg"`
 
 	Detail string `json:"detail"`
-
-	// Reference returns the reference document which maybe useful to solve this error.
-	Reference string `json:"reference,omitempty"`
 }
 
 // WriteErrResponse write an error or the response data into http response body.
 // It use errors.ParseCoder to parse any error into errors.Coder
 // errors.Coder contains error code, user-safe error message and http status code.
-func WriteErrResponse(c *gin.Context, err error, data interface{}) {
-	errStr := fmt.Sprintf("%#+v", err)
+func WriteErrResponse(c *gin.Context, err error) {
+	log.Errorf("%#+v", err)
 	coder := errors.ParseCoder(err)
+
 	c.JSON(coder.HTTPStatus(), ErrResponse{
-		Code:      coder.Code(),
-		Message:   coder.String(),
-		Detail:    errStr,
-		Reference: coder.Reference(),
+		Code:    coder.Code(),
+		Message: coder.String(),
+		Detail:  err.Error(),
 	})
 
 	return

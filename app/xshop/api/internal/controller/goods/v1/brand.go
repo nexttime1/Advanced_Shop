@@ -5,16 +5,15 @@ import (
 	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
-	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
-func (gc *goodsController) BrandListView(c *gin.Context) {
+func (gc *goodsController) BrandListView(c *gin.Context) error {
 	var cr common.PageInfo
 	if err := c.ShouldBindQuery(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
 	list, err := gc.srv.Goods().BrandList(c, &proto.BrandFilterRequest{
@@ -22,96 +21,96 @@ func (gc *goodsController) BrandListView(c *gin.Context) {
 		PagePerNums: cr.Limit,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 
-	core.OkWithList(c, list.Data, list.Total)
-
+	common.OkWithList(c, list.Data, list.Total)
+	return nil
 }
 
-func (gc *goodsController) CreateBrandView(c *gin.Context) {
+func (gc *goodsController) CreateBrandView(c *gin.Context) error {
 	var cr good.BrandCreateRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	brandInfo, err := gc.srv.Goods().CreateBrand(c, &proto.BrandRequest{
+	ctx := c.Request.Context()
+	brandInfo, err := gc.srv.Goods().CreateBrand(ctx, &proto.BrandRequest{
 		Name: cr.Name,
 		Logo: cr.Logo,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	RMap := map[string]interface{}{
 		"id": brandInfo.Id,
 	}
-	core.OkWithData(c, RMap)
-
+	common.OkWithData(c, RMap)
+	return nil
 }
 
-func (gc *goodsController) UpdateBrandView(c *gin.Context) {
+func (gc *goodsController) UpdateBrandView(c *gin.Context) error {
 	var cr good.BrandUpdateRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 	idString := c.Param("id")
 	id, err := strconv.Atoi(idString)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	_, err = gc.srv.Goods().UpdateBrand(c, &proto.BrandRequest{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().UpdateBrand(ctx, &proto.BrandRequest{
 		Id:   int32(id),
 		Name: cr.Name,
 		Logo: cr.Logo,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 
-	core.OkWithMessage(c, "修改成功")
-
+	common.OkWithMessage(c, "修改成功")
+	return nil
 }
 
-func (gc *goodsController) DeleteBrandView(c *gin.Context) {
+func (gc *goodsController) DeleteBrandView(c *gin.Context) error {
 	var cr good.BrandIdRequest
+
 	if err := c.ShouldBindUri(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
-	_, err := gc.srv.Goods().DeleteBrand(c, &proto.BrandRequest{
+	ctx := c.Request.Context()
+	_, err := gc.srv.Goods().DeleteBrand(ctx, &proto.BrandRequest{
 		Id: cr.Id,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "删除成功")
-
+	common.OkWithMessage(c, "删除成功")
+	return nil
 }
 
 //第三张表
 
-func (gc *goodsController) CategoryBrandListView(c *gin.Context) {
+func (gc *goodsController) CategoryBrandListView(c *gin.Context) error {
 	var cr common.PageInfo
 	if err := c.ShouldBindQuery(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	list, err := gc.srv.Goods().CategoryBrandList(c, &proto.CategoryBrandFilterRequest{
+	ctx := c.Request.Context()
+	list, err := gc.srv.Goods().CategoryBrandList(ctx, &proto.CategoryBrandFilterRequest{
 		Pages:       cr.Page,
 		PagePerNums: cr.Limit,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	var response []good.BrandCategoryItem
 	for _, model := range list.Data {
@@ -132,89 +131,92 @@ func (gc *goodsController) CategoryBrandListView(c *gin.Context) {
 		})
 	}
 
-	core.OkWithList(c, response, list.Total)
-
+	common.OkWithList(c, response, list.Total)
+	return nil
 }
 
-func (gc *goodsController) CategoryAllBrandView(c *gin.Context) {
+func (gc *goodsController) CategoryAllBrandView(c *gin.Context) error {
 	var cr good.BrandIdRequest
 	if err := c.ShouldBindUri(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	list, err := gc.srv.Goods().GetCategoryBrandList(c, &proto.CategoryInfoRequest{
+	ctx := c.Request.Context()
+	list, err := gc.srv.Goods().GetCategoryBrandList(ctx, &proto.CategoryInfoRequest{
 		Id: cr.Id,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithList(c, list.Data, list.Total)
-
+	common.OkWithList(c, list.Data, list.Total)
+	return nil
 }
 
-func (gc *goodsController) CreateCategoryBrandView(c *gin.Context) {
+func (gc *goodsController) CreateCategoryBrandView(c *gin.Context) error {
 	var cr good.CreateCategoryBrandRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	Info, err := gc.srv.Goods().CreateCategoryBrand(c, &proto.CategoryBrandRequest{
+	ctx := c.Request.Context()
+	Info, err := gc.srv.Goods().CreateCategoryBrand(ctx, &proto.CategoryBrandRequest{
 		BrandId:    cr.BrandId,
 		CategoryId: cr.CategoryId,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	RMap := map[string]interface{}{
 		"id": Info.Id,
 	}
-	core.OkWithData(c, RMap)
+	common.OkWithData(c, RMap)
+	return nil
 }
 
-func (gc *goodsController) DeleteCategoryBrandView(c *gin.Context) {
+func (gc *goodsController) DeleteCategoryBrandView(c *gin.Context) error {
 	var cr good.BrandIdRequest
 	if err := c.ShouldBindUri(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	_, err := gc.srv.Goods().DeleteCategoryBrand(c, &proto.CategoryBrandRequest{
+	ctx := c.Request.Context()
+	_, err := gc.srv.Goods().DeleteCategoryBrand(ctx, &proto.CategoryBrandRequest{
 		Id: cr.Id,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "删除成功")
+	common.OkWithMessage(c, "删除成功")
+	return nil
 
 }
 
-func (gc *goodsController) UpdateCategoryBrandView(c *gin.Context) {
+func (gc *goodsController) UpdateCategoryBrandView(c *gin.Context) error {
 	var cr good.UpdateCategoryBrandRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 	idString := c.Param("id")
 	id, err := strconv.Atoi(idString)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
+
 	}
 
-	_, err = gc.srv.Goods().UpdateCategoryBrand(c, &proto.CategoryBrandRequest{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().UpdateCategoryBrand(ctx, &proto.CategoryBrandRequest{
 		Id:         int32(id),
 		BrandId:    cr.BrandId,
 		CategoryId: cr.CategoryId,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "更新成功")
+	common.OkWithMessage(c, "更新成功")
+	return nil
 
 }

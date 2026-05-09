@@ -1,8 +1,8 @@
 package user
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/pkg/common/core"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,24 +12,23 @@ type UserRegisterRequest struct {
 	Code     string `json:"code" binding:"required"`
 }
 
-func (us *userServer) Register(ctx *gin.Context) {
+func (us *userServer) Register(ctx *gin.Context) error {
 	var cr UserRegisterRequest
 	if err := ctx.ShouldBind(&cr); err != nil {
-		gin2.HandleValidatorError(ctx, err, us.trans)
-		return
+		return gin2.HandleValidatorError(ctx, err, us.trans)
+
 	}
 
 	userDTO, err := us.sf.Users().Register(ctx, cr.Mobile, cr.Password, cr.Code)
 	if err != nil {
-		core.WriteErrResponse(ctx, err, nil)
-		return
+		return err
 	}
 
-	core.OkWithData(ctx, UserResponse{
+	common.OkWithData(ctx, UserResponse{
 		ID:        userDTO.ID,
 		NickName:  userDTO.NickName,
 		Token:     userDTO.Token,
 		ExpiredAt: userDTO.ExpiresAt,
 	})
-
+	return nil
 }

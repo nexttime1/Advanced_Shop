@@ -5,8 +5,10 @@ import (
 	"time"
 
 	"Advanced_Shop/app/inventory/srv/config"
+	_ "Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/options"
 	gapp "Advanced_Shop/gnova/app"
+	_ "Advanced_Shop/gnova/code"
 	"Advanced_Shop/pkg/app"
 	"Advanced_Shop/pkg/log"
 	"Advanced_Shop/pkg/storage"

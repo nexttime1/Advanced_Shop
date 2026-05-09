@@ -9,6 +9,8 @@ import (
 	"context"
 	"github.com/hashicorp/consul/api"
 
+	_ "Advanced_Shop/app/pkg/code"
+	_ "Advanced_Shop/gnova/code"
 	"Advanced_Shop/gnova/registry"
 	"Advanced_Shop/gnova/registry/consul"
 )
@@ -54,6 +56,7 @@ func NewGoodsApp(cfg *config.Config) (*gapp.App, error) {
 		gapp.WithName(cfg.Server.Name),
 		gapp.WithRPCServer(rpcServer),
 		gapp.WithRegistrar(register),
+		gapp.WithMetricsPort(cfg.Server.MetricPort),
 	), nil
 }
 

@@ -1,8 +1,8 @@
 package user
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
-	"Advanced_Shop/pkg/common/core"
 	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -47,7 +47,7 @@ func (us *userServer) Login(ctx *gin.Context) {
 		})
 		return
 	}
-	core.OkWithData(ctx, UserResponse{
+	common.OkWithData(ctx, UserResponse{
 		ID:        userDTO.ID,
 		NickName:  userDTO.NickName,
 		Token:     userDTO.Token,

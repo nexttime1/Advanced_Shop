@@ -3,10 +3,10 @@ package goods
 import (
 	proto "Advanced_Shop/api/goods/v1"
 	ipb "Advanced_Shop/api/inventory/v1"
+	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/good"
 	"Advanced_Shop/app/xshop/api/internal/service"
-	"Advanced_Shop/pkg/common/core"
 	"Advanced_Shop/pkg/log"
 
 	"github.com/gin-gonic/gin"
@@ -26,17 +26,16 @@ func NewGoodsController(srv service.ServiceFactory, trans ut.Translator) *goodsC
 	}
 }
 
-func (gc *goodsController) GetGoodListView(c *gin.Context) {
+func (gc *goodsController) GetGoodListView(c *gin.Context) error {
 	log.Info("goods list function called ...")
 
 	var cr good.GoodListRequest
 	err := c.ShouldBindQuery(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
-
-	list, err := gc.srv.Goods().List(c, &proto.GoodsFilterRequest{
+	ctx := c.Request.Context()
+	list, err := gc.srv.Goods().List(ctx, &proto.GoodsFilterRequest{
 		PriceMin:      cr.PriceMin,
 		PriceMax:      cr.PriceMax,
 		IsHot:         cr.IsHot,
@@ -49,8 +48,7 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 	})
 	if err != nil {
 		log.Errorf("get goods list error %v", err)
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	var response []good.GoodsInfoResponse
 	for _, model := range list.Data {
@@ -87,19 +85,19 @@ func (gc *goodsController) GetGoodListView(c *gin.Context) {
 		}
 		response = append(response, info)
 	}
-	core.OkWithList(c, response, list.Total)
-
+	common.OkWithList(c, response, list.Total)
+	return nil
 }
 
-func (gc *goodsController) CreateGoodView(c *gin.Context) {
+func (gc *goodsController) CreateGoodView(c *gin.Context) error {
 
 	var cr good.GoodCreateRequest
 	err := c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
-	_, err = gc.srv.Goods().CreateGoods(c, &proto.CreateGoodsInfo{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().CreateGoods(ctx, &proto.CreateGoodsInfo{
 		Name:            cr.Name,
 		GoodsSn:         cr.GoodsSn,
 		Stocks:          cr.Stocks,
@@ -114,19 +112,18 @@ func (gc *goodsController) CreateGoodView(c *gin.Context) {
 		BrandId:         cr.Brand,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "创建成功")
+	common.OkWithMessage(c, "创建成功")
+	return nil
 }
 
-func (gc *goodsController) GoodDetailView(c *gin.Context) {
+func (gc *goodsController) GoodDetailView(c *gin.Context) error {
 	log.Info("goods detail function called ...")
 	var cr good.GoodDetailRequest
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
 	ctx := c.Request.Context()
 
@@ -134,16 +131,14 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 		Id: cr.Id,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	detail, err := gc.srv.Inventory().InvDetail(ctx, &ipb.GoodsInvInfo{
 		GoodsId: goodInfo.Id,
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	response := good.GoodsInfoResponse{
 		ID:              goodInfo.Id,
@@ -177,26 +172,25 @@ func (gc *goodsController) GoodDetailView(c *gin.Context) {
 		},
 	}
 
-	core.OkWithData(c, response)
-
+	common.OkWithData(c, response)
+	return nil
 }
 
-func (gc *goodsController) GoodUpdateView(c *gin.Context) {
+func (gc *goodsController) GoodUpdateView(c *gin.Context) error {
 
 	var cr good.GoodUpdateRequest
 	idString := c.Param("id")
 	id, err := strconv.Atoi(idString)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
 
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
-	_, err = gc.srv.Goods().UpdateGoods(c, &proto.CreateGoodsInfo{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().UpdateGoods(ctx, &proto.CreateGoodsInfo{
 		Id:              int32(id),
 		Name:            cr.Name,
 		GoodsSn:         cr.GoodsSn,
@@ -213,29 +207,27 @@ func (gc *goodsController) GoodUpdateView(c *gin.Context) {
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "更新成功")
-
+	common.OkWithMessage(c, "更新成功")
+	return nil
 }
 
-func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) {
+func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) error {
 
 	idString := c.Param("id")
 	id, err := strconv.Atoi(idString)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
 	var cr good.GoodPatchUpdateRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
 
-	_, err = gc.srv.Goods().UpdateGoods(c, &proto.CreateGoodsInfo{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().UpdateGoods(ctx, &proto.CreateGoodsInfo{
 		Id:         int32(id),
 		IsNew:      cr.IsNew,
 		IsHot:      cr.IsHot,
@@ -245,30 +237,29 @@ func (gc *goodsController) GoodPatchUpdateView(c *gin.Context) {
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "更新成功")
+	common.OkWithMessage(c, "更新成功")
+	return nil
 }
 
-func (gc *goodsController) GoodDeleteView(c *gin.Context) {
+func (gc *goodsController) GoodDeleteView(c *gin.Context) error {
 
 	var cr good.GoodDeleteRequest
 
 	err := c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, gc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, gc.trans)
 	}
 
-	_, err = gc.srv.Goods().DeleteGoods(c, &proto.DeleteGoodsInfo{
+	ctx := c.Request.Context()
+	_, err = gc.srv.Goods().DeleteGoods(ctx, &proto.DeleteGoodsInfo{
 		Id: cr.Id,
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "删除成功")
-
+	common.OkWithMessage(c, "删除成功")
+	return nil
 }

@@ -2,12 +2,12 @@ package v1
 
 import (
 	proto "Advanced_Shop/api/order/v1"
+	"Advanced_Shop/app/pkg/code"
 	"Advanced_Shop/app/pkg/common"
 	"Advanced_Shop/app/pkg/options"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/order"
 	"Advanced_Shop/app/xshop/api/internal/service"
-	"Advanced_Shop/pkg/common/core"
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"fmt"
@@ -37,18 +37,17 @@ func NewOrderController(srv service.ServiceFactory, trans ut.Translator, options
 	}
 }
 
-func (oc orderController) OrderListView(c *gin.Context) {
+func (oc orderController) OrderListView(c *gin.Context) error {
 	log.Info("order list function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	var cr common.PageInfo
 	err = c.ShouldBindQuery(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, oc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, oc.trans)
+
 	}
 	ctx := c.Request.Context()
 
@@ -59,8 +58,7 @@ func (oc orderController) OrderListView(c *gin.Context) {
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	var response []order.OrderListResponse
 	for _, model := range list.Data {
@@ -80,7 +78,8 @@ func (oc orderController) OrderListView(c *gin.Context) {
 
 	}
 
-	core.OkWithList(c, response, list.Total)
+	common.OkWithList(c, response, list.Total)
+	return nil
 
 }
 
@@ -92,18 +91,17 @@ func RandomSns(userID int32) string {
 
 	return OrderSns
 }
-func (oc orderController) OrderCreateView(c *gin.Context) {
+func (oc orderController) OrderCreateView(c *gin.Context) error {
 	log.Info("order create function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	var cr order.OrderCreateRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, oc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, oc.trans)
+
 	}
 	ctx := c.Request.Context()
 	orderSn := RandomSns(userID)
@@ -116,8 +114,7 @@ func (oc orderController) OrderCreateView(c *gin.Context) {
 		Post:    cr.Post,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 
 	client, err := alipay.New(oc.options.AlipayAppId, oc.options.AlipayPrivateKey, false)
@@ -141,30 +138,28 @@ func (oc orderController) OrderCreateView(c *gin.Context) {
 	result, err := client.TradePagePay(p)
 	if err != nil {
 		log.Errorf("生成支付宝url失败")
-		core.WriteErrResponse(c, err, nil)
-		return
+		return errors.WithCode(code.ErrAlipay, "生成支付宝url失败")
 	}
 	response := order.OrderCreateResponse{
 		OrderSn:   orderSn,
 		AlipayUrl: result.String(),
 	}
 
-	core.OkWithData(c, response)
-
+	common.OkWithData(c, response)
+	return nil
 }
 
-func (oc orderController) OrderDetailView(c *gin.Context) {
+func (oc orderController) OrderDetailView(c *gin.Context) error {
 	log.Info("order detail function called ...")
 	userID, role, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	var cr order.OrderIdRequest
 	err = c.ShouldBindQuery(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, oc.trans)
-		return
+		return gin2.HandleValidatorError(c, err, oc.trans)
+
 	}
 
 	if role == 1 {
@@ -175,7 +170,7 @@ func (oc orderController) OrderDetailView(c *gin.Context) {
 		UserId: userID,
 	})
 	if err != nil {
-		return
+		return err
 	}
 
 	response := order.OrderDetailResponse{
@@ -224,13 +219,12 @@ func (oc orderController) OrderDetailView(c *gin.Context) {
 
 	if err != nil {
 		log.Errorf("生成支付宝url失败")
-		core.WriteErrResponse(c, err, nil)
-		return
+		return errors.WithCode(code.ErrAlipay, "生成支付宝url失败")
 	}
 	response.AlipayUrl = alipayRes.String()
 
-	core.OkWithData(c, response)
-
+	common.OkWithData(c, response)
+	return err
 }
 
 func (oc orderController) AlipayCallBackView(c *gin.Context) {
@@ -246,7 +240,8 @@ func (oc orderController) AlipayCallBackView(c *gin.Context) {
 
 	notification, err := client.GetTradeNotification(c.Request)
 	if err != nil || notification == nil {
-		core.WriteErrResponse(c, err, nil)
+		log.Errorf("支付宝 CallBack 失败")
+		c.String(200, "fail")
 		return
 	}
 	// 查看订单是否存在 是否超时
@@ -271,5 +266,4 @@ func (oc orderController) AlipayCallBackView(c *gin.Context) {
 		return
 	}
 	c.String(http.StatusOK, "success")
-
 }

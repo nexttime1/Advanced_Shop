@@ -2,23 +2,23 @@ package trace
 
 import (
 	"Advanced_Shop/pkg/log"
+	"context"
+	"sync"
+
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
-	"go.opentelemetry.io/otel/exporters/zipkin"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
-	"go.opentelemetry.io/otel/sdk/trace"
-	semconv "go.opentelemetry.io/otel/semconv/v1.38.0"
-	"sync"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	semconv "go.opentelemetry.io/otel/semconv/v1.21.0"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
-
-/*
-初始化不同的export的设置
-*/
 
 const (
 	kindJaeger = "jaeger"
-	kindZipkin = "zipkin"
+	kindOTLP   = "otlp"
 )
 
 var (
@@ -27,7 +27,6 @@ var (
 )
 
 func InitAgent(o Options) {
-	// TODO 是否是高并发
 	lock.Lock()
 	defer lock.Unlock()
 
@@ -35,7 +34,8 @@ func InitAgent(o Options) {
 	if ok {
 		return
 	}
-	err := startAgent(o)
+
+	err := startAgent(context.Background(), o)
 	if err != nil {
 		log.Errorf("InitAgent failed: %v", err)
 		return
@@ -43,37 +43,59 @@ func InitAgent(o Options) {
 	agents[o.Endpoint] = struct{}{}
 }
 
-func startAgent(o Options) error {
-	var sexp trace.SpanExporter
-	var err error
-
-	opts := []trace.TracerProviderOption{
-		trace.WithSampler(trace.ParentBased(trace.TraceIDRatioBased(o.Sampler))),
-		trace.WithResource(resource.NewSchemaless(semconv.ServiceNameKey.String(o.Name))),
+func startAgent(ctx context.Context, o Options) error {
+	// 1. 配置 Resource
+	res, err := resource.New(ctx,
+		resource.WithAttributes(
+			semconv.ServiceNameKey.String(o.Name),
+		),
+	)
+	if err != nil {
+		return err
 	}
 
-	if len(o.Endpoint) > 0 {
-		switch o.Batcher {
-		case kindJaeger:
-			sexp, err = jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(o.Endpoint)))
-			if err != nil {
-				return err
-			}
-		case kindZipkin:
-			sexp, err = zipkin.New(o.Endpoint)
-			if err != nil {
-				return err
-			}
-
-		}
-		opts = append(opts, trace.WithBatcher(sexp))
+	// 2. 创建 OTLP gRPC Exporter，连接到 otel-collector
+	conn, err := grpc.NewClient(
+		o.Endpoint, // 例如 "otel-collector:4317"
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		return err
 	}
 
-	tp := trace.NewTracerProvider(opts...)
+	exp, err := otlptrace.New(ctx,
+		otlptracegrpc.NewClient(
+			otlptracegrpc.WithGRPCConn(conn),
+		),
+	)
+	if err != nil {
+		return err
+	}
+
+	// 3. 配置 TracerProvider
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithSampler(
+			sdktrace.ParentBased(sdktrace.TraceIDRatioBased(o.Sampler)),
+		),
+		sdktrace.WithResource(res),
+		sdktrace.WithBatcher(exp),
+	)
+
+	// 4. 注册全局 TracerProvider
 	otel.SetTracerProvider(tp)
-	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
+
+	// 5. 设置分布式传播器
+	otel.SetTextMapPropagator(
+		propagation.NewCompositeTextMapPropagator(
+			propagation.TraceContext{},
+			propagation.Baggage{},
+		),
+	)
+
+	// 6. 全局错误处理
 	otel.SetErrorHandler(otel.ErrorHandlerFunc(func(err error) {
 		log.Errorf("[otel] error: %v", err)
 	}))
+
 	return nil
 }

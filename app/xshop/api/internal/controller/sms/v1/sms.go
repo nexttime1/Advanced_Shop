@@ -2,10 +2,10 @@ package v1
 
 import (
 	"Advanced_Shop/app/pkg/code"
+	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/service"
 	v1 "Advanced_Shop/app/xshop/api/internal/service/sms/v1"
-	"Advanced_Shop/pkg/common/core"
 	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/storage"
 	"github.com/gin-gonic/gin"
@@ -27,26 +27,26 @@ func NewSmsController(sf service.ServiceFactory, trans ut.Translator) *SmsContro
 	return &SmsController{sf, trans}
 }
 
-func (sc *SmsController) SendSms(c *gin.Context) {
+func (sc *SmsController) SendSms(c *gin.Context) error {
 	var cr SendSmsRequest
 	if err := c.ShouldBind(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, sc.trans)
+		return gin2.HandleValidatorError(c, err, sc.trans)
 	}
 
 	smsCode := v1.GenerateSmsCode(6)
-	err := sc.sf.Sms().SendSms(c, cr.Mobile)
+	ctx := c.Request.Context()
+	err := sc.sf.Sms().SendSms(ctx, cr.Mobile)
 	if err != nil {
-		core.WriteErrResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
-		return
+		return errors.WithCode(code.ErrSmsSend, err.Error())
 	}
 
 	//将验证码保存起来 - redis
 	rstore := storage.RedisCluster{}
 	err = rstore.SetKey(c, cr.Mobile, smsCode, 5*time.Minute)
 	if err != nil {
-		core.WriteErrResponse(c, errors.WithCode(code.ErrSmsSend, err.Error()), nil)
-		return
+		return errors.WithCode(code.ErrSmsSend, err.Error())
 	}
 
-	core.OkWithMessage(c, "发送成功")
+	common.OkWithMessage(c, "发送成功")
+	return nil
 }

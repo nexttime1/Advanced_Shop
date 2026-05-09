@@ -6,30 +6,26 @@ import (
 	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/action"
-	"Advanced_Shop/pkg/common/core"
-	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
 )
 
-func (ac *actionController) CollectionListView(c *gin.Context) {
+func (ac *actionController) CollectionListView(c *gin.Context) error {
 	log.Info("collection list function called.")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	ctx := c.Request.Context()
 	list, err := ac.srv.Collection().GetFavList(ctx, &p1.UserFavRequest{
 		UserId: userID,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	if list.Total == 0 {
-		core.OkWithList(c, list.Data, 0)
-		return
+		common.OkWithList(c, list.Data, 0)
+		return nil
 	}
 	var idList []int32
 	for _, model := range list.Data {
@@ -40,8 +36,7 @@ func (ac *actionController) CollectionListView(c *gin.Context) {
 		Id: idList,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 	var response []action.CollectionListResponse
 
@@ -57,22 +52,21 @@ func (ac *actionController) CollectionListView(c *gin.Context) {
 			}
 		}
 	}
-	core.OkWithList(c, response, goodsInfo.Total)
-
+	common.OkWithList(c, response, goodsInfo.Total)
+	return nil
 }
 
-func (ac *actionController) CollectionAddView(c *gin.Context) {
+func (ac *actionController) CollectionAddView(c *gin.Context) error {
 	log.Info("collection add function called.")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	var cr action.CollectionAddRequest
 	if err := c.ShouldBindJSON(&cr); err != nil {
-		gin2.HandleValidatorError(c, err, ac.trans)
-		return
+		return gin2.HandleValidatorError(c, err, ac.trans)
+
 	}
 	ctx := c.Request.Context()
 	_, err = ac.srv.Collection().AddUserFav(ctx, &p1.UserFavRequest{
@@ -80,25 +74,24 @@ func (ac *actionController) CollectionAddView(c *gin.Context) {
 		GoodsId: cr.GoodId,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 
-	core.OkWithMessage(c, "收藏成功")
+	common.OkWithMessage(c, "收藏成功")
+	return nil
 }
 
-func (ac *actionController) CollectionDeleteView(c *gin.Context) {
+func (ac *actionController) CollectionDeleteView(c *gin.Context) error {
 	log.Info("collection delete function called.")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	var cr action.CollectionIdRequest
 	err = c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, ac.trans)
-		return
+		return gin2.HandleValidatorError(c, err, ac.trans)
+
 	}
 
 	ctx := c.Request.Context()
@@ -107,25 +100,24 @@ func (ac *actionController) CollectionDeleteView(c *gin.Context) {
 		GoodsId: cr.GoodId,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "删除成功")
+	common.OkWithMessage(c, "删除成功")
 
+	return nil
 }
 
-func (ac *actionController) CollectionDetailView(c *gin.Context) {
+func (ac *actionController) CollectionDetailView(c *gin.Context) error {
 	log.Info("collection delete function called.")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	var cr action.CollectionIdRequest
 	err = c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, ac.trans)
-		return
+		return gin2.HandleValidatorError(c, err, ac.trans)
+
 	}
 
 	ctx := c.Request.Context()
@@ -134,9 +126,8 @@ func (ac *actionController) CollectionDetailView(c *gin.Context) {
 		GoodsId: cr.GoodId,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "存在")
-
+	common.OkWithMessage(c, "存在")
+	return nil
 }

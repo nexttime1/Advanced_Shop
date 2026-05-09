@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"Advanced_Shop/app/pkg/common"
 	"Advanced_Shop/app/xshop/api/config"
 	v2 "Advanced_Shop/app/xshop/api/internal/controller/action/v1"
 	"Advanced_Shop/app/xshop/api/internal/controller/goods/v1"
@@ -13,6 +14,7 @@ import (
 )
 
 func initRouter(g *restserver.Server, cfg *config.Config) {
+
 	// 服务
 	userGroup := g.Group("/u")
 	// 版本
@@ -30,17 +32,17 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	uController := user.NewUserController(g.Translator(), serviceFactory)
 	{
 		ugroup.POST("login", uController.Login)
-		ugroup.POST("register", uController.Register)
+		ugroup.POST("register", common.Wrapper(uController.Register))
 
-		ugroup.GET("detail", jwtAuth.AuthFunc(), uController.GetUserDetail)
-		ugroup.GET("list", jwtAuth.AuthFunc(), uController.UserListView)
-		ugroup.PATCH("update", jwtAuth.AuthFunc(), uController.GetUserDetail)
+		ugroup.GET("detail", jwtAuth.AuthFunc(), common.Wrapper(uController.GetUserDetail))
+		ugroup.GET("list", jwtAuth.AuthFunc(), common.Wrapper(uController.UserListView))
+		ugroup.PATCH("update", jwtAuth.AuthFunc(), common.Wrapper(uController.GetUserDetail))
 	}
 
 	baseRouter := v1.Group("base")
 	{
 		smsCtl := v12.NewSmsController(serviceFactory, g.Translator())
-		baseRouter.POST("send_sms", smsCtl.SendSms)
+		baseRouter.POST("send_sms", common.Wrapper(smsCtl.SendSms))
 		baseRouter.GET("captcha", user.GetCaptcha)
 	}
 
@@ -54,38 +56,38 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	{
 		goodsController := goods.NewGoodsController(serviceFactory, g.Translator())
 		// 商品相关
-		goodsRouter.GET("/list", goodsController.GetGoodListView) // 限流
-		goodsRouter.POST("/", goodsController.CreateGoodView)
-		goodsRouter.GET("/:id", goodsController.GoodDetailView)
-		goodsRouter.PUT("/:id", goodsController.GoodUpdateView)
-		goodsRouter.PATCH("/:id", goodsController.GoodPatchUpdateView)
-		goodsRouter.DELETE("/:id", goodsController.GoodDeleteView)
+		goodsRouter.GET("/list", common.Wrapper(goodsController.GetGoodListView)) // 限流
+		goodsRouter.POST("/", common.Wrapper(goodsController.CreateGoodView))
+		goodsRouter.GET("/:id", common.Wrapper(goodsController.GoodDetailView))
+		goodsRouter.PUT("/:id", common.Wrapper(goodsController.GoodUpdateView))
+		goodsRouter.PATCH("/:id", common.Wrapper(goodsController.GoodPatchUpdateView))
+		goodsRouter.DELETE("/:id", common.Wrapper(goodsController.GoodDeleteView))
 
 		// 图片相关
-		v1.GET("banners", goodsController.GetBannerListView)
-		v1.POST("banners", goodsController.CreateBannerView)
-		v1.PUT("banners/:id", goodsController.UpdateBannerView)
-		v1.DELETE("banners/:id", goodsController.DeleteBannerView)
+		v1.GET("banners", common.Wrapper(goodsController.GetBannerListView))
+		v1.POST("banners", common.Wrapper(goodsController.CreateBannerView))
+		v1.PUT("banners/:id", common.Wrapper(goodsController.UpdateBannerView))
+		v1.DELETE("banners/:id", common.Wrapper(goodsController.DeleteBannerView))
 
 		// 分类相关
-		v1.GET("categorys", goodsController.GetAllCategoryView)
-		v1.GET("categorys/:id", goodsController.GetSubCategoryView)
-		v1.POST("categorys", goodsController.CreateCategoryView)
-		v1.PUT("categorys/:id", goodsController.UpdateCategoryView)
-		v1.DELETE("categorys/:id", goodsController.DeleteCategoryView)
+		v1.GET("categorys", common.Wrapper(goodsController.GetAllCategoryView))
+		v1.GET("categorys/:id", common.Wrapper(goodsController.GetSubCategoryView))
+		v1.POST("categorys", common.Wrapper(goodsController.CreateCategoryView))
+		v1.PUT("categorys/:id", common.Wrapper(goodsController.UpdateCategoryView))
+		v1.DELETE("categorys/:id", common.Wrapper(goodsController.DeleteCategoryView))
 
 		// 品牌相关
-		v1.GET("brands", goodsController.BrandListView)
-		v1.POST("brands", goodsController.CreateBrandView)
-		v1.PUT("brands/:id", goodsController.UpdateBrandView)
-		v1.DELETE("brands/:id", goodsController.DeleteBrandView)
+		v1.GET("brands", common.Wrapper(goodsController.BrandListView))
+		v1.POST("brands", common.Wrapper(goodsController.CreateBrandView))
+		v1.PUT("brands/:id", common.Wrapper(goodsController.UpdateBrandView))
+		v1.DELETE("brands/:id", common.Wrapper(goodsController.DeleteBrandView))
 
 		// 第三张表
-		v1.GET("categorybrands", goodsController.CategoryBrandListView)    //所有的 第三张表
-		v1.GET("categorybrands/:id", goodsController.CategoryAllBrandView) //某个分类下的所有品牌
-		v1.POST("categorybrands", goodsController.CreateCategoryBrandView)
-		v1.PUT("categorybrands/:id", goodsController.UpdateCategoryBrandView)
-		v1.DELETE("categorybrands/:id", goodsController.DeleteCategoryBrandView)
+		v1.GET("categorybrands", common.Wrapper(goodsController.CategoryBrandListView))    //所有的 第三张表
+		v1.GET("categorybrands/:id", common.Wrapper(goodsController.CategoryAllBrandView)) //某个分类下的所有品牌
+		v1.POST("categorybrands", common.Wrapper(goodsController.CreateCategoryBrandView))
+		v1.PUT("categorybrands/:id", common.Wrapper(goodsController.UpdateCategoryBrandView))
+		v1.DELETE("categorybrands/:id", common.Wrapper(goodsController.DeleteCategoryBrandView))
 	}
 
 	// 订单路由
@@ -99,17 +101,17 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 
 		{
 			// order 相关
-			orderRouter.GET("", jwtAuth.AuthFunc(), orderController.OrderListView)       // 查看所有订单
-			orderRouter.POST("", jwtAuth.AuthFunc(), orderController.OrderCreateView)    // 创建订单
-			orderRouter.GET("/:id", jwtAuth.AuthFunc(), orderController.OrderDetailView) // 订单细节
+			orderRouter.GET("", jwtAuth.AuthFunc(), common.Wrapper(orderController.OrderListView))       // 查看所有订单
+			orderRouter.POST("", jwtAuth.AuthFunc(), common.Wrapper(orderController.OrderCreateView))    // 创建订单
+			orderRouter.GET("/:id", jwtAuth.AuthFunc(), common.Wrapper(orderController.OrderDetailView)) // 订单细节
 		}
 		// cart 相关
 		cartRouter := v1.Group("shopcarts")
 		{
-			cartRouter.GET("", orderController.CartListView)              // 购物车列表
-			cartRouter.DELETE("/:id", orderController.DeleteCartItemView) // 删除条目
-			cartRouter.POST("", orderController.AddItemView)              // 添加商品到购物车
-			cartRouter.PATCH("/:id", orderController.UpdatePatchView)     // 更新购物车中的某个商品
+			cartRouter.GET("", common.Wrapper(orderController.CartListView))              // 购物车列表
+			cartRouter.DELETE("/:id", common.Wrapper(orderController.DeleteCartItemView)) // 删除条目
+			cartRouter.POST("", common.Wrapper(orderController.AddItemView))              // 添加商品到购物车
+			cartRouter.PATCH("/:id", common.Wrapper(orderController.UpdatePatchView))     // 更新购物车中的某个商品
 		}
 		// 阿里云回调
 		alipayRouter := v1.Group("/pay")
@@ -127,10 +129,10 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	{
 
 		// 地址相关接口（添加认证和Trace中间件）
-		addressRouter.GET("", jwtAuth.AuthFunc(), ActionController.AddressListView)          // 查看所有地址
-		addressRouter.DELETE("/:id", jwtAuth.AuthFunc(), ActionController.DeleteAddressView) // 删除地址
-		addressRouter.POST("", jwtAuth.AuthFunc(), ActionController.AddressCreateView)       // 创建地址
-		addressRouter.PUT("/:id", jwtAuth.AuthFunc(), ActionController.UpdateAddressView)    // 修改地址
+		addressRouter.GET("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.AddressListView))          // 查看所有地址
+		addressRouter.DELETE("/:id", jwtAuth.AuthFunc(), common.Wrapper(ActionController.DeleteAddressView)) // 删除地址
+		addressRouter.POST("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.AddressCreateView))       // 创建地址
+		addressRouter.PUT("/:id", jwtAuth.AuthFunc(), common.Wrapper(ActionController.UpdateAddressView))    // 修改地址
 	}
 
 	// 收藏模块路由
@@ -138,10 +140,10 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	collectionRouter := v1.Group("userfavs")
 	{
 
-		collectionRouter.GET("", jwtAuth.AuthFunc(), ActionController.CollectionListView)               // 查看收藏
-		collectionRouter.DELETE("/:good_id", jwtAuth.AuthFunc(), ActionController.CollectionDeleteView) // 删除收藏
-		collectionRouter.POST("", jwtAuth.AuthFunc(), ActionController.CollectionAddView)               // 添加收藏
-		collectionRouter.GET("/:good_id", jwtAuth.AuthFunc(), ActionController.CollectionDetailView)    // 查看详情
+		collectionRouter.GET("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.CollectionListView))               // 查看收藏
+		collectionRouter.DELETE("/:good_id", jwtAuth.AuthFunc(), common.Wrapper(ActionController.CollectionDeleteView)) // 删除收藏
+		collectionRouter.POST("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.CollectionAddView))               // 添加收藏
+		collectionRouter.GET("/:good_id", jwtAuth.AuthFunc(), common.Wrapper(ActionController.CollectionDetailView))    // 查看详情
 	}
 
 	// 消息核心路由组
@@ -149,8 +151,8 @@ func initRouter(g *restserver.Server, cfg *config.Config) {
 	{
 
 		// 消息相关接口（添加认证和Trace中间件）
-		messageRouter.GET("", jwtAuth.AuthFunc(), ActionController.MessageListView)    // 消息列表
-		messageRouter.POST("", jwtAuth.AuthFunc(), ActionController.CreateMessageView) // 添加留言
+		messageRouter.GET("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.MessageListView))    // 消息列表
+		messageRouter.POST("", jwtAuth.AuthFunc(), common.Wrapper(ActionController.CreateMessageView)) // 添加留言
 	}
 
 }

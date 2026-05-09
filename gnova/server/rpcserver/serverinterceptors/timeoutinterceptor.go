@@ -63,7 +63,7 @@ func UnaryTimeoutInterceptor(timeout time.Duration) grpc.UnaryServerInterceptor 
 		case <-ctx.Done():
 			err := ctx.Err()
 			if err == context.Canceled {
-				//我们之前说过我们把error统一了， grpc的error我们也可以统一, 自己完成 TODO
+				//我们之前说过我们把error统一了， grpc的error我们也可以统一, 自己完成
 				err = status.Error(codes.Canceled, err.Error())
 			} else if err == context.DeadlineExceeded {
 				err = status.Error(codes.DeadlineExceeded, err.Error())

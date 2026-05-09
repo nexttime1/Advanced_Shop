@@ -1,7 +1,7 @@
 package user
 
 import (
-	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/app/pkg/common"
 	"net/http"
 
 	"Advanced_Shop/pkg/log"
@@ -28,7 +28,7 @@ func GetCaptcha(ctx *gin.Context) {
 	}
 
 	log.Infof("Answer : %s", answer)
-	core.OkWithData(ctx, CaptchaResponse{
+	common.OkWithData(ctx, CaptchaResponse{
 		CaptchaId:     captchaId,
 		CaptchaBase64: base64s,
 	})

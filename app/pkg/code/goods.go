@@ -6,7 +6,7 @@ package code
 // Code must start with 1005xx.
 const (
 	// ErrGoodsNotFound - 404: Goods not found.
-	ErrGoodsNotFound int = iota + 100501
+	ErrGoodsNotFound int = iota + 102001
 
 	// ErrCategoryNotFound - 404: Category not found.
 	ErrCategoryNotFound

@@ -1,6 +1,7 @@
 package clientinterceptors
 
 import (
+	"Advanced_Shop/pkg/log"
 	"context"
 	"io"
 
@@ -155,6 +156,7 @@ func (w *clientStream) sendStreamEvent(eventType streamEventType, err error) {
 }
 
 func startSpan(ctx context.Context, method, target string) (context.Context, trace.Span) {
+	log.Info("链路追踪2")
 	var md metadata.MD
 	requestMetadata, ok := metadata.FromOutgoingContext(ctx)
 	//requestMetadata, ok := metadata.FromIncomingContext(ctx)

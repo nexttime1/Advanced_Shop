@@ -4,7 +4,6 @@ import (
 	"Advanced_Shop/gnova/server/rpcserver/clientinterceptors"
 	"Advanced_Shop/gnova/server/rpcserver/resolver/discovery"
 	"context"
-	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	grpcinsecure "google.golang.org/grpc/credentials/insecure"
 
 	"Advanced_Shop/gnova/registry"
@@ -98,23 +97,27 @@ func dial(ctx context.Context, insecure bool, opts ...ClientOption) (*grpc.Clien
 		timeout:       2000 * time.Millisecond,
 		balancerName:  "selector",
 		enableTracing: true,
+		enableMetrics: true,
 	}
 
 	for _, o := range opts {
 		o(&options)
 	}
 
-	//TODO 客户端默认拦截器
-	ints := []grpc.UnaryClientInterceptor{
-		clientinterceptors.TimeoutInterceptor(options.timeout),
-	}
-	if options.enableTracing {
-		ints = append(ints, otelgrpc.UnaryClientInterceptor())
-	}
+	// 客户端默认拦截器
+	ints := []grpc.UnaryClientInterceptor{}
 
 	if options.enableMetrics {
 		ints = append(ints, clientinterceptors.PrometheusInterceptor())
 	}
+
+	ints = append(ints, clientinterceptors.TimeoutInterceptor(options.timeout))
+
+	if options.enableTracing {
+		ints = append(ints, clientinterceptors.UnaryTracingInterceptor)
+	}
+
+	ints = append(ints, clientinterceptors.UnaryClientInterceptor())
 
 	streamInts := []grpc.StreamClientInterceptor{}
 

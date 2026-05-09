@@ -76,7 +76,7 @@ var codeMux = &sync.Mutex{}
 // It will overrid the exist code.
 func Register(coder Coder) {
 	if coder.Code() == 0 {
-		panic("code `0` is reserved by `imooc/Advanced_Shop/pkg/errors` as unknownCode error code")
+		panic("code `0` is reserved by `/Advanced_Shop/pkg/errors` as unknownCode error code")
 	}
 
 	codeMux.Lock()

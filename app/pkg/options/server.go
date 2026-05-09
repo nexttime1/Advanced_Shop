@@ -29,6 +29,9 @@ type ServerOptions struct {
 
 	//中间件
 	Middlewares []string `json:"middlewares,omitempty"                 mapstructure:"middlewares"`
+
+	// metrics 监听端口
+	MetricPort int `json:"metric-port,omitempty"                 mapstructure:"metric-port"`
 }
 
 // NewServerOptions create a `zero` value instance.

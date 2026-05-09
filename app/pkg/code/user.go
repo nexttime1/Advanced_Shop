@@ -6,7 +6,7 @@ package code
 // Code must start with 1004xx.
 const (
 	// ErrUserNotFound - 404: User not found.
-	ErrUserNotFound int = iota + 100401
+	ErrUserNotFound int = iota + 105001
 
 	// ErrUserPasswordIncorrect - 401: User password incorrect.
 	ErrUserPasswordIncorrect

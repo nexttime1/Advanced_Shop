@@ -1,11 +1,10 @@
 package rpcserver
 
 import (
-	"context"
-
 	srvintc "Advanced_Shop/gnova/server/rpcserver/serverinterceptors"
 	"Advanced_Shop/pkg/host"
 	"Advanced_Shop/pkg/log"
+	"context"
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -47,8 +46,9 @@ func (s *Server) Address() string {
 
 func NewServer(opts ...ServerOption) *Server {
 	srv := &Server{
-		address: ":0",
-		health:  health.NewServer(),
+		address:       ":0",
+		health:        health.NewServer(),
+		enableMetrics: true,
 		//timeout: 1 * time.Second,
 	}
 
@@ -59,7 +59,6 @@ func NewServer(opts ...ServerOption) *Server {
 	//TODO 我们现在希望用户不设置拦截器的情况下，我们会自动默认加上一些必须的拦截器， crash，tracing
 	unaryInts := []grpc.UnaryServerInterceptor{
 		srvintc.UnaryCrashInterceptor,
-		otelgrpc.UnaryServerInterceptor(),
 	}
 
 	if srv.enableMetrics {
@@ -69,6 +68,11 @@ func NewServer(opts ...ServerOption) *Server {
 	if srv.timeout > 0 {
 		unaryInts = append(unaryInts, srvintc.UnaryTimeoutInterceptor(srv.timeout))
 	}
+	// 链路追踪
+	unaryInts = append(unaryInts, otelgrpc.UnaryServerInterceptor())
+
+	// error 转换拦截器
+	unaryInts = append(unaryInts, srvintc.UnaryServerInterceptor())
 
 	if len(srv.unaryInts) > 0 {
 		unaryInts = append(unaryInts, srv.unaryInts...)

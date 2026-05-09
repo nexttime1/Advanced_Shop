@@ -5,18 +5,15 @@ import (
 	"Advanced_Shop/app/pkg/common"
 	gin2 "Advanced_Shop/app/pkg/translator/gin"
 	"Advanced_Shop/app/xshop/api/internal/domain/request/order"
-	"Advanced_Shop/pkg/common/core"
-	"Advanced_Shop/pkg/errors"
 	"Advanced_Shop/pkg/log"
 	"github.com/gin-gonic/gin"
 )
 
-func (oc orderController) CartListView(c *gin.Context) {
+func (oc orderController) CartListView(c *gin.Context) error {
 	log.Info("Cart list function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 	ctx := c.Request.Context()
 	response, total, err := oc.srv.Order().CartItemList(ctx, &proto.UserInfo{
@@ -24,27 +21,26 @@ func (oc orderController) CartListView(c *gin.Context) {
 	})
 
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
 
-	core.OkWithList(c, response, total)
+	common.OkWithList(c, response, total)
+	return nil
 
 }
 
-func (oc orderController) DeleteCartItemView(c *gin.Context) {
+func (oc orderController) DeleteCartItemView(c *gin.Context) error {
 	log.Info("DeleteCartItemView function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	var cr order.CartIdRequest
 	err = c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, nil)
-		return
+		return gin2.HandleValidatorError(c, err, nil)
+
 	}
 	ctx := c.Request.Context()
 	_, err = oc.srv.Order().DeleteCartItem(ctx, &proto.CartItemRequest{
@@ -52,25 +48,24 @@ func (oc orderController) DeleteCartItemView(c *gin.Context) {
 		GoodsId: cr.Id,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "删除成功")
+	common.OkWithMessage(c, "删除成功")
+	return nil
 }
 
-func (oc orderController) AddItemView(c *gin.Context) {
+func (oc orderController) AddItemView(c *gin.Context) error {
 	log.Info("AddItemView function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	var cr order.CartAddRequest
 	err = c.ShouldBindJSON(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, nil)
-		return
+		return gin2.HandleValidatorError(c, err, nil)
+
 	}
 	ctx := c.Request.Context()
 	res, err := oc.srv.Order().CreateCartItem(ctx, &proto.CartItemRequest{
@@ -81,29 +76,28 @@ func (oc orderController) AddItemView(c *gin.Context) {
 	response := order.CartAddResponse{
 		Id: res.Id,
 	}
-	core.OkWithData(c, response.Id)
-
+	common.OkWithData(c, response.Id)
+	return nil
 }
 
-func (oc orderController) UpdatePatchView(c *gin.Context) {
+func (oc orderController) UpdatePatchView(c *gin.Context) error {
 	log.Info("UpdatePatchView function called ...")
 	userID, _, err := common.GetAuthUser(c)
 	if err != nil {
-		core.WriteErrResponse(c, errors.New("未登录"), nil)
-		return
+		return err
 	}
 
 	var cr order.CartIdRequest
 	err = c.ShouldBindUri(&cr)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, nil)
-		return
+		return gin2.HandleValidatorError(c, err, nil)
+
 	}
 	var update order.CartUpdateRequest
 	err = c.ShouldBindJSON(&update)
 	if err != nil {
-		gin2.HandleValidatorError(c, err, nil)
-		return
+		return gin2.HandleValidatorError(c, err, nil)
+
 	}
 	ctx := c.Request.Context()
 	_, err = oc.srv.Order().UpdateCartItem(ctx, &proto.CartItemRequest{
@@ -113,9 +107,9 @@ func (oc orderController) UpdatePatchView(c *gin.Context) {
 		Checked: update.Checked,
 	})
 	if err != nil {
-		core.WriteErrResponse(c, err, nil)
-		return
+		return err
 	}
-	core.OkWithMessage(c, "更新成功")
+	common.OkWithMessage(c, "更新成功")
+	return nil
 
 }

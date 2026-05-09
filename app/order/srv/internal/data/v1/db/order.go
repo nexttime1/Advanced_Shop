@@ -88,6 +88,17 @@ func (o *orders) GetByOrderSn(ctx context.Context, orderSn string) (*dto.OrderIn
 	return &response, nil
 }
 
+func (o *orders) ExistsByOrderSn(ctx context.Context, txn *gorm.DB, orderSn string) (bool, error) {
+
+	var model do.OrderInfoDO
+	err := o.db.Where("order_sn = ?", orderSn).Take(&model).Error
+	if err != nil {
+		return false, errors.WithCode(code.ErrOrderNotFound, "get order info error")
+	}
+
+	return true, nil
+}
+
 func (o *orders) List(ctx context.Context, userID uint64, meta metav1.ListMeta, orderby []string) (*do.OrderInfoDOList, error) {
 	ret := &do.OrderInfoDOList{}
 	//分页

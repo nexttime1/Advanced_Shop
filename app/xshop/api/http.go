@@ -2,10 +2,19 @@ package admin
 
 import (
 	"Advanced_Shop/app/xshop/api/config"
+	"Advanced_Shop/gnova/core/trace"
 	"Advanced_Shop/gnova/server/restserver"
 )
 
 func NewAPIHTTPServer(cfg *config.Config) (*restserver.Server, error) {
+	//初始化open-telemetry的exporter
+	trace.InitAgent(trace.Options{
+		cfg.Telemetry.Name,
+		cfg.Telemetry.Endpoint,
+		cfg.Telemetry.Sampler,
+		cfg.Telemetry.Batcher,
+	})
+
 	aRestServer := restserver.NewServer(restserver.WithPort(cfg.Server.HttpPort),
 		restserver.WithMiddlewares(cfg.Server.Middlewares),
 		restserver.WithMetrics(true),

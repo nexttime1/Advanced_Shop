@@ -7,14 +7,14 @@ import (
 )
 
 type Config struct {
-	Log *log.Options `json:"log" mapstructure:"log"`
-
-	Server   *options.ServerOptions   `json:"server" mapstructure:"server"`
-	Registry *options.RegistryOptions `json:"registry" mapstructure:"registry"`
-	Jwt      *options.JwtOptions      `json:"jwt" mapstructure:"jwt"`
-	Sms      *options.SmsOptions      `json:"sms" mapstructure:"sms"`
-	Redis    *options.RedisOptions    `json:"redis" mapstructure:"redis"`
-	Aliyun   *options.AliyunOptions   `json:"aliyun" mapstructure:"aliyun"`
+	Log       *log.Options              `json:"log" mapstructure:"log"`
+	Telemetry *options.TelemetryOptions `json:"telemetry" mapstructure:"telemetry"`
+	Server    *options.ServerOptions    `json:"server" mapstructure:"server"`
+	Registry  *options.RegistryOptions  `json:"registry" mapstructure:"registry"`
+	Jwt       *options.JwtOptions       `json:"jwt" mapstructure:"jwt"`
+	Sms       *options.SmsOptions       `json:"sms" mapstructure:"sms"`
+	Redis     *options.RedisOptions     `json:"redis" mapstructure:"redis"`
+	Aliyun    *options.AliyunOptions    `json:"aliyun" mapstructure:"aliyun"`
 }
 
 func (c *Config) Validate() []error {

@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"Advanced_Shop/pkg/common/core"
+	"Advanced_Shop/app/pkg/common"
 	"encoding/base64"
 	"strings"
 
@@ -32,10 +32,9 @@ func (b BasicStrategy) AuthFunc() gin.HandlerFunc {
 		auth := strings.SplitN(c.Request.Header.Get("Authorization"), " ", 2)
 
 		if len(auth) != 2 || auth[0] != "Basic" {
-			core.WriteErrResponse(
+			common.WriteErrResponse(
 				c,
 				errors.WithCode(code.ErrSignatureInvalid, "Authorization header format is wrong."),
-				nil,
 			)
 			c.Abort()
 
@@ -46,10 +45,9 @@ func (b BasicStrategy) AuthFunc() gin.HandlerFunc {
 		pair := strings.SplitN(string(payload), ":", 2)
 
 		if len(pair) != 2 || !b.compare(pair[0], pair[1]) {
-			core.WriteErrResponse(
+			common.WriteErrResponse(
 				c,
 				errors.WithCode(code.ErrSignatureInvalid, "Authorization header format is wrong."),
-				nil,
 			)
 			c.Abort()
 

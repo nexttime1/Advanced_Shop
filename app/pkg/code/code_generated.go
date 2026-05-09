@@ -39,4 +39,9 @@ func init() {
 	register(ErrRoleNotConfigured, 500, "User role not configured")
 	register(ErrInvalidRoleFormat, 400, "Invalid role format")
 	register(ErrInvalidRole, 403, "Invalid role value, only 1(admin) or 2(user) allowed")
+	register(ErrValidation, 400, "Request validation failed")
+	register(ErrValidationTranslate, 500, "Failed to translate validation error")
+	register(ErrAlipay, 500, "Alipay initialize failed")
+	register(ErrInsufficientPermissions, 403, "Insufficient permissions")
+	register(ErrRedisLock, 500, "Redis lock operation failed")
 }

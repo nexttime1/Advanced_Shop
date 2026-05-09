@@ -6,7 +6,7 @@ package code
 // Code must start with 1007xx.
 const (
 	// ErrShopCartItemNotFound - 404: ShopCart item not found.
-	ErrShopCartItemNotFound int = iota + 100701
+	ErrShopCartItemNotFound int = iota + 104001
 
 	// ErrSubmitOrder - 500: Failed to submit order.
 	ErrSubmitOrder
@@ -22,4 +22,7 @@ const (
 
 	// ErrInvalidParameter - 400: Invalid request parameter.
 	ErrInvalidParameter
+
+	// ErrRedisLock - 500: Redis lock operation failed.
+	ErrRedisLock
 )

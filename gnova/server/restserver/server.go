@@ -81,7 +81,10 @@ func NewServer(opts ...ServerOption) *Server {
 	for _, o := range opts {
 		o(srv)
 	}
+
+	// 链路的开始
 	srv.Use(mws.TracingHandler(srv.serviceName))
+
 	for _, m := range srv.middlewares {
 		mw, ok := mws.Middlewares[m]
 		if !ok {

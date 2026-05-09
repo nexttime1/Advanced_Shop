@@ -1,6 +1,7 @@
 package app
 
 import (
+	"Advanced_Shop/gnova/core/metric"
 	"Advanced_Shop/gnova/registry"
 	gs "Advanced_Shop/gnova/server"
 	"Advanced_Shop/pkg/log"
@@ -47,7 +48,7 @@ func New(opts ...Option) *App {
 
 // Run 启动整个服务
 func (a *App) Run(rootCtx context.Context) error {
-	// 注册的信息
+	//注册的信息
 	instance, err := a.buildInstance()
 	if err != nil {
 		return err
@@ -87,19 +88,14 @@ func (a *App) Run(rootCtx context.Context) error {
 	eg, ctx := errgroup.WithContext(gctx)
 	wg := sync.WaitGroup{}
 	for _, srv := range servers {
-		// 启动server
-
-		// 在启动一个goroutine 去监听是否有 err 产生
+		//启动server
+		//在启动一个goroutine 去监听是否有err产生
 		srv := srv
-		eg.Go(func() error { // 为了应对 传入两个 server
-
-			<-ctx.Done() // wait for stop signal
-
-			// 不可能无休止的等待 stop
+		eg.Go(func() error {
+			<-ctx.Done() //wait for stop signal
+			//不可能无休止的等待 stop
 			sctx, cancel := context.WithTimeout(context.Background(), a.opts.stopTimeout)
-
 			defer cancel()
-
 			return srv.Stop(sctx)
 		})
 
@@ -113,7 +109,12 @@ func (a *App) Run(rootCtx context.Context) error {
 
 	wg.Wait()
 
-	// 注册服务
+	// 启动 metrics server
+	if a.opts.metricsPort > 0 {
+		metric.StartMetricsServer(a.opts.metricsPort)
+	}
+
+	//注册服务
 	if a.opts.registrar != nil {
 		rctx, rcancel := context.WithTimeout(context.Background(), a.opts.registrarTimeout)
 		defer rcancel()
